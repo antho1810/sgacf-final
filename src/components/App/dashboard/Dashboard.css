@@ -1,0 +1,49 @@
+.main{
+  background-color: #F7F7F8;
+}
+
+.grid-global-content{
+  display: grid;
+  grid-template-columns: 218px 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  padding: 0 0;
+}
+
+.ct-sidenav{
+  grid-area: 1 / 1 / 2 / 2;
+  background: #fff;
+}
+
+.ct-main-content{
+  padding: 36px 30px;
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+.ct-header-actas{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-start;
+  width: 100%;
+  overflow: auto;
+  margin-bottom: 33px;
+}
+
+.ct-header-actas .title-actas{
+  font-weight: 700;
+  font-size: 24px;
+  color: #030229;
+}
+
+.ct-header-actas .plus-acta-btn{
+  padding: 10px 27px;
+  border-radius: 10px;
+}
+
+
+
+

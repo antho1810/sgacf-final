@@ -2,6 +2,7 @@ import './App.css';
 import { Routes, Route, Navigate } from "react-router-dom"
 
 import "bootstrap/dist/css/bootstrap.min.css"
+import "rsuite/dist/rsuite.min.css"
 
 import Login from "./components/login/Login";
 import Dashboard from "./components/App/dashboard/Dashboard.jsx"
