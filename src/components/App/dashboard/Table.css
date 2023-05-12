@@ -1,0 +1,14 @@
+.table-header {
+  background-color: transparent;
+}
+
+.table-header .head-column {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.row-column {
+  background: #fff !important;
+  box-shadow: 1px 17px 44px rgba(3, 2, 41, 0.07) !important;
+  border-radius: 10px !important;
+}
