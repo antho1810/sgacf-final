@@ -11,9 +11,10 @@ import Navbarside from "../Layout/Navbarside";
 
 import "./Dashboard.css";
 import "./Table.css";
+import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 
 function Dashboard() {
-  const [actas, setActas] = useState([]);
+  const [actas, setActas] = useState({});
 
   useEffect(() => {
     async function fetchData() {
@@ -22,14 +23,16 @@ function Dashboard() {
       console.log(actas);
     }
     fetchData();
-  }, []);
+  }, [actas]);
 
   const data = useMemo(
     () =>
       actas.map((acta) => ({
         numeroRef: acta.numeroRef,
         fechaCreacion: acta.fechaCreacion,
-        miembrosPresentes: acta.miembrosPresentes,
+        miembrosPresentes: acta.miembrosPresentes.map(
+          (miembro) => `${miembro.nombre} ${miembro.apellido}, `
+        ),
         lugar: acta.lugar,
         modalidad: acta.modalidad,
         estado: acta.estado,
@@ -72,8 +75,23 @@ function Dashboard() {
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => (
-                    <th className="head-column" {...column.getHeaderGroupProps}>
+                    <th
+                      key={column.numeroRef}
+                      className="head-column"
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                    >
                       {column.render("Header")}
+                      <span>
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <HiChevronDown />
+                          ) : (
+                            <HiChevronUp />
+                          )
+                        ) : (
+                          ""
+                        )}
+                      </span>
                     </th>
                   ))}
                 </tr>
@@ -94,7 +112,7 @@ function Dashboard() {
                       })}
                     </tr>
                     <tr>
-                      <td colSpan="10"></td>
+                      <td colSpan="10" className="no-borders"></td>
                     </tr>
                   </>
                 );

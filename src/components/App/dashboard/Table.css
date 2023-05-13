@@ -1,3 +1,12 @@
+:root {
+  --aprobar: #2de71d;
+  --revisar: #f6b400;
+  --compartir: #000af9;
+  --descargar: #e7661d;
+  --editar: #5b93ff;
+  --borrar: #e71d36;
+}
+
 .table-header {
   background-color: transparent;
 }
@@ -8,7 +17,107 @@
 }
 
 .row-column {
+    padding: 20px 0;
+  text-align: center !important;
   background: #fff !important;
   box-shadow: 1px 17px 44px rgba(3, 2, 41, 0.07) !important;
   border-radius: 10px !important;
 }
+
+td {
+  font-size: 12px;
+  font-weight: 400;
+  color: #030229;
+}
+
+tr td:nth-child(1) {
+  border-top-left-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
+}
+
+tr td:nth-child(2),
+tr td:nth-child(5) {
+  max-width: 100px;
+}
+tr td:nth-child(3) {
+  max-width: 130px;
+}
+tr td:nth-child(6) {
+  max-width: 90px;
+}
+tr td:nth-child(7) {
+  max-width: 120px;
+}
+
+tr td:nth-child(8) {
+  border-top-right-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}
+
+td.no-borders {
+  background: none !important;
+  box-shadow: none !important;
+  border-radius: none !important;
+  border: none !important;
+}
+
+.inProcess {
+  padding: 8px 22px;
+  background-color: #2669efe8 !important;
+  opacity: 0.8;
+  border-radius: 33px;
+}
+
+.inProcess span,
+.confirmed span {
+  color: #fff;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.confirmed {
+  padding: 8px 22px;
+  background-color: #3dda76 !important;
+  opacity: 0.8;
+  border-radius: 33px;
+}
+
+.accion-drop .rs-btn-icon {
+  background: transparent;
+}
+.accion-drop .rs-btn-icon > svg {
+  width: 28px;
+}
+
+.accion-drop ul {
+  transform: translate(-50%);
+}
+
+.accion-drop ul li:hover {
+  background: rgba(192, 213, 255, 0.1);
+}
+
+.accion-drop ul li span {
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.accion-drop .i-revisar {
+  color: var(--revisar);
+}
+.accion-drop .i-aprobar {
+  color: var(--aprobar);
+}
+.accion-drop .i-eliminar {
+  color: var(--borrar);
+}
+.accion-drop .i-editar {
+  color: var(--editar);
+}
+.accion-drop .i-descargar {
+  color: var(--descargar);
+}
+.accion-drop .i-compartir {
+  color: var(--compartir);
+}
+
