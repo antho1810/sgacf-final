@@ -14,7 +14,7 @@ import "./Table.css";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 
 function Dashboard() {
-  const [actas, setActas] = useState({});
+  const [actas, setActas] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
