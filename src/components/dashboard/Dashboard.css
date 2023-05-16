@@ -21,6 +21,10 @@
   grid-area: 1 / 2 / 2 / 3;
 }
 
+.table-header{
+ align-items: center;
+}
+
 .ct-header-actas{
   display: flex;
   flex-wrap: nowrap;

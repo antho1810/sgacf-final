@@ -1,0 +1,28 @@
+.ct-header-ca {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-start;
+  width: 100%;
+  overflow: auto;
+  margin-bottom: 33px;
+}
+
+.ct-header-ca .title {
+  font-weight: 700;
+  font-size: 24px;
+  color: #030229;
+}
+
+.ct-form{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ct-form .ct-form-inputs{
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}

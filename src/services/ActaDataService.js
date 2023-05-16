@@ -13,7 +13,10 @@ export const getActa = (id) => {
 
 // Create Acta
 export const createActa = (data) => { 
-  return http.post("/actas", data)
+  return http.post(
+    "http://sgacfi-back-mern.up.railway.app/sgacfi-api/actas",
+    data
+  );
 }
 
 // Update Acta
@@ -27,7 +30,7 @@ export const deleteActa = (id) => {
 }
 
 const findByRef = (ref) => {
-  return http.get(`/actas/ref/${ref}`)
+  return http.get(`/actas?ref=${ref}`)
 }
 
 const findByArticulo = (articulo) => {
