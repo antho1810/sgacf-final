@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://sgacfi-back-mern.up.railway.app/sgacfi-api",
+  baseURL: "https://sgacfi-back-mern.up.railway.app/sgacfi-api",
   // baseURL: "http://localhost:4000/sgacfi-api",
   headers: {
     "Content-type": "application/json",
