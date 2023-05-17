@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import ActaService from "../../../services/ActaDataService";
+import ActaService from "../../../services/ActasDataService";
+import { DateRangePicker, SelectPicker } from "rsuite";
+import { HiPlus } from "react-icons/hi";
 
 import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
 
 import "./CreateActa.css";
 
@@ -60,6 +63,10 @@ function CreateActa() {
     setActa(initialActaState);
     setSubmitted(false);
   };
+  const data = ["presencial", "virtual", "mixta"].map((item) => ({
+    label: item,
+    value: item,
+  }));
 
   return (
     <>
@@ -74,119 +81,97 @@ function CreateActa() {
 
       <Container fluid>
         <div className="ct-form">
+          {/* Container Informacion */}
           <div className="ct-form-inputs">
+            {/* Numero REF */}
             <div className="form-group">
-              <label htmlFor="numeroRef">Número de referencia</label>
+              <label htmlFor="numeroRef">Numero Ref</label>
               <input
-                type="text"
+                type="Number"
                 className="form-control"
                 id="numeroRef"
                 required
-                value={acta.numeroRef}
                 onChange={handleInputChange}
                 name="numeroRef"
               />
             </div>
-
+            {/* Modalidad */}
             <div className="form-group">
-              <label htmlFor="modalidad">modalidad</label>
+              <label htmlFor="modalidad">Modalidad</label>
               <input
                 type="text"
                 className="form-control"
                 id="modalidad"
                 required
-                value={acta.modalidad}
                 onChange={handleInputChange}
                 name="modalidad"
               />
             </div>
-
+            {/* Lugar */}
             <div className="form-group">
-              <label htmlFor="lugar">lugar</label>
+              <label htmlFor="lugar">Lugar</label>
               <input
                 type="text"
                 className="form-control"
                 id="lugar"
                 required
-                value={acta.lugar}
                 onChange={handleInputChange}
                 name="lugar"
               />
             </div>
-          </div>
-
-          <div className="ct-form-inputs">
+            {/* Hora Inicio - Fin */}
             <div className="form-group">
-              <label htmlFor="horaInicio">horaInicio</label>
-              <input
-                type="text"
-                className="form-control"
-                id="horaInicio"
-                required
-                value={acta.horaInicio}
-                onChange={handleInputChange}
-                name="horaInicio"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="horaFinal">horaFinal</label>
-              <input
-                type="text"
-                className="form-control"
-                id="horaFinal"
-                required
-                value={acta.horaFinal}
-                onChange={handleInputChange}
-                name="horaFinal"
+              <p>Hora inicio - fin</p>
+              <DateRangePicker
+                format="HH:mm"
+                ranges={[]}
+                defaultCalendarValue={[
+                  new Date("2023-02-01 00:00"),
+                  new Date("2023-12-01 23:59"),
+                ]}
               />
             </div>
           </div>
-
-          <div className="ct-form-inputs">
-            <div className="form-group">
-              <label htmlFor="desarrolloActa">desarrollo del acta</label>
-              <input
-                type="text"
-                className="form-control"
-                id="desarrolloActa"
-                required
-                value={acta.desarrolloActa}
-                onChange={handleInputChange}
-                name="desarrolloActa"
-              />
+          {/* Container Ejecucion Acta */}
+          <div className="container-fluid ct-ejec-acta">
+            <h4 className="mb-4">Cronograma del dia</h4>
+            <div className="ct-form-inputs">
+              <div className="form-group">
+                <label htmlFor="HORA">Hora</label>
+                <input
+                  type=""
+                  className="form-control"
+                  id="HORA"
+                  required
+                  onChange={handleInputChange}
+                  name="HORA"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="actividad">Actividad</label>
+                <textarea
+                  className="form-control"
+                  id="actividad"
+                  required
+                  onChange={handleInputChange}
+                  name="actividad"
+                />
+              </div>
+              <div className="form-group">
+                <Button className="plus-item">
+                  <HiPlus/>
+                </Button>
+              </div>
             </div>
           </div>
+          {/* Container Tabla Participante */}
+          <div className="table"></div>
 
-          <div className="ct-form-inputs">
-            <div className="form-group">
-              <label htmlFor="articulos">articulos</label>
-              <input
-                type="text"
-                className="form-control"
-                id="articulos"
-                required
-                value={acta.articulos}
-                onChange={handleInputChange}
-                name="articulos"
-              />
-            </div>
-          </div>
+          {/* Container VOTOS */}
+          <div className="ct-group-votos"></div>
 
-          <div className="ct-form-inputs">
-            <div className="form-group">
-              <label htmlFor="docsSoporte">Adjuntar documentos</label>
-              <input
-                type="text"
-                className="form-control"
-                id="docsSoporte"
-                required
-                value={acta.docsSoporte}
-                onChange={handleInputChange}
-                name="docsSoporte"
-              />
-            </div>
-          </div>
+          {/* Container Adjuntar documentos */}
+          <div className="ct-form-doc"></div>
         </div>
       </Container>
 

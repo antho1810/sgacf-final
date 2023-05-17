@@ -9,23 +9,25 @@
 
 .table-header {
   background-color: transparent;
+  border: transparent;
+  text-align: center;
 }
 
 .table-header .head-column {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .row-column {
-    padding: 20px 0;
-  text-align: center !important;
-  background: #fff !important;
+  padding: 20px 0;
+  text-align: center;
   box-shadow: 1px 17px 44px rgba(3, 2, 41, 0.07) !important;
-  border-radius: 10px !important;
+  background: #fff !important;
+  border: transparent !important;
 }
 
 td {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   color: #030229;
 }
@@ -33,18 +35,22 @@ td {
 tr td:nth-child(1) {
   border-top-left-radius: 5px !important;
   border-bottom-left-radius: 5px !important;
+  width: 60px;
 }
 
 tr td:nth-child(2),
 tr td:nth-child(5) {
-  max-width: 100px;
+  width: 100px;
 }
+
 tr td:nth-child(3) {
   max-width: 130px;
 }
+
 tr td:nth-child(6) {
   max-width: 90px;
 }
+
 tr td:nth-child(7) {
   max-width: 120px;
 }
@@ -62,10 +68,15 @@ td.no-borders {
 }
 
 .inProcess {
-  padding: 8px 22px;
   background-color: #2669efe8 !important;
-  opacity: 0.8;
+}
+
+.inProcess,
+.confirmed {
+  padding: 8px 0;
+  width: 77%;
   border-radius: 33px;
+  opacity: 0.9;
 }
 
 .inProcess span,
@@ -76,21 +87,19 @@ td.no-borders {
 }
 
 .confirmed {
-  padding: 8px 22px;
-  background-color: #3dda76 !important;
-  opacity: 0.8;
-  border-radius: 33px;
+  background-color: #02b308 !important;
 }
 
 .accion-drop .rs-btn-icon {
   background: transparent;
 }
+
 .accion-drop .rs-btn-icon > svg {
   width: 28px;
 }
 
 .accion-drop ul {
-  transform: translate(-50%);
+  transform: translateX(-50%);
 }
 
 .accion-drop ul li:hover {
@@ -102,22 +111,48 @@ td.no-borders {
   margin-left: 8px;
 }
 
-.accion-drop .i-revisar {
+.accion-drop ul li.i-revisar {
   color: var(--revisar);
 }
-.accion-drop .i-aprobar {
+
+.accion-drop ul li.i-aprobar {
   color: var(--aprobar);
 }
-.accion-drop .i-eliminar {
+
+.accion-drop ul li.i-borrar {
   color: var(--borrar);
 }
-.accion-drop .i-editar {
-  color: var(--editar);
-}
-.accion-drop .i-descargar {
+
+.accion-drop ul li.i-descargar {
   color: var(--descargar);
 }
-.accion-drop .i-compartir {
+
+.accion-drop ul li.i-compartir {
   color: var(--compartir);
 }
 
+.accion-drop ul li.i-editar {
+  color: var(--editar);
+}
+
+.ct-search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.ct-search input[type="search"] {
+  border: solid 3px #fff;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  font-size: 1em;
+  height: 2.8em;
+  padding: 0.5rem;
+  width: 30vw;
+  z-index: 1;
+}
