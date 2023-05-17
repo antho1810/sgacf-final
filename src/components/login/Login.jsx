@@ -14,8 +14,9 @@ const Login = () => {
   const [data, setData] = useState({ email: "", contrasena: "" });
   const [error, setError] = useState("");
 
-  const baseUrl =
-    "https://sgacfi-back-mern.up.railway.app/sgacfi-api/auth/ingreso";
+//   const baseUrl =
+//     "https://sgacfi-back-mern.up.railway.app/sgacfi-api/auth/ingreso";
+  const baseUrl = "https://sgacfi-back-mern.up.railway.app/sgacfi-api/auth/ingreso";
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
