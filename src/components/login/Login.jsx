@@ -14,7 +14,7 @@ const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
-  const baseUrl = "https://sotware-sgacfi.netlify.app/sgacfi-api/auth/ingreso";
+  const baseUrl = "https://sgacfi-back-mern.up.railway.app/sgacfi-api/auth/ingreso";
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
