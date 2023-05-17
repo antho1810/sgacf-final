@@ -3,7 +3,7 @@ import { NavLink, Navigate, Outlet, redirect } from "react-router-dom";
 
 import Dashboard from "../components/dashboard/Dashboard";
 import CreateActa from "../components/actas/createActa/CreateActa";
-import UpdateActa from "../services/ActaDataService";
+import ActaService from "../services/ActaDataService";
 import CreateParticipante from "../components/participantes/createParticipante/CreateParticipante";
 import UpdateParticipante from "../components/participantes/updateParticipante/UpdateParticipante";
 

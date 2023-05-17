@@ -1,82 +1,80 @@
-.main .row .col {
-  padding: 0;
-  margin: 0;
-  height: 100vh;
+.main .row .col{
+    padding: 0;
+    margin: 0;
+    height: 100vh; 
 }
 
-.img-login {
-  background-image: url("./tiburon.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
+.img-login{
+    background-image: url('./tiburon.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
 }
 
-.ct-main .ct-logo {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+.ct-main .ct-logo{
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
 }
 
-.ct-logo .form-image {
-  position: absolute;
-  top: 5%;
-  right: 8%;
-  width: 99px;
-  height: 98px;
+.ct-logo .form-image{
+    position: absolute;
+    top: 5%;
+    right: 8%;
+    width: 99px;
+    height: 98px;
 }
 
 .ct-form{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
 
 .ct-form form .container-fluid{
-  padding-left: 0;
-  padding-right: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .form-label{
-  color: #4a5568;
-  font-size: 1rem;
-  font-weight: 400;
+    color: #4A5568;
+    font-size: 1rem;
+    font-weight: 400;
 }
 
 .form-control{
-  border: 1px solid #E8e8e8;
-  border-radius: 5px;
-  width: 350px;
-  height: 47px;
-  font-size: 14px;
-  font-weight: 400;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    width: 350px;
+    height: 47px;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .error_msg{
-  width: 360px;
-  padding: 15px 10px;
-  font-size: 14px;
-  background-color: #f34646;
-  color: white;
-  border-radius: 5px;
-  text-align: center;
+    width: 370px;
+	padding: 15px 10px;
+	font-size: 14px;
+	background-color: #f34646;
+	color: white;
+	border-radius: 5px;
+	text-align: center;
 }
 
 .form-btn{
-  width: 347px;
-  background: #04c45c;
-  border: none;
-  border-radius: 5px;
-  padding: 15px 16px;
-  color: #fff;
-  font-weight: 700;
-  font-size: 1rm;
+    width: 347px;
+    background: #04C45C;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 16px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
 }
 
 .form-btn:hover{
-  background-color: #039648;
+    background-color: #039648;
 }
-

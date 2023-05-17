@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
-import { useSortBy, useTable } from "react-table";
+import { useSortBy, useTable, useGlobalFilter } from "react-table";
 
 import ActaService from "../../services/ActaDataService";
-import ParticipantesServices from "../../services/ParticipantesDataServices";
+import { useLoaderData, NavLink } from "react-router-dom";
 
 import { COLUMNS } from "./columns";
 
@@ -19,8 +19,8 @@ import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 import "./Dashboard.css";
 import "./Table.css";
 import CreateActa from "../actas/createActa/CreateActa";
-import { useLoaderData } from "react-router-dom";
-import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable";
+import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable.jsx";
+import GlobalActasFilter from "./GlobalFilter";
 
 function Dashboard() {
   const responseActas = useLoaderData();
@@ -28,7 +28,7 @@ function Dashboard() {
 
   const data = useMemo(
     () =>
-    responseActas.map((acta) => ({
+      responseActas.map((acta) => ({
         numeroRef: acta.numeroRef,
         fechaCreacion: acta.fechaCreacion,
         miembrosPresentes: acta.miembrosPresentes.map(
@@ -47,11 +47,21 @@ function Dashboard() {
       columns: COLUMNS,
       data,
     },
+    useGlobalFilter,
     useSortBy
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance;
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    setGlobalFilter
+  } = tableInstance;
+
+  const { globalFilter } = state;
 
   return (
     <>
@@ -60,9 +70,11 @@ function Dashboard() {
           <h2>Lista de actas</h2>
         </div>
         <div>
-          <Button className="plus-acta-btn">+ Añadir acta</Button>
+          <Button className="plus-acta-btn" as={NavLink} to="crear-acta">+ Añadir acta</Button>
         </div>
       </div>
+
+      <GlobalActasFilter filter={globalFilter} setFilter={setGlobalFilter} />
 
       <Table {...getTableProps()}>
         <thead className="table-header">
@@ -112,14 +124,15 @@ function Dashboard() {
         </tbody>
       </Table>
 
-      <ParticipantesTable/>
+      <ParticipantesTable />
     </>
   );
 }
 
 export const dashboardLoader = async () => {
   const responseActas = await ActaService.getAllActas();
-  return responseActas.data
+  console.log(responseActas.data)
+  return responseActas.data;
 };
 
 export default Dashboard;
