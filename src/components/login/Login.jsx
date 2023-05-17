@@ -11,9 +11,11 @@ import Button from "react-bootstrap/Button";
 import logo from "./logo-unac.png";
 
 const Login = () => {
-  const [data, setData] = useState({ email: "", password: "" });
+  const [data, setData] = useState({ email: "", contrasena: "" });
   const [error, setError] = useState("");
 
+//   const baseUrl =
+//     "https://sgacfi-back-mern.up.railway.app/sgacfi-api/auth/ingreso";
   const baseUrl = "https://sgacfi-back-mern.up.railway.app/sgacfi-api/auth/ingreso";
 
   const handleChange = ({ currentTarget: input }) => {
