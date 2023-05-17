@@ -1,7 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-export const ActaDetails = () => {
-  return (
-    <div>ActaDetails</div>
-  )
+const ActaDetails = () => {
+    return (
+        <div>
+            
+        </div>
+    );
 }
+
+export default ActaDetails;

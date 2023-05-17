@@ -1,8 +1,8 @@
-.main{
-  background-color: #F7F7F8;
+.main {
+  background-color: #f7f7f8;
 }
 
-.grid-global-content{
+.grid-global-content {
   display: grid;
   grid-template-columns: 218px 1fr;
   grid-template-rows: 1fr;
@@ -11,21 +11,18 @@
   padding: 0 0;
 }
 
-.ct-sidenav{
+.ct-sidenav {
   grid-area: 1 / 1 / 2 / 2;
   background: #fff;
+  position: fixed;
 }
 
-.ct-main-content{
+.ct-main-content {
   padding: 36px 30px;
   grid-area: 1 / 2 / 2 / 3;
 }
 
-.table-header{
- align-items: center;
-}
-
-.ct-header-actas{
+.ct-header-actas {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
@@ -37,17 +34,18 @@
   margin-bottom: 33px;
 }
 
-.ct-header-actas .title-actas{
+.ct-header-actas .title-actas {
   font-weight: 700;
   font-size: 24px;
   color: #030229;
 }
 
-.ct-header-actas .plus-acta-btn{
+.ct-header-actas .plus-acta-btn {
   padding: 10px 27px;
   border-radius: 10px;
 }
 
-
-
-
+.custom-dw-btn {
+  padding: 5px 5px;
+  background: transparent;
+}
