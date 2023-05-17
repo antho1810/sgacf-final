@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ActaService from "../../../services/ActaDataService";
+import ActaService from "../../../services/ActasDataService";
 
 // <th># ref</th>
 {

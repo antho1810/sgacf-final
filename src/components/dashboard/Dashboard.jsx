@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useSortBy, useTable, useGlobalFilter } from "react-table";
 
-import ActaService from "../../services/ActaDataService";
+import ActaService from "../../services/ActasDataService";
 import { useLoaderData, NavLink } from "react-router-dom";
 
 import { COLUMNS } from "./columns";
@@ -19,7 +19,7 @@ import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 import "./Dashboard.css";
 import "./Table.css";
 import CreateActa from "../actas/createActa/CreateActa";
-import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable.jsx";
+import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable";
 import GlobalActasFilter from "./GlobalFilter";
 
 function Dashboard() {

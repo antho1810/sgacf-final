@@ -15,14 +15,14 @@ const renderIconButton = (props, ref) => {
 }
 
 export const COLUMNS = [
-    { Header: 'nombre', accessor: 'nombre'},
+    { Header: 'Nombre', accessor: 'nombre'},
 
     {
-      Header: 'apellido',
+      Header: 'Apellido',
       accessor: 'apellido'
     },
     {
-      Header: 'cargo',
+      Header: 'Cargo',
       accessor: 'cargo'
     },
     {

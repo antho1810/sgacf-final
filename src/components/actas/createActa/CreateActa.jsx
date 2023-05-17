@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ActaService from "../../../services/ActaDataService";
+import ActaService from "../../../services/ActasDataService";
 import { DateRangePicker, SelectPicker } from "rsuite";
 import { HiPlus } from "react-icons/hi";
 

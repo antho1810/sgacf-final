@@ -1,22 +1,23 @@
 import "./App.css";
-import {
-  createBrowserRouter,
+import { 
+  createBrowserRouter,  
   Route,
   createRoutesFromElements,
   RouterProvider,
-  Navigate,
+  Navigate
 } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "rsuite/dist/rsuite.min.css";
+import "rsuite/dist/rsuite.min.css"
 
 import Login from "./components/login/Login";
-import RootLayout from "./routesLayouts/RootLayout";
+import RootLayout from "./routesLayouts/RootLayout"
 import Dashboard, { dashboardLoader } from "./components/dashboard/Dashboard";
 import UpdateActa from "./components/actas/updateActa/UpdateActa";
 import CreateActa from "./components/actas/createActa/CreateActa";
+import CreateParticipante from "./components/participantes/createParticipante/CreateParticipante";
 
-const user = localStorage.getItem("token");
+const user = localStorage.getItem("token")
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,10 @@ const router = createBrowserRouter(
           <Route index element={<Dashboard />} loader={dashboardLoader}></Route>
 
           <Route path="crear-acta" element={<CreateActa />}></Route>
+          <Route
+            path="crear-participante"
+            element={<CreateParticipante />}
+          ></Route>
           <Route path="actualizar-acta" element={<UpdateActa />}></Route>
         </Route>
       )}
@@ -37,7 +42,9 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router}/>
+  );
 }
 
 export default App;
