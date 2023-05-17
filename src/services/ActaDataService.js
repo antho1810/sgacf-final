@@ -1,5 +1,5 @@
 import http from "../http-common.js"
-// import axios from "axios"
+import axios from "axios"
 
 // Get All Actas
 export const getAllActas = () => {
