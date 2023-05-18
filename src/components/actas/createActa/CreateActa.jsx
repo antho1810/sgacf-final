@@ -75,7 +75,7 @@ function CreateActa() {
           <h2>Crear una nueva acta</h2>
         </div>
         <div className="subtitle">
-          <span>Rellene los campos y comience a construit una nueva acta</span>
+          <span>Rellene los campos y comience a construir una nueva acta</span>
         </div>
       </div>
 

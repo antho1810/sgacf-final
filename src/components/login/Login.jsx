@@ -11,7 +11,7 @@ import Button from "react-bootstrap/Button";
 import logo from "./logo-unac.png";
 
 const Login = () => {
-  const [data, setData] = useState({ email: "", contrasena: "" });
+  const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
 //   const baseUrl =
@@ -77,9 +77,9 @@ const Login = () => {
                   <Form.Label className="form-label">Password</Form.Label>
                   <Form.Control
                     type="password"
-                    name="contrasena"
+                    name="password"
                     onChange={handleChange}
-                    value={data.contrasena}
+                    value={data.password}
                     required
                   />
                 </Form.Group>

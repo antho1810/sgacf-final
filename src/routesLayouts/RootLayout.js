@@ -80,11 +80,12 @@ function Navbarside() {
                       <Nav.Item
                         onClick={() => {
                           const userToken = localStorage.getItem("token");
-
                           if (userToken) {
                             localStorage.removeItem("token");
                             return redirect('/login');
                           }
+                          // console.log(userToken)
+                        
                         }}
                         eventKey="4"
                         icon={<ImExit />}
