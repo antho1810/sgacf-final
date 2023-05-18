@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ActaService from "../../../services/ActasDataService";
-import { DateRangePicker, SelectPicker } from "rsuite";
+
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 import { HiPlus } from "react-icons/hi";
 
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+
+import ParticipantesTableCreate from "./ParticipantesTableCreate";
+import votosData from "./votosData";
 
 import "./CreateActa.css";
 
@@ -63,10 +73,6 @@ function CreateActa() {
     setActa(initialActaState);
     setSubmitted(false);
   };
-  const data = ["presencial", "virtual", "mixta"].map((item) => ({
-    label: item,
-    value: item,
-  }));
 
   return (
     <>
@@ -75,104 +81,156 @@ function CreateActa() {
           <h2>Crear una nueva acta</h2>
         </div>
         <div className="subtitle">
-          <span>Rellene los campos y comience a construir una nueva acta</span>
+          <span>Rellene los campos y comience a construit una nueva acta</span>
         </div>
       </div>
 
       <Container fluid>
-        <div className="ct-form">
-          {/* Container Informacion */}
-          <div className="ct-form-inputs">
-            {/* Numero REF */}
-            <div className="form-group">
-              <label htmlFor="numeroRef">Numero Ref</label>
-              <input
-                type="Number"
-                className="form-control"
-                id="numeroRef"
-                required
-                onChange={handleInputChange}
-                name="numeroRef"
-              />
-            </div>
-            {/* Modalidad */}
-            <div className="form-group">
-              <label htmlFor="modalidad">Modalidad</label>
-              <input
+        <Row className="mb-3">
+          <Col
+            style={{
+              height: "80px",
+            }}
+          >
+            <Form.Group>
+              <Form.Label>Número de referencia</Form.Label>
+              <Form.Control
                 type="text"
-                className="form-control"
-                id="modalidad"
-                required
-                onChange={handleInputChange}
-                name="modalidad"
+                placeholder="Ingrese numero de referencia"
               />
-            </div>
-            {/* Lugar */}
-            <div className="form-group">
-              <label htmlFor="lugar">Lugar</label>
-              <input
+            </Form.Group>
+          </Col>
+          <Col
+            style={{
+              height: "80px",
+            }}
+          >
+            <Form.Group>
+              <Form.Label>Lugar</Form.Label>
+              <Form.Control
                 type="text"
-                className="form-control"
-                id="lugar"
-                required
-                onChange={handleInputChange}
-                name="lugar"
+                placeholder="Ingrese el lugar de la reunión"
               />
-            </div>
-            {/* Hora Inicio - Fin */}
-            <div className="form-group">
-              <p>Hora inicio - fin</p>
-              <DateRangePicker
-                format="HH:mm"
-                ranges={[]}
-                defaultCalendarValue={[
-                  new Date("2023-02-01 00:00"),
-                  new Date("2023-12-01 23:59"),
-                ]}
-              />
-            </div>
-          </div>
-          {/* Container Ejecucion Acta */}
-          <div className="container-fluid ct-ejec-acta">
-            <h4 className="mb-4">Cronograma del dia</h4>
-            <div className="ct-form-inputs">
-              <div className="form-group">
-                <label htmlFor="HORA">Hora</label>
-                <input
-                  type=""
-                  className="form-control"
-                  id="HORA"
-                  required
-                  onChange={handleInputChange}
-                  name="HORA"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="actividad">Actividad</label>
-                <textarea
-                  className="form-control"
-                  id="actividad"
-                  required
-                  onChange={handleInputChange}
-                  name="actividad"
-                />
-              </div>
-              <div className="form-group">
-                <Button className="plus-item">
-                  <HiPlus/>
-                </Button>
-              </div>
-            </div>
-          </div>
-          {/* Container Tabla Participante */}
-          <div className="table"></div>
+            </Form.Group>
+          </Col>
+          <Col
+            style={{
+              height: "80px",
+            }}
+          >
+            <Form.Label>Modalidad</Form.Label>
+            <Form.Select aria-label="Tipo de modalidad">
+              <option>Seleccione</option>
+              <option value="presencial">Presencial</option>
+              <option value="virtual">Virtual</option>
+              <option value="mixta">Mixta</option>
+            </Form.Select>
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100px",
+            }}
+          >
+            <Form.Label>Hora de inicio</Form.Label>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker className="time-picker-small" />
+            </LocalizationProvider>
+          </Col>
+          <Col
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100px",
+            }}
+          >
+            <Form.Label>Hora de finalización</Form.Label>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker className="time-picker-small" />
+            </LocalizationProvider>
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <h3>Cronograma del acta</h3>
+        </Row>
+      </Container>
+      <Container>
+        <Row className="mb-3">
+          <Col
+            style={{
+              height: "200px",
+            }}
+            xs={3}
+          >
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker label="Hora" className="time-picker-small" />
+            </LocalizationProvider>
+          </Col>
+          <Col
+            style={{
+              height: "200px",
+            }}
+            xs={8}
+          >
+            <Form.Group>
+              <textarea
+                name="actividad"
+                id="actividad"
+                cols="75"
+                rows="4"
+                placeholder="Actividad realizada"
+              ></textarea>
+            </Form.Group>
+          </Col>
+          <Col xs={1}>
+            <Button size="lg">
+              <HiPlus></HiPlus>
+            </Button>
+          </Col>
+        </Row>
+      </Container>
 
-          {/* Container VOTOS */}
-          <div className="ct-group-votos"></div>
+      <Container>
+        {/* TABLA PARTICIPANTES */}
+        <Row>
+          <ParticipantesTableCreate></ParticipantesTableCreate>
+        </Row>
+        <Row style={{textAlign: "center"}}>
+          <Col>
+            <Button variant="primary">Añadir a miembros presentes</Button>
+          </Col>
+          <Col>
+            <Button variant="danger">Añadir a miembros ausentes</Button>
+          </Col>
+          <Col>
+            <Button variant="warning">Añadir a miembros invitados</Button>
+          </Col>
+        </Row>
+      </Container>
 
-          {/* Container Adjuntar documentos */}
-          <div className="ct-form-doc"></div>
-        </div>
+      <Container>
+        <Row>
+          <Col>
+            <Form.Label>Voto</Form.Label>
+            <Form.Select aria-label="Tipo de voto a seleccionar">
+
+              <option value="">Seleccione</option>
+              {votosData.map((voto) => {
+
+                return voto.elementos.map(elemento => {
+                  console.log(elemento.tipo)
+                  return (
+                    <option value={elemento.tipo}>{elemento.tipo}</option>
+                  )
+                  })
+                
+              })}
+            </Form.Select>
+          </Col>
+        </Row>
       </Container>
 
       <div className="submit-form">
@@ -185,53 +243,8 @@ function CreateActa() {
           </div>
         ) : (
           <div>
-            {/*
-          estado: response.estado, */}
-
-            {/* AQUI VA UNA TABLA PARA SELECCIONAR LOS MIEMBROS*/}
-            {/* <div className="form-group">
-            <label htmlFor="miembrosPresentes">miembrosPresentes</label>
-            <input
-              type="text"
-              className="form-control"
-              id="miembrosPresentes"
-              required
-              value={acta.miembrosPresentes}
-              onChange={handleInputChange}
-              name="miembrosPresentes"
-            />
-          </div> */}
-
-            {/* AQUI VA UNA TABLA PARA SELECCIONAR LOS MIEMBROS*/}
-            {/* <div className="form-group">
-            <label htmlFor="miembrosPresentes">miembrosPresentes</label>
-            <input
-              type="text"
-              className="form-control"
-              id="miembrosPresentes"
-              required
-              value={acta.miembrosPresentes}
-              onChange={handleInputChange}
-              name="miembrosPresentes"
-            />
-          </div> */}
-
-            {/* AQUI VA UNA TABLA PARA SELECCIONAR LOS MIEMBROS*/}
-            {/* <div className="form-group">
-            <label htmlFor="miembrosPresentes">miembrosPresentes</label>
-            <input
-              type="text"
-              className="form-control"
-              id="miembrosPresentes"
-              required
-              value={acta.miembrosPresentes}
-              onChange={handleInputChange}
-              name="miembrosPresentes"
-            />
-          </div> */}
-
             <button onClick={saveActa} className="btn btn-success">
-              Submit
+              Registrar acta
             </button>
           </div>
         )}
