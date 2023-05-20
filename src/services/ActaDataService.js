@@ -8,7 +8,7 @@ export const getAllActas = () => {
 
 // Get Acta
 export const getActa = (id) => { 
-  return http.get(`/actas/id/${id}`)
+  return http.get(`http://sgacfi-back-mern.up.railway.app/sgacfi-api/actas/id/${id}`, id)
 }
 
 // Create Acta

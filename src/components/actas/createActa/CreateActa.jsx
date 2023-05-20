@@ -32,6 +32,8 @@ function CreateActa() {
   const [acta, setActa] = useState(initialActaState);
   const [submitted, setSubmitted] = useState(false);
 
+  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setActa({ ...acta, [name]: value });
@@ -95,6 +97,7 @@ function CreateActa() {
             <Form.Group>
               <Form.Label>Número de referencia</Form.Label>
               <Form.Control
+                className="me-2"
                 type="text"
                 placeholder="Ingrese numero de referencia"
               />
@@ -108,6 +111,7 @@ function CreateActa() {
             <Form.Group>
               <Form.Label>Lugar</Form.Label>
               <Form.Control
+                className="me-2"
                 type="text"
                 placeholder="Ingrese el lugar de la reunión"
               />
@@ -198,7 +202,7 @@ function CreateActa() {
         <Row>
           <ParticipantesTableCreate></ParticipantesTableCreate>
         </Row>
-        <Row style={{textAlign: "center"}}>
+        <Row style={{ textAlign: "center" }}>
           <Col>
             <Button variant="primary">Añadir a miembros presentes</Button>
           </Col>
@@ -216,17 +220,12 @@ function CreateActa() {
           <Col>
             <Form.Label>Voto</Form.Label>
             <Form.Select aria-label="Tipo de voto a seleccionar">
-
               <option value="">Seleccione</option>
               {votosData.map((voto) => {
-
-                return voto.elementos.map(elemento => {
-                  console.log(elemento.tipo)
-                  return (
-                    <option value={elemento.tipo}>{elemento.tipo}</option>
-                  )
-                  })
-                
+                return voto.elementos.map((elemento) => {
+                  console.log(elemento.tipo);
+                  return <option value={elemento.tipo}>{elemento.tipo}</option>;
+                });
               })}
             </Form.Select>
           </Col>

@@ -23,16 +23,7 @@ div.container-fluid{
 .ct-inputs{
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 25px;
   align-items: center;
   justify-content: flex-start;
-}
-
-.time-picker-small{
-  width: 70%;
-  height: 10px;
-}
-
-.time-picker-short{
-  width: 80px;
 }
