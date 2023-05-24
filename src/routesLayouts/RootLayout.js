@@ -28,7 +28,7 @@ function Navbarside() {
       const response = await UserService.getUser("646b9a3cf31d14ee45504c32");
       getUser(response.data);
       console.log(response.data);
-      console.log(acta);
+      console.log(user);
     };
     fetchData();
   }, []);
