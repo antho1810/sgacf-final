@@ -16,6 +16,7 @@ import Dashboard, { dashboardLoader } from "./components/dashboard/Dashboard";
 import UpdateActa from "./components/actas/updateActa/UpdateActa";
 import CreateActa from "./components/actas/createActa/CreateActa";
 import CreateParticipante from "./components/participantes/createParticipante/CreateParticipante";
+import ActaDetails from "./components/actas/actaDetails/ActaDetails";
 
 const user = localStorage.getItem("token")
 
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
         <Route path="/" exact element={<RootLayout />}>
           <Route index element={<Dashboard />} loader={dashboardLoader}></Route>
 
+          <Route path="details-acta" element={<ActaDetails />}></Route>
           <Route path="crear-acta" element={<CreateActa />}></Route>
           <Route
             path="crear-participante"

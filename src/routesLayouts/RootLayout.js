@@ -1,11 +1,12 @@
-import React from "react";
-import { NavLink, Navigate, Outlet, redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, Navigate, Outlet, redirect, useNavigate } from "react-router-dom";
 
 import Dashboard from "../components/dashboard/Dashboard";
 import CreateActa from "../components/actas/createActa/CreateActa";
 import UpdateActa from "../services/ActasDataService";
 import CreateParticipante from "../components/participantes/createParticipante/CreateParticipante";
 import UpdateParticipante from "../components/participantes/updateParticipante/UpdateParticipante";
+import UserService from "../services/UserDataServices";
 
 import Container from "react-bootstrap/Container";
 
@@ -21,11 +22,22 @@ import { HiDocumentAdd, HiDocumentText } from "react-icons/hi";
 import "./Navbarside.css";
 
 function Navbarside() {
+  const [user, getUser] = useState({})
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await UserService.getUser("646b9a3cf31d14ee45504c32");
+      getUser(response.data);
+      console.log(response.data);
+      console.log(acta);
+    };
+    fetchData();
+  }, []);
   const handleLogout = () => {
     const userToken = localStorage.getItem("token");
 
     if (userToken) {
       localStorage.removeItem("token");
+      // navigate( "/login", {replace:true});
       return <Navigate to="/login" replace={true} />;
     }
   };
@@ -82,11 +94,13 @@ function Navbarside() {
                           const userToken = localStorage.getItem("token");
                           if (userToken) {
                             localStorage.removeItem("token");
-                            return redirect('/login');
+                            // return redirect('/login');
+                            window.location.reload();
                           }
                           // console.log(userToken)
-                        
+
                         }}
+                        // onClick={handleLogout}
                         eventKey="4"
                         icon={<ImExit />}
                       >
