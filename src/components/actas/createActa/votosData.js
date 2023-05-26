@@ -68,7 +68,7 @@ export const votosData = [
       },
       {
         nombre: 'materiaLicei',
-        etiqueta: 'Materia Licei',
+        etiqueta: 'Materia cursada',
         tipo: 'text',
       },
       {

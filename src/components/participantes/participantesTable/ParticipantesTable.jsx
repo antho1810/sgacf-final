@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useMemo } from "react";
 import ParticipantesService from "../../../services/ParticipantesDataServices";
-import { useSortBy, useTable, useGlobalFilter } from "react-table";
+import {
+  useSortBy,
+  useTable,
+  useGlobalFilter,
+  usePagination,
+} from "react-table";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
@@ -32,20 +37,39 @@ const ParticipantesTable = () => {
     [participantes]
   );
 
-  const tableInstance = useTable(
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    setGlobalFilter,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+  } = useTable(
     {
       columns: COLUMNS,
       data,
+      initialState: {
+        pageIndex: 0,
+        pageSize: 5,
+      }, // Estado de la paginación
     },
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    usePagination
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,  state,
-    setGlobalFilter } =
-    tableInstance;
+  // const  = tableInstance;
 
-   const { globalFilter } = state;
+  const { pageIndex, pageSize, globalFilter } = state;
 
   return (
     <>
@@ -54,7 +78,13 @@ const ParticipantesTable = () => {
           <h2>Lista de participantes</h2>
         </div>
         <div>
-          <Button as={NavLink} to="crear-participante" className="plus-acta-btn">+ Añadir participante</Button>
+          <Button
+            as={NavLink}
+            to="crear-participante"
+            className="plus-acta-btn"
+          >
+            + Añadir participante
+          </Button>
         </div>
       </div>
       <GlobalActasFilter filter={globalFilter} setFilter={setGlobalFilter} />
@@ -105,6 +135,58 @@ const ParticipantesTable = () => {
           })}
         </tbody>
       </Table>
+      <div
+        className="container-fluid d-flex justify-content-end mb-4"
+        style={{ gap: "10px" }}
+      >
+        <div>
+          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            {"<<"}
+          </button>{" "}
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            {"<"}
+          </button>{" "}
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            {">"}
+          </button>{" "}
+          <button
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+          >
+            {">>"}
+          </button>{" "}
+          <span>
+            Página{" "}
+            <strong>
+              {pageIndex + 1} de {pageOptions.length}
+            </strong>{" "}
+          </span>
+          <span>
+            | Ir a la página:{" "}
+            <input
+              type="number"
+              defaultValue={pageIndex + 1}
+              onChange={(e) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                gotoPage(page);
+              }}
+              style={{ width: "50px" }}
+            />
+          </span>{" "}
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+            }}
+          >
+            {[5, 10, 15, 20].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Mostrar {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
     </>
   );
 };

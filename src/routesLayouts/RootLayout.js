@@ -28,7 +28,7 @@ function Navbarside() {
       const response = await UserService.getUser("646b9a3cf31d14ee45504c32");
       getUser(response.data);
       console.log(response.data);
-      console.log(acta);
+      console.log(user);
     };
     fetchData();
   }, []);
@@ -37,7 +37,7 @@ function Navbarside() {
 
     if (userToken) {
       localStorage.removeItem("token");
-      // navigate( "/login", {replace:true});
+      navigate( "/login", {replace:true});
       return <Navigate to="/login" replace={true} />;
     }
   };
@@ -94,8 +94,8 @@ function Navbarside() {
                           const userToken = localStorage.getItem("token");
                           if (userToken) {
                             localStorage.removeItem("token");
-                            // return redirect('/login');
                             window.location.reload();
+                            // return redirect('/login');
                           }
                           // console.log(userToken)
 
@@ -121,7 +121,7 @@ function Navbarside() {
                   />
                   <div className="ct-info-user">
                     <h4>Jhon Niño</h4>
-                    <span>Decano FI - UNAC</span>
+                    <span> FI - UNAC</span>
                   </div>
                 </div>
               </div>

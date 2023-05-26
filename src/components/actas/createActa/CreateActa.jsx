@@ -26,6 +26,7 @@ const Row = ({ id, onAddRow, onDeleteRow }) => {
 
   return (
     <div className="row mb-4 d-flex align-items-center">
+    
       <div className="col-auto" style={{ display: "flex", flexDirection: "column" }}>
         <Form.Label>Hora</Form.Label>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -170,6 +171,14 @@ function CreateActa() {
   return (
     <>
       <div className="container-fluid">
+        <div className="ct-header-ca">
+          <div className="title">
+            <h2>Crear una nueva Acta</h2>
+          </div>
+          <div className="subtitle">
+            <span>Rellene los campos y cree un nuevo participante</span>
+          </div>
+        </div>
         <div className="row mb-4">
           <div className="col-auto">
             <Form.Label>Numero de referencia</Form.Label>
@@ -212,7 +221,7 @@ function CreateActa() {
           </div>
         </div>
 
-{/* Cronograma */}
+        {/* Cronograma */}
         <div className="container-fluid">
           <div className="row mb-4">
             <h3>Cronograma del acta</h3>

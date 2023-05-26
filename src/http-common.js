@@ -9,6 +9,6 @@ export default axios.create({
     headers: {
         "Content-Type": "application/json",
 //         "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NjZiMmI1MTE0NzQ3ZjFlZjBmMzlkMSIsImlhdCI6MTY4NDQ1MjAyMSwiZXhwIjoxNjg1MDU2ODIxfQ.tzQlsZfeunGYl9U2QGncCCQpmLKSpyMC1OIpWkFDAkA"
-        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NjY2ZjRiMGM5NDY2YzNmZTdmODdhYyIsImlhdCI6MTY4NDQzNDc2NCwiZXhwIjoxNjg1MDM5NTY0fQ.xSTLtRQ4PB6eOLbn9vHgHbh1iwgJVL_BtngPu8auEgU"
+        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmZkNTQxMDAwMDc4ODUzZTQzMTA3YSIsImlhdCI6MTY4NTA1MDY4OSwiZXhwIjoxNjg1NjU1NDg5fQ.6WMudqcvl2fSKIxOxe-wgQ6rhnsdAwmqsvHrDV1FQOY"
     }
 })
