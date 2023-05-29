@@ -120,8 +120,8 @@ function Navbarside() {
                     style={{ width: "45px" }}
                   />
                   <div className="ct-info-user">
-                    <h4>Jhon Niño</h4>
-                    <span>Decano FI - UNAC</span>
+                    <h4>{user.nombre} +' '+{user.apellido}</h4>
+                    <span>{user.cargo}+' '+ FI - UNAC</span>
                   </div>
                 </div>
               </div>
