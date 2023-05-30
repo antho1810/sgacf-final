@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, Navigate, Outlet, redirect, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, Outlet } from "react-router-dom";
 
-import Dashboard from "../components/dashboard/Dashboard";
-import CreateActa from "../components/actas/createActa/CreateActa";
-import UpdateActa from "../services/ActasDataService";
-import CreateParticipante from "../components/participantes/createParticipante/CreateParticipante";
-import UpdateParticipante from "../components/participantes/updateParticipante/UpdateParticipante";
+// import Dashboard from "../components/dashboard/Dashboard";
+// import CreateActa from "../components/actas/createActa/CreateActa";
+// import UpdateActa from "../services/ActasDataService";
+// import CreateParticipante from "../components/participantes/createParticipante/CreateParticipante";
+// import UpdateParticipante from "../components/participantes/updateParticipante/UpdateParticipante";
 import UserService from "../services/UserDataServices";
+
+import jwtDecode from "jwt-decode";
 
 import Container from "react-bootstrap/Container";
 
@@ -22,24 +24,44 @@ import { HiDocumentAdd, HiDocumentText } from "react-icons/hi";
 import "./Navbarside.css";
 
 function Navbarside() {
-  const [user, getUser] = useState({})
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await UserService.getUser("646b9a3cf31d14ee45504c32");
-      getUser(response.data);
-      console.log(response.data);
-      console.log(user);
-    };
-    fetchData();
-  }, []);
-  const handleLogout = () => {
-    const userToken = localStorage.getItem("token");
+  const [userInfo, getUserInfo] = useState({})
 
-    if (userToken) {
-      localStorage.removeItem("token");
-      navigate( "/login", {replace:true});
-      return <Navigate to="/login" replace={true} />;
+  const loadUserData = async () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decodeUser = await jwtDecode(token);
+        localStorage.setItem('userInfo', JSON.stringify(decodeUser));
+        getUserInfo(decodeUser)
+        console.log(userInfo)
+      } catch (e) {
+        console.log('Error al decodificar el token',e);
+      }
     }
+  }
+
+  useEffect(() => {
+    loadUserData()
+  })
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await UserService.getUserInfo("646b9a3cf31d14ee45504c32");
+  //     getUserInfo(response.data);
+  //     console.log(response.data);
+  //     console.log(userInfo);
+  //   };
+  //   fetchData();
+  // }, []);
+  const handleLogout = () => {
+    localStorage.getItem("token");
+    localStorage.getItem("userInfo");
+    window.location.href = '/login'
+
+    // if (userToken) {
+    //   localStorage.removeItem("token");
+    // navigate( "/login", {replace:true});
+    //   return <Navigate to="/login" replace={true} />;
+    // }
   };
 
   return (
@@ -55,7 +77,7 @@ function Navbarside() {
               </div>
 
               <div className="flex-items">
-                <Sidenav style={{ marginLeft: "0", height: "100%" }}>
+                <Sidenav style={{ marginLeft: '0', height: '100%' }}>
                   <Sidenav.Body>
                     <Nav activeKey="1">
                       <Nav.Item
@@ -90,20 +112,11 @@ function Navbarside() {
                         </Nav.Item>
                       </Nav.Menu>
                       <Nav.Item
-                        onClick={() => {
-                          const userToken = localStorage.getItem("token");
-                          if (userToken) {
-                            localStorage.removeItem("token");
-                            window.location.reload();
-                            // return redirect('/login');
-                          }
-                          // console.log(userToken)
-
-                        }}
-                        // onClick={handleLogout}
+                        as={NavLink}
+                        onClick={handleLogout}
                         eventKey="4"
-                        icon={<ImExit />}
-                      >
+                        icon={<ImExit />}>
+
                         <span>Login out</span>
                       </Nav.Item>
                     </Nav>
@@ -117,11 +130,11 @@ function Navbarside() {
                     circle
                     src="https://avatars.githubusercontent.com/u/12592949"
                     alt="@SevenOutman"
-                    style={{ width: "45px" }}
+                    style={{ width: '45px' }}
                   />
                   <div className="ct-info-user">
-                    <h4>Jhon Niño</h4>
-                    <span> FI - UNAC</span>
+                    <h4> {userInfo.nombre + ' ' + userInfo.apellido} </h4>
+                    <span> {userInfo.cargo} FI - UNAC</span>
                   </div>
                 </div>
               </div>

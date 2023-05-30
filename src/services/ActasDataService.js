@@ -24,7 +24,7 @@ export const updateActa = (id, data) => {
 }
 
 export const deleteActa = (id) => {
-    return http.delete(`/actas/${id}`)
+    return http.delete(`/actas//id/${id}`) // Actas/id/:id
 }
 
 

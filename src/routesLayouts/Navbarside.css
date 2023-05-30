@@ -14,7 +14,6 @@
   align-items: stretch;
   align-content: stretch;
   flex-direction: column;
-
 }
 
 .flex-items:nth-child(1) {
@@ -84,6 +83,17 @@ nav {
 .rs-sidenav-nav .rs-dropdown .rs-sidenav-item svg {
   width: 26px !important;
   color: var(--blue-cake);
+}
+
+.hide-btn{
+  padding: 0;
+  border: transparent;
+}
+
+.hide-btn:focus,
+.hide-btn:active{
+  background-color: transparent !important;
+  transition: none !important;
 }
 
 .ct-user {

@@ -1,6 +1,6 @@
 import "./App.css";
-import { 
-  createBrowserRouter,  
+import {
+  createBrowserRouter,
   Route,
   createRoutesFromElements,
   RouterProvider,
@@ -26,26 +26,62 @@ const router = createBrowserRouter(
     <Route>
       {user && (
         <Route path="/" exact element={<RootLayout />}>
-          <Route index element={<Dashboard />} loader={dashboardLoader}></Route>
 
+          <Route index element={<Dashboard />} loader={dashboardLoader}></Route>
           <Route path="details-acta" element={<ActaDetails />}></Route>
           <Route path="crear-acta" element={<CreateActa />}></Route>
           <Route
             path="crear-participante"
             element={<CreateParticipante />}
-          ></Route>
+          />
           <Route path="actualizar-acta" element={<UpdateActa />}></Route>
         </Route>
       )}
       <Route path="/login" exact element={<Login />} />
       <Route path="/" exact element={<Navigate replace to="/login" />} />
+      <Route path="crear-acta" element={<CreateActa />}></Route>
+      <Route path="actualizar-acta" element={<UpdateActa />}></Route>
+      <Route
+        path="crear-participante"
+        element={<CreateParticipante />}
+      />
+      <Route path="actualizar-participante" element={<UpdateActa />}></Route>
     </Route>
   )
 );
+// const router = createBrowserRouter(
+//   createRoutesFromElements(
+//     // Login routes
+//     <Route>
+//       {user && (
+//         <Route path="/" exact element={<RootLayout />}>
+
+//           <Route index element={<Dashboard />} loader={dashboardLoader} />
+//           <Route path="details-acta" element={<ActaDetails />} />
+//           <Route path="crear-acta" element={<CreateActa />} />
+//           <Route
+//             path="crear-participante"
+//             element={<CreateParticipante />}
+//           />
+//           <Route path="actualizar-acta" element={<UpdateActa />} />
+//         </Route>
+//       )}
+//       <Route path="/login" exact element={<Login />} />
+//       <Route path="/" exact element={<Navigate replace to="/login" />} />
+//       <Route path="crear-acta" element={<Navigate replace to="/login" />} />
+//       <Route path="actualizar-acta" element={<Navigate replace to="/login" />} />
+//       <Route
+//         path="crear-participante"
+//         element={<Navigate replace to="/login" />}
+//       />
+//       <Route path="actualizar-participante" element={<Navigate replace to="/login" />} />
+//     </Route>
+//   )
+// );
 
 function App() {
   return (
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   );
 }
 

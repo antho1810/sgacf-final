@@ -14,7 +14,8 @@ const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
-  const baseUrl = "https://sgacfi-back-mern.up.railway.app/sgacfi-api/auth/ingreso";
+  const baseUrl =
+    "https://sgacfi-back-mern.up.railway.app/sgacfi-api/auth/ingreso";
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -24,6 +25,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data: res } = await axios.post(baseUrl, data);
+      console.log(res.data);
       localStorage.setItem("token", res.data);
       window.location = "/";
       console.log("Ingreso éxitoso");
@@ -31,8 +33,8 @@ const Login = () => {
       if (e.response && e.response.status >= 400 && e.response.status <= 500) {
         setError(e.response.data.message);
         setTimeout(() => {
-          setError("")
-        }, 3000)
+          setError("");
+        }, 3000);
       }
     }
   };
@@ -93,14 +95,7 @@ const Login = () => {
                   />
                 </Form.Group>
 
-                {error && (
-                  <div
-                    className="error_msg mb-2"
-                    style={{ transition: "opacity 0.5s ease" }}
-                  >
-                    {error}
-                  </div>
-                )}
+                {error && <div className="error_msg mb-2">{error}</div>}
 
                 <div>
                   <Button className="form-btn w-100" type="submit">
@@ -114,6 +109,6 @@ const Login = () => {
       </Container>
     </div>
   );
-}
+};
 
 export default Login;
