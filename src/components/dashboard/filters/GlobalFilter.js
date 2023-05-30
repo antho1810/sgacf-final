@@ -1,4 +1,4 @@
-const GlobalParticipantesFilter = ({ filter, setFilter }) => {
+const GlobalActasFilter = ({ filter, setFilter }) => {
     return (
         <div className="ct-search">
             <h4>Buscar: {' '}</h4>
@@ -8,4 +8,4 @@ const GlobalParticipantesFilter = ({ filter, setFilter }) => {
     );
 }
 
-export default GlobalParticipantesFilter;
+export default GlobalActasFilter;

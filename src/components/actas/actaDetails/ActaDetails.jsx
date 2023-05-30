@@ -2,21 +2,23 @@ import React, { useState, useMemo } from "react";
 import ActaService from "../../../services/ActasDataService";
 import { useEffect } from "react";
 import { Container, Row, Col, Badge } from "react-bootstrap";
-
+import moment from "moment";
 
 const ActaDetails = () => {
   const [acta, setActa] = useState([]);
-  
-  useEffect(  ()=>
- { const fetchData = async () => {
-    const response = await ActaService.getActa("6453013ca10254386459cccc");
-    setActa(response.data)
-    console.log(response.data)
-    console.log(acta)
-  }
-  fetchData()},[])
 
+  const fechaCreacion = acta.fechaCreacion;
+  const fechaFormateada = moment(fechaCreacion).format("DD/MM/YYYY");
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await ActaService.getActa("64642c55c58af37181981ff5");
+      setActa(response.data);
+      console.log(response.data);
+      console.log(acta);
+    };
+    fetchData();
+  }, []);
 
   // const data = useMemo(
   //   () => {
@@ -74,6 +76,10 @@ const ActaDetails = () => {
             <p>{acta.numeroRef}</p>
           </div>
           <div className="me-4">
+            <h3 className="h4">Fecha</h3>
+            <p>{fechaFormateada}</p>
+          </div>
+          <div className="me-4">
             <h3 className="h4">Estado</h3>
             <p>
               {acta.estado === "En proceso" ? (
@@ -107,7 +113,35 @@ const ActaDetails = () => {
             <p> {acta.horaFinal} </p>
           </div>
         </div>
+        <div className="d-flex mt-2">
+          <div className="me-4 text-center">
+            <h1 className="h4">Miembros presentes</h1>
+            {/* {acta.miembrosPresentes ? (
+              acta.miembrosPresentes.map((item) => (
+                <div key={item._id}>
+                  <p>
+                    {item.nombre} {item.apellido}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <span>No hay miembros presentes</span>
+            )} */}
+          </div>
+        </div>
       </div>
+      <div className="d-flex mt-2">
+        <div className="me-4 text-center">
+          {/* <h1 className="h4">Cronograma</h1>
+          {acta.desarrolloActa.map((item) => (
+            <div key={item._id}>
+              <p>Hora: {moment(item.HORA, "HH:mm").format("hh:mm A")}></p>
+              <p>Descripción: {item.DESCRIPCION}</p>
+            </div>
+          ))}; */}
+        </div>
+      </div>
+      {/* </div> */}
       {/* Container Articulos */}
       <Container className="ct-articulos">
         <span className="header"></span>

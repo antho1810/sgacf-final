@@ -6,13 +6,14 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table";
+import { NavLink } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 import { COLUMNS } from "./columns";
-import { NavLink } from "react-router-dom";
 import "./ParticipantesTable.css";
-import GlobalActasFilter from "./GlobalFilter";
+
+import GlobalParticipantesFilter from "./GlobalFilter";
 
 const ParticipantesTable = () => {
   const [participantes, setParticipantes] = useState([]);
@@ -41,7 +42,7 @@ const ParticipantesTable = () => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
     prepareRow,
     state,
     setGlobalFilter,
@@ -57,17 +58,12 @@ const ParticipantesTable = () => {
     {
       columns: COLUMNS,
       data,
-      initialState: {
-        pageIndex: 0,
-        pageSize: 5,
-      }, // Estado de la paginación
+      initialState: { pageIndex: 0, pageSize: 5 }, // Estado inicial de la paginación
     },
     useGlobalFilter,
     useSortBy,
     usePagination
   );
-
-  // const  = tableInstance;
 
   const { pageIndex, pageSize, globalFilter } = state;
 
@@ -87,7 +83,12 @@ const ParticipantesTable = () => {
           </Button>
         </div>
       </div>
-      <GlobalActasFilter filter={globalFilter} setFilter={setGlobalFilter} />
+
+      <GlobalParticipantesFilter
+        filter={globalFilter}
+        setFilter={setGlobalFilter}
+      />
+
       <Table {...getTableProps()}>
         <thead className="table-header">
           {headerGroups.map((headerGroup) => (
@@ -116,7 +117,7 @@ const ParticipantesTable = () => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <>

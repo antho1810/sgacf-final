@@ -6,17 +6,14 @@ export const getAllActas = () => {
     return http.get("/actas")
 }
 
-// Get Acta
+// GET ACTA
 export const getActa = (id) => {
     return http.get(`/actas/id/${id}`)
 }
 
-// Create Acta
+// CREATE ACTA
 export const createActa = (data) => {
-    return http.post(
-        "http://sgacfi-back-mern.up.railway.app/sgacfi-api/actas",
-        data
-    );
+    return http.post("/actas", data)
 }
 
 export const updateActa = (id, data) => {
@@ -24,16 +21,15 @@ export const updateActa = (id, data) => {
 }
 
 export const deleteActa = (id) => {
-    return http.delete(`/actas/${id}`)
+    return http.delete(`/actas/id/${id}`)
 }
-
 
 const ActaService = {
     getAllActas,
     getActa,
     createActa,
     updateActa,
-    deleteActa,
+    deleteActa
 };
 
 export default ActaService;

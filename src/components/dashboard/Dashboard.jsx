@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
   useSortBy,
   useTable,
@@ -6,28 +6,23 @@ import {
   usePagination,
 } from "react-table";
 
-
+import ActaService from "../../services/ActasDataService";
 import { useLoaderData, NavLink } from "react-router-dom";
-import { HiChevronDown, HiChevronUp } from "react-icons/hi";
+
 import { COLUMNS } from "./columns";
 
-import Navbarside from "../../routesLayouts/RootLayout";
-import CrearActa from "../actas/createActa/CreateActa";
-import UpdateActa from "../actas/updateActa/UpdateActa";
-import ActaService from "../../services/ActasDataService";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable";
-import GlobalActasFilter from "./GlobalFilter";
 
+import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 
 import "./Dashboard.css";
 import "./Table.css";
-
+import GlobalActasFilter from "./filters/GlobalFilter";
 
 function Dashboard() {
   const responseActas = useLoaderData();
-  const participantes = useLoaderData();
 
   const data = useMemo(
     () =>
@@ -49,12 +44,12 @@ function Dashboard() {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
     prepareRow,
     state,
     setGlobalFilter,
-    canNextPage,
     canPreviousPage,
+    canNextPage,
     pageOptions,
     pageCount,
     gotoPage,
@@ -65,30 +60,12 @@ function Dashboard() {
     {
       columns: COLUMNS,
       data,
-      initialState: { pageIndex: 0, pageSize: 5 }, // Estado de la paginacion
+      initialState: { pageIndex: 0, pageSize: 5 }, // Estado inicial de la paginación
     },
     useGlobalFilter,
     useSortBy,
     usePagination
   );
-
-  // const {
-  //   getTableProps,
-  //   getTableBodyProps,
-  //   headerGroups,
-  //   rows,
-  //   prepareRow,
-  //   state,
-  //   setGlobalFilter,
-  //   canNextPage,
-  //   canPreviousPage,
-  //   pageOptions,
-  //   pageCount,
-  //   gotoPage,
-  //   nextPage,
-  //   previousPage,
-  //   setPageSize
-  // } = tableInstance;
 
   const { pageIndex, pageSize, globalFilter } = state;
 
@@ -99,7 +76,7 @@ function Dashboard() {
           <h2>Lista de actas</h2>
         </div>
         <div>
-          <Button className="plus-acta-btn" as={NavLink} to="crear-acta">
+          <Button as={NavLink} to="crear-acta" className="plus-acta-btn">
             + Añadir acta
           </Button>
         </div>
@@ -135,7 +112,7 @@ function Dashboard() {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <>
@@ -154,7 +131,6 @@ function Dashboard() {
           })}
         </tbody>
       </Table>
-      {/* Paginación */}
       <div
         className="container-fluid d-flex justify-content-end mb-4"
         style={{ gap: "10px" }}
@@ -215,7 +191,6 @@ function Dashboard() {
 
 export const dashboardLoader = async () => {
   const responseActas = await ActaService.getAllActas();
-  console.log(responseActas.data);
   return responseActas.data;
 };
 
