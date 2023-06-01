@@ -13,7 +13,7 @@ import { BsEyeglasses } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaShareAlt, FaRegEdit } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 
 const renderIconButton = (props, ref) => {
   return <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />;
@@ -28,8 +28,8 @@ export const COLUMNS = [
     accessor: "fechaCreacion",
     Cell: ({ value }) => moment(value).format("DD/MM/YYYY"),
   },
-  { Header: "Miembros presentes", accessor: "lugar" },
-  { Header: "Lugar", accessor: "miembrosPResentes" },
+  { Header: "Miembros presentes", accessor: "miembrosPresentes" },
+  { Header: "Lugar", accessor: "lugar" },
   { Header: "Modalidad", accessor: "modalidad" },
   {
     Header: "Estado",
@@ -52,7 +52,7 @@ export const COLUMNS = [
     accessor: "_id",
     Cell: ({ value }) => (
       <Dropdown renderToggle={renderIconButton} className="accion-drop">
-        <Dropdown.Item className="i-revisar" icon={<BsEyeglasses />}>
+        <Dropdown.Item className="i-revisar" as={NavLink } to="detalle-acta" icon={<BsEyeglasses />}>
           {" "}
           <span>Revisar</span>{" "}
         </Dropdown.Item>
@@ -60,11 +60,11 @@ export const COLUMNS = [
           {" "}
           <span>Aprobar</span>{" "}
         </Dropdown.Item>
-        <Dropdown.Item className="i-editar" icon={<FaRegEdit />}>
+        <Dropdown.Item className="i-editar" onClick={async () => { ActaService.updateActa(value) }} icon={<FaRegEdit />}>
           {" "}
           <span>Editar</span>{" "}
         </Dropdown.Item>
-        <Dropdown.Item as={NavLink} onClick={async () => { await ActaService.deleteActa(value) }} className="i-borrar" icon={<RiDeleteBinLine />}>
+        <Dropdown.Item className="i-borrar" onClick={async () => { await ActaService.deleteActa(value) }} icon={<RiDeleteBinLine />}>
           {"  "}
           <span>Borrar</span>
         </Dropdown.Item>

@@ -1,5 +1,5 @@
 import http from '../http-common.js'
-import axios from 'axios'
+// import axios from 'axios'
 
 // GET ALL ACTAS
 export const getAllActas = () => {
@@ -18,6 +18,9 @@ export const createActa = (data) => {
 
 export const updateActa = (id, data) => {
     return http.put(`/actas/id/${id}`, data)
+}
+export const updateStatusActa = (id, data) => {
+    return http.put(`/actas/autorize/id/${id}`, data)
 }
 
 export const deleteActa = (id) => {

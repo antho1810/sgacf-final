@@ -68,47 +68,47 @@ const CreateParticipante = () => {
         <div className="ct-form">
           {/* Container Informacion */}
           <div className="ct-form-inputs">
-            {/* Numero REF */}
+            {/* Nombres */}
             <div className="form-group">
               <label htmlFor="nombre">Nombres</label>
               <input
                 type="text"
                 className="form-control"
                 id="nombre"
-                required
-                placeholder="Nombres"
                 name="nombre"
+                placeholder="Nombres"
                 value={participante.nombre}
                 onChange={handleInputChange}
+                required
               />
             </div>
-            {/* Modalidad */}
+            {/* Apellidos */}
             <div className="form-group">
               <label htmlFor="apellido">Apellidos</label>
               <input
                 type="text"
                 className="form-control"
                 id="apellido"
-                required
-                placeholder="Apellidos"
                 name="apellido"
+                placeholder="Apellidos"
                 value={participante.apellido}
                 onChange={handleInputChange}
+                required
               />
             </div>
-            {/* Lugar */}
+            {/* Cargo */}
             <div className="form-group">
               <label htmlFor="cargo">Cargo</label>
               <input
                 type="text"
                 className="form-control"
                 id="cargo"
-                required
-                placeholder="Cargo"
                 name="cargo"
+                placeholder="Cargo"
                 value={participante.cargo}
+                required
                 onChange={handleInputChange}
-              />
+                />
             </div>
           </div>
         </div>

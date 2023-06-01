@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import ActaService from "../../../services/ActasDataService";
-import { useEffect } from "react";
 import { Container, Row, Col, Badge } from "react-bootstrap";
 import moment from "moment";
 
@@ -12,7 +11,8 @@ const ActaDetails = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await ActaService.getActa("64642c55c58af37181981ff5");
+      const idActa = acta._id
+      const response = await ActaService.getActa(idActa);
       setActa(response.data);
       console.log(response.data);
       console.log(acta);
@@ -132,7 +132,10 @@ const ActaDetails = () => {
       </div>
       <div className="d-flex mt-2">
         <div className="me-4 text-center">
-          {/* <h1 className="h4">Cronograma</h1>
+          
+          <h1 className="h4">Cronograma</h1>
+          <p className="center">{ acta.cronograma}</p>
+           {/*
           {acta.desarrolloActa.map((item) => (
             <div key={item._id}>
               <p>Hora: {moment(item.HORA, "HH:mm").format("hh:mm A")}></p>
@@ -144,10 +147,11 @@ const ActaDetails = () => {
       {/* </div> */}
       {/* Container Articulos */}
       <Container className="ct-articulos">
-        <span className="header"></span>
+        <span className="header">Articulos</span>
+        
       </Container>
       {/* Container Documentos Soporte */}
-      <div className="ct-docsSoprot"></div>
+      <div className="ct-docsSoprot">Documentos adjuntos</div>
       <Container fluid>
         <Row className="mb-3">
           <Col style={{ height: "80px" }}></Col>
