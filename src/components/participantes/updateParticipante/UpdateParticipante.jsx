@@ -44,12 +44,12 @@ const UpdateParticipante = () => {
 
   const handleShowConfirmModal = () => {
     setIsUpdateModalOpen(true);
-    };
-    
-      const handleConfirmExitBtn = () => {
-        setIsUpdateModalOpen(false);
-        window.location.href = "/";
-      };
+  };
+
+  const handleConfirmExitBtn = () => {
+    setIsUpdateModalOpen(false);
+    window.location.href = "/";
+  };
 
   const handleConfirmUpdate = () => {
     updateParticipante();
@@ -67,12 +67,12 @@ const UpdateParticipante = () => {
 
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button class="btn btn-primary" onClick={handleConfirmUpdate}>
+              <button className="btn btn-primary" onClick={handleConfirmUpdate}>
                 Confirmar
               </button>
             </div>
@@ -140,10 +140,10 @@ const UpdateParticipante = () => {
       </div>
 
       <div className="ct-btn d-flex mt-2 justify-content-evenly">
-        <button class="btn btn-warning" onClick={handleConfirmExitBtn}>
+        <button className="btn btn-warning" onClick={handleConfirmExitBtn}>
           Atrás
         </button>
-        <button class="btn btn-primary" onClick={handleShowConfirmModal}>
+        <button className="btn btn-primary" onClick={handleShowConfirmModal}>
           Enviar
         </button>
       </div>

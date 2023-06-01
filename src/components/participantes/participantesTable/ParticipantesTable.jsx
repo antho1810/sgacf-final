@@ -26,57 +26,55 @@ const ParticipantesTable = () => {
   const getParticipantesData = async () => {
     const response = await ParticipantesService.getAllParticipantes();
     setParticipantes(response.data);
-    console.log(response.data)
+    console.log(response.data);
   };
 
   useEffect(() => {
     try {
       getParticipantesData();
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error al obtener los participantes:", error);
     }
-
   }, []);
 
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-    const handleChangeStatusModalFalse = () => {
-      setIsDeleteModalOpen(false);
-    };
+  const handleChangeStatusModalFalse = () => {
+    setIsDeleteModalOpen(false);
+  };
 
-    const handleShowConfirmModal = () => {
-      setIsDeleteModalOpen(true);
-    };
+  const handleShowConfirmModal = () => {
+    setIsDeleteModalOpen(true);
+  };
 
-    const handleConfirmDelete = () => {
-      deleteParticipante();
-      // ParticipantesService.deleteParticipante()
-      //   .then((response) => {
-      //     console.log("Participante borrado exitosamente: ", response.data);
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error al actualizar el participante: ", error);
-      //   })
-      // setTimeout(() => {
-       
-      // }, 2000)
-    };
+  const handleConfirmDelete = () => {
+    deleteParticipante();
+    // ParticipantesService.deleteParticipante()
+    //   .then((response) => {
+    //     console.log("Participante borrado exitosamente: ", response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error al actualizar el participante: ", error);
+    //   })
+    // setTimeout(() => {
+
+    // }, 2000)
+  };
 
   const deleteParticipante = async () => {
     // peticion
-   const reponse= await ParticipantesService.deleteParticipante()
-     .then((response) => {
-       console.log("Participante borrado exitosamente: ", response.data);
-   })
-     .catch((error) => {
-     console.error("Error al actualizar el participante: ", error)
-     });
+    const reponse = await ParticipantesService.deleteParticipante()
+      .then((response) => {
+        console.log("Participante borrado exitosamente: ", response.data);
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el participante: ", error);
+      });
     setTimeout(() => {
       // Recargar la página
       window.location.reload();
-    }, 2000)
-  }
+    }, 2000);
+  };
 
   const renderIconButton = (props, ref) => {
     return (
@@ -93,45 +91,47 @@ const ParticipantesTable = () => {
     [participantes]
   );
 
-  const columns = React.useMemo(() => [
-    { Header: "nombre", accessor: "nombre" },
+  const columns = React.useMemo(
+    () => [
+      { Header: "nombre", accessor: "nombre" },
 
-    {
-      Header: "apellido",
-      accessor: "apellido",
-    },
-    {
-      Header: "cargo",
-      accessor: "cargo",
-    },
-    {
-      Header: "",
-      accessor: "_id", //localhost:4000/api/actas/id/_id
-      Cell: ({ value }) => (
-        <Dropdown renderToggle={renderIconButton} className="accion-drop">
-          <Dropdown.Item
-            className="i-editar"
-            as={NavLink}
-            to="actualizar-participante"
-            icon={<FaRegEdit />}
-          >
-            {" "}
-            <span>Editar</span>{" "}
-          </Dropdown.Item>
-          <Dropdown.Item
-            className="i-borrar"
-            as={NavLink}
-            onClick={handleShowConfirmModal}
-            icon={<RiDeleteBinLine />}
-          >
-            {" "}
-            <span> Borrar</span>
-          </Dropdown.Item>
-        </Dropdown>
-      ),
-    },
-  ],
-    []);
+      {
+        Header: "apellido",
+        accessor: "apellido",
+      },
+      {
+        Header: "cargo",
+        accessor: "cargo",
+      },
+      {
+        Header: "",
+        accessor: "_id", //localhost:4000/api/actas/id/_id
+        Cell: ({ value }) => (
+          <Dropdown renderToggle={renderIconButton} className="accion-drop">
+            <Dropdown.Item
+              className="i-editar"
+              as={NavLink}
+              to="actualizar-participante"
+              icon={<FaRegEdit />}
+            >
+              {" "}
+              <span>Editar</span>{" "}
+            </Dropdown.Item>
+            <Dropdown.Item
+              className="i-borrar"
+              as={NavLink}
+              onClick={handleShowConfirmModal}
+              icon={<RiDeleteBinLine />}
+            >
+              {" "}
+              <span> Borrar</span>
+            </Dropdown.Item>
+          </Dropdown>
+        ),
+      },
+    ],
+    []
+  );
 
   const {
     getTableProps,
@@ -173,12 +173,12 @@ const ParticipantesTable = () => {
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button class="btn btn-primary" onClick={handleConfirmDelete}>
+              <button className="btn btn-primary" onClick={handleConfirmDelete}>
                 Confirmar
               </button>
             </div>

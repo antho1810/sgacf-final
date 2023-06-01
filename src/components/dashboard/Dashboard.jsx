@@ -46,7 +46,7 @@ function Dashboard() {
   };
 
   const handleShowConfirmUpdateModal = () => {
-     setIsUpdateModalOpen(true);
+    setIsUpdateModalOpen(true);
   };
 
   // Update Status
@@ -55,7 +55,7 @@ function Dashboard() {
   };
 
   const updateStatusActa = async () => {
-    const reponse = await ActaService.updateStatusActa()
+    const response = await ActaService.updateStatusActa()
       .then((response) => {
         console.log(
           "El estado del acta ha sido actualizada exitosamente: ",
@@ -73,7 +73,7 @@ function Dashboard() {
 
   const deleteActa = async () => {
     // peticion
-    const reponse = await ActaService.deleteActa()
+    const response = await ActaService.deleteActa()
       .then((response) => {
         console.log("Participante borrado exitosamente: ", response.data);
       })
@@ -233,12 +233,12 @@ function Dashboard() {
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button class="btn btn-primary" onClick={handleUpdateStatus}>
+              <button className="btn btn-primary" onClick={handleUpdateStatus}>
                 Confirmar
               </button>
             </div>
@@ -254,12 +254,12 @@ function Dashboard() {
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button class="btn btn-primary" onClick={handleConfirmDelete}>
+              <button className="btn btn-primary" onClick={handleConfirmDelete}>
                 Confirmar
               </button>
             </div>

@@ -11,8 +11,7 @@ const ActaDetails = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const idActa = acta._id
-      const response = await ActaService.getActa(idActa);
+      const response = await ActaService.getActa(acta._id);
       setActa(response.data);
       console.log(response.data);
       console.log(acta);

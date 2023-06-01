@@ -1,38 +1,38 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from "react";
 
-import GlobalParticipantesFilter from './GlobalFilter';
-import { votosData } from './votosData';
+import GlobalParticipantesFilter from "./GlobalFilter";
+import { votosData } from "./votosData";
 
-import './CreateActa.css';
-import './Modal.css';
+import "./CreateActa.css";
+import "./Modal.css";
 
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Table from "react-bootstrap/Table";
 
-import { HiPlus, HiX, HiChevronDown, HiChevronUp } from 'react-icons/hi';
+import { HiPlus, HiX, HiChevronDown, HiChevronUp } from "react-icons/hi";
 
-import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-import ActaService from '../../../services/ActasDataService';
-import ParticipantesService from '../../../services/ParticipantesDataServices';
+import ActaService from "../../../services/ActasDataService";
+import ParticipantesService from "../../../services/ParticipantesDataServices";
 
 import {
   useSortBy,
   useTable,
   useGlobalFilter,
   usePagination,
-} from 'react-table';
+} from "react-table";
 
 const CreateActa = () => {
   // ESTADO DEL ACTA INICIAL
   const [actaInicial, setActaInicial] = useState({
-    lugar: '',
-    modalidad: '',
-    horaInicio: '',
-    horaFinal: '',
-    cronograma: '',
+    lugar: "",
+    modalidad: "",
+    horaInicio: "",
+    horaFinal: "",
+    cronograma: "",
     miembrosPresentes: [],
     miembrosAusentes: [],
     miembrosInvitados: [],
@@ -44,13 +44,13 @@ const CreateActa = () => {
   const handleSubmitted = () => {
     ActaService.createActa(actaInicial)
       .then((response) => {
-        console.log('Acta enviada exitosamente:', response.data);
+        console.log("Acta enviada exitosamente:", response.data);
       })
       .catch((error) => {
-        console.error('Error al enviar el acta:', error);
+        console.error("Error al enviar el acta:", error);
       });
 
-    window.location.href="/"
+    window.location.href = "/";
   };
 
   // MODALES
@@ -64,31 +64,31 @@ const CreateActa = () => {
 
   const handleChangeStatusModalFalse = () => {
     setIsOpen(false);
-    setIsSendModalOpen(false)
+    setIsSendModalOpen(false);
   };
 
   const handleShowConfirmModal = () => {
-    setIsSendModalOpen(true)
-  }
+    setIsSendModalOpen(true);
+  };
 
   const handleConfirmExitBtn = () => {
     setIsOpen(false);
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   const handleConfirmSend = () => {
     ActaService.createActa(actaInicial)
       .then((response) => {
-        console.log('Acta enviada exitosamente:', response.data);
+        console.log("Acta enviada exitosamente:", response.data);
       })
       .catch((error) => {
-        console.error('Error al enviar el acta:', error);
+        console.error("Error al enviar el acta:", error);
       });
 
-      setTimeout(() => {
-        window.location.href="/"
-      }, 2000);
-  }
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 2000);
+  };
 
   // FUNCIONALIDAD PASO A PASO
   const [currentStep, setCurrentStep] = useState(1);
@@ -141,9 +141,9 @@ const CreateActa = () => {
 
   // ARREGLO DE OBJETOS QUE RECOPILA LOS _ID DE CADA PARTICIPANTE PARA ENVIAR
   // AL BODY REQUEST MEDIANTE onSubmitted()
-  const [objIdPresentes, setObjIdPresentes] = useState([{ _id: '' }]);
-  const [objIdAusentes, setObjIdAusentes] = useState([{ _id: '' }]);
-  const [objIdInvitados, setObjIdInvitados] = useState([{ _id: '' }]);
+  const [objIdPresentes, setObjIdPresentes] = useState([{ _id: "" }]);
+  const [objIdAusentes, setObjIdAusentes] = useState([{ _id: "" }]);
+  const [objIdInvitados, setObjIdInvitados] = useState([{ _id: "" }]);
 
   // ESTADO INICIAL PARA LOS DATOS DE LA TABLA <<PARTICIPANTES>>
   const [participantes, setParticipantes] = useState([]);
@@ -155,7 +155,7 @@ const CreateActa = () => {
         const response = await ParticipantesService.getAllParticipantes();
         setParticipantes(response.data);
       } catch (e) {
-        console.error('Error al obtener los datos:', e);
+        console.error("Error al obtener los datos:", e);
       }
     };
 
@@ -270,8 +270,8 @@ const CreateActa = () => {
   const columns = React.useMemo(
     () => [
       {
-        Header: '',
-        accessor: '_id',
+        Header: "",
+        accessor: "_id",
         disableSortBy: true,
         Cell: ({ value }) => (
           <input
@@ -282,9 +282,9 @@ const CreateActa = () => {
           />
         ),
       },
-      { Header: 'nombre', accessor: 'nombre' },
-      { Header: 'apellido', accessor: 'apellido' },
-      { Header: 'cargo', accessor: 'cargo' },
+      { Header: "nombre", accessor: "nombre" },
+      { Header: "apellido", accessor: "apellido" },
+      { Header: "cargo", accessor: "cargo" },
     ],
     [selectedParticipant]
   );
@@ -321,7 +321,7 @@ const CreateActa = () => {
   // PARTE 4: VOTOS
   // --------------------------------------------------------------------------------------------
 
-  const [votoSeleccionado, setVotoSeleccionado] = useState('');
+  const [votoSeleccionado, setVotoSeleccionado] = useState("");
   const [formulario, setFormulario] = useState({});
 
   const handleChangeVotos = (event) => {
@@ -350,7 +350,7 @@ const CreateActa = () => {
             <Form.Select
               id={campo.nombre}
               name={campo.nombre}
-              value={formulario[campo.nombre] || ''}
+              value={formulario[campo.nombre] || ""}
               onChange={handleChangeCampo}
             >
               <option value="">-- Seleccionar --</option>
@@ -371,7 +371,7 @@ const CreateActa = () => {
               id={campo.nombre}
               name={campo.nombre}
               className="form-control-custom w-75"
-              value={formulario[campo.nombre] || ''}
+              value={formulario[campo.nombre] || ""}
               onChange={handleChangeCampo}
             />
           </div>
@@ -391,12 +391,15 @@ const CreateActa = () => {
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button class="btn btn-primary" onClick={handleConfirmExitBtn}>
+              <button
+                className="btn btn-primary"
+                onClick={handleConfirmExitBtn}
+              >
                 Confirmar
               </button>
             </div>
@@ -413,12 +416,12 @@ const CreateActa = () => {
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button class="btn btn-primary" onClick={handleConfirmSend}>
+              <button className="btn btn-primary" onClick={handleConfirmSend}>
                 Confirmar
               </button>
             </div>
@@ -436,7 +439,7 @@ const CreateActa = () => {
 
         {/* PARTE 1: INFORMACIÓN BÁSICA */}
         {/* -------------------------------------------------------------------------------- */}
-        <div className={`formulario ${currentStep !== 1 && 'oculto'}`}>
+        <div className={`formulario ${currentStep !== 1 && "oculto"}`}>
           {currentStep === 1 && (
             <>
               <div className="create-acta-header mb-4">
@@ -510,13 +513,13 @@ const CreateActa = () => {
         </div>
 
         {/* PARTE 2: MIEMBROS DEL ACTA */}
-        <div className={`formulario ${currentStep !== 2 && 'oculto'}`}>
+        <div className={`formulario ${currentStep !== 2 && "oculto"}`}>
           {currentStep === 2 && (
             <>
               <div className="create-acta-header mb-4">
                 <h3 className="h3 mt-2">Seleccionar miembros del acta</h3>
               </div>
-              <div className="row" style={{ gap: '20px' }}>
+              <div className="row" style={{ gap: "20px" }}>
                 <div className="col h-auto d-flex flex-column justify-content-center">
                   <div className="container-fluid tabla-participantes-header mb-4">
                     <h2 className="h2 fw-bold">Tabla de participantes</h2>
@@ -527,7 +530,7 @@ const CreateActa = () => {
                       filter={globalFilter}
                       setFilter={setGlobalFilter}
                     />
-                    <Table style={{ maxWidth: '480px' }} {...getTableProps()}>
+                    <Table style={{ maxWidth: "480px" }} {...getTableProps()}>
                       <thead className="table-header">
                         {headerGroups.map((headerGroup) => (
                           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -539,7 +542,7 @@ const CreateActa = () => {
                                   column.getSortByToggleProps()
                                 )}
                               >
-                                {column.render('Header')}
+                                {column.render("Header")}
                                 <span>
                                   {column.isSorted ? (
                                     column.isSortedDesc ? (
@@ -548,7 +551,7 @@ const CreateActa = () => {
                                       <HiChevronUp />
                                     )
                                   ) : (
-                                    ''
+                                    ""
                                   )}
                                 </span>
                               </th>
@@ -565,7 +568,7 @@ const CreateActa = () => {
                                 {row.cells.map((cell) => {
                                   return (
                                     <td {...cell.getCellProps()}>
-                                      {cell.render('Cell')}
+                                      {cell.render("Cell")}
                                     </td>
                                   );
                                 })}
@@ -582,41 +585,41 @@ const CreateActa = () => {
 
                   <div
                     className="container-fluid d-flex justify-content-end mb-4"
-                    style={{ gap: '10px' }}
+                    style={{ gap: "10px" }}
                   >
                     <div>
                       <button
                         onClick={() => gotoPage(0)}
                         disabled={!canPreviousPage}
                       >
-                        {'<<'}
-                      </button>{' '}
+                        {"<<"}
+                      </button>{" "}
                       <button
                         onClick={() => previousPage()}
                         disabled={!canPreviousPage}
                       >
-                        {'<'}
-                      </button>{' '}
+                        {"<"}
+                      </button>{" "}
                       <button
                         onClick={() => nextPage()}
                         disabled={!canNextPage}
                       >
-                        {'>'}
-                      </button>{' '}
+                        {">"}
+                      </button>{" "}
                       <button
                         onClick={() => gotoPage(pageCount - 1)}
                         disabled={!canNextPage}
                       >
-                        {'>>'}
-                      </button>{' '}
+                        {">>"}
+                      </button>{" "}
                       <span>
-                        Página{' '}
+                        Página{" "}
                         <strong>
                           {pageIndex + 1} de {pageOptions.length}
-                        </strong>{' '}
+                        </strong>{" "}
                       </span>
                       <span>
-                        | Ir a la página:{' '}
+                        | Ir a la página:{" "}
                         <input
                           type="number"
                           defaultValue={pageIndex + 1}
@@ -626,9 +629,9 @@ const CreateActa = () => {
                               : 0;
                             gotoPage(page);
                           }}
-                          style={{ width: '50px' }}
+                          style={{ width: "50px" }}
                         />
-                      </span>{' '}
+                      </span>{" "}
                       <select
                         value={pageSize}
                         onChange={(e) => {
@@ -646,7 +649,7 @@ const CreateActa = () => {
 
                   <div
                     className="d-flex justify-content-center"
-                    style={{ gap: '30px' }}
+                    style={{ gap: "30px" }}
                   >
                     <Button
                       onClick={(e) => handleBtnPresClick(e)}
@@ -692,13 +695,13 @@ const CreateActa = () => {
                     <div className="col">
                       <div
                         className="row d-flex flex-column"
-                        style={{ gap: '30px' }}
+                        style={{ gap: "30px" }}
                       >
                         <div className="col-auto">
                           <h3 className="h3">Miembros presentes</h3>
                           <div
                             className="container-fluid mt-3 d-flex w-100 flex-wrap"
-                            style={{ gap: '20px' }}
+                            style={{ gap: "20px" }}
                           >
                             {groupPresentes.map((presente) => (
                               <div className="tag-miembro tag-pres">
@@ -711,7 +714,7 @@ const CreateActa = () => {
                           <h3 className="h3">Miembros invitados</h3>
                           <div
                             className="container-fluid mt-3 d-flex w-100 flex-wrap"
-                            style={{ gap: '20px' }}
+                            style={{ gap: "20px" }}
                           >
                             {groupInvitados.map((invitado) => (
                               <div className="tag-miembro tag-inv">
@@ -724,7 +727,7 @@ const CreateActa = () => {
                           <h3 className="h3">Miembros ausentes</h3>
                           <div
                             className="container-fluid mt-3 d-flex w-100 flex-wrap"
-                            style={{ gap: '20px' }}
+                            style={{ gap: "20px" }}
                           >
                             {groupAusentes.map((ausente) => (
                               <div className="tag-miembro tag-aus">
@@ -744,7 +747,7 @@ const CreateActa = () => {
 
         {/* PARTE 3: VOTOS DEL ACTA */}
         {/* -------------------------------------------------------------------------------- */}
-        <div className={`formulario ${currentStep !== 3 && 'oculto'}`}>
+        <div className={`formulario ${currentStep !== 3 && "oculto"}`}>
           {currentStep === 3 && (
             <>
               <div className="create-acta-header mb-4">
@@ -776,7 +779,7 @@ const CreateActa = () => {
 
         {/* PARTE 4: DOCUMENTOS DE SOPORTE */}
         {/* -------------------------------------------------------------------------------- */}
-        <div className={`formulario ${currentStep !== 4 && 'oculto'}`}>
+        <div className={`formulario ${currentStep !== 4 && "oculto"}`}>
           {currentStep === 4 && (
             <>
               <div className="create-acta-header mb-4">
@@ -791,10 +794,10 @@ const CreateActa = () => {
         {/* -------------------------------------------------------------------------------- */}
         <div
           className="container-fluid mt-4 d-flex justify-content-between"
-          style={{ gap: '15px' }}
+          style={{ gap: "15px" }}
         >
           <button
-            class="btn btn-danger"
+            className="btn btn-danger"
             role="button"
             onClick={handleChangeStatusModalOk}
           >
@@ -803,20 +806,23 @@ const CreateActa = () => {
           <div className="container-fluid d-flex justify-content-end">
             {currentStep > 1 && (
               <button
-                class="btn btn-secondary me-2"
+                className="btn btn-secondary me-2"
                 onClick={handleDecrementStep}
               >
                 Atrás
               </button>
             )}
             {currentStep < 4 && (
-              <button class="btn btn-primary" onClick={handleIncrementStep}>
+              <button className="btn btn-primary" onClick={handleIncrementStep}>
                 Siguiente
               </button>
             )}
 
             {currentStep >= 4 && (
-              <button class="btn btn-success" onClick={handleShowConfirmModal}>
+              <button
+                className="btn btn-success"
+                onClick={handleShowConfirmModal}
+              >
                 Enviar acta
               </button>
             )}

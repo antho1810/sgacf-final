@@ -71,7 +71,6 @@ const Row = ({
 };
 
 const CreateActa = () => {
-
   const [actaInfo, setActaInfo] = useState({
     lugar: "",
     modalidad: "",
@@ -88,7 +87,6 @@ const CreateActa = () => {
   // ENVÍO DEL FORMULARIO PARA LA CREACIÓN DEL ACTA
 
   const handleSubmitted = (cronogramas) => {
-
     const cronograma = rows.map((row) => ({
       HORA: row.hora,
       ACTIVIDAD: row.actividad,
@@ -119,8 +117,6 @@ const CreateActa = () => {
     });
   };
 
-  
-
   // RECOPILA LA HORA DE INICIO Y FIN DEL ACTA
   const handleHoraInicioChange = (horaInicio) => {
     setActaInfo({
@@ -128,7 +124,7 @@ const CreateActa = () => {
       horaInicio,
     });
   };
-  
+
   const handleHoraFinalChange = (horaFinal) => {
     setActaInfo({
       ...actaInfo,
@@ -233,7 +229,7 @@ const CreateActa = () => {
 
   // AQUÍ HAY TRES FUNCIONES PARA LOS TRES BOTONES
   // EL FUNCIONAMIENTO DE ESTOS BOTONES YA ESTÁ VERIFICADO, SÓLO ES PARA MEJORAR EL CONTEXTO
-  // ESTE ES EL BOTÓN PARA RECOPILAR LOS MIEMBROS PRESENTES 
+  // ESTE ES EL BOTÓN PARA RECOPILAR LOS MIEMBROS PRESENTES
   const handleBtnPresClick = (e) => {
     e.preventDefault();
 
@@ -247,25 +243,25 @@ const CreateActa = () => {
         const fullName = `${nombre} ${apellido}`;
 
         if (!groupPresentes.includes(fullName)) {
-          
           setTimeout(() => {
             setGroupPresentes((prevGroupPresentes) => [
-            ...prevGroupPresentes,
-            fullName,
-          ]);
+              ...prevGroupPresentes,
+              fullName,
+            ]);
           }, 2);
 
-          setObjIdPresentes((prevObjIdPresentes) => [...prevObjIdPresentes, {_id: _id}]);
-          
-            console.log(objIdPresentes);
-            setIsAdded(false);
+          setObjIdPresentes((prevObjIdPresentes) => [
+            ...prevObjIdPresentes,
+            { _id: _id },
+          ]);
+
+          console.log(objIdPresentes);
+          setIsAdded(false);
         } else {
           setIsAdded(true);
         }
       }
     }
-
-
   };
 
   // ESTE ES EL BOTÓN PARA RECOPILAR LOS MIEMBROS INVITADOS
@@ -771,7 +767,11 @@ const CreateActa = () => {
           <div className="row mb-4">{renderCampos()}</div>
 
           <div className="container-fluid d-flex justify-content-center">
-            <button class="btn-send" role="button" onClick={handleSubmitted}>
+            <button
+              className="btn-send"
+              role="button"
+              onClick={handleSubmitted}
+            >
               Crear Acta
             </button>
           </div>
