@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import {
   useSortBy,
   useTable,
   useGlobalFilter,
   usePagination,
 } from "react-table";
+import emailjs from "@emailjs/browser";
 
 import ActaService from "../../services/ActasDataService";
 import { useLoaderData, NavLink } from "react-router-dom";
@@ -32,13 +33,14 @@ import GlobalActasFilter from "./filters/GlobalFilter";
 
 function Dashboard() {
   // Modals
-
+  const [isEmailOpen, setIsEmailOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleChangeStatusModalFalse = () => {
     setIsDeleteModalOpen(false);
     setIsUpdateModalOpen(false);
+    setIsEmailOpen(false);
   };
 
   const handleShowConfirmDeleteModal = () => {
@@ -48,8 +50,38 @@ function Dashboard() {
   const handleShowConfirmUpdateModal = () => {
     setIsUpdateModalOpen(true);
   };
+  const handleShowEmailModal = () => {
+    setIsEmailOpen(true);
+  };
 
-  // Update Status
+  // Email Modal
+  const handleEmail = () => {
+    sendEmail();
+  };
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    // Configura EmailJS con tu Service ID
+    emailjs
+      .sendForm(
+        "service_0c37kw4",
+        "template_znez8vj",
+        e.target,
+        "lKnR9ZvyvLPcJxoin"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          closeModal();
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+
+  // Update Status Modal
   const handleUpdateStatus = () => {
     updateStatusActa();
   };
@@ -65,8 +97,12 @@ function Dashboard() {
       .catch((error) => {
         console.error("Error al actualizar el estado del acta: ", error);
       });
+    setTimeout(() => {
+      // Recargar la página
+      window.location.reload();
+    }, 2000);
   };
-  // Delete
+  // Delete Modal
   const handleConfirmDelete = () => {
     deleteActa();
   };
@@ -157,7 +193,11 @@ function Dashboard() {
               {"  "}
               <span>Borrar</span>
             </Dropdown.Item>
-            <Dropdown.Item className="i-compartir" icon={<FaShareAlt />}>
+            <Dropdown.Item
+              className="i-compartir"
+              onClick={handleShowEmailModal}
+              icon={<FaShareAlt />}
+            >
               {" "}
               <span>Compartir</span>{" "}
             </Dropdown.Item>
@@ -224,7 +264,48 @@ function Dashboard() {
 
   return (
     <>
-      {/* MODAL Eliminar CERRAR */}
+      {/* MODAL Actualizar Estado Acta CERRAR */}
+      {isEmailOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2 className="mb-4 h4 text-center">
+              ¿Está seguro que desea enviar el acta por correo?
+            </h2>
+            <div className="mt-4 mb-4">
+              <label className="Email">Email:</label>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Ingrese el correo electrónico"
+                // onChange={handleEmailChange}
+              />
+              <label className="Mensaje">Mensaje:</label>
+              <textarea
+                className="form-control"
+                placeholder="Ingrese el mensaje"
+                // onChange={handleMensajeChange}
+              />
+              <div>
+                <label className="Archivo">Archivo: </label>
+                Espacio para el archivo seleccionado
+              </div>
+            </div>
+            <div className="ct-btn d-flex justify-content-evenly">
+              <button
+                className="btn btn-warning"
+                onClick={handleChangeStatusModalFalse}
+              >
+                Atrás
+              </button>
+              <button className="btn btn-primary" onClick={handleEmail}>
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL Actualizar Estado Acta CERRAR */}
       {isUpdateModalOpen && (
         <div className="modal">
           <div className="modal-content">

@@ -46,6 +46,9 @@ const CreateParticipante = () => {
         .catch((error) => {
           console.error("Error al enviar el participante:", error);
         });
+      setTimeout(() => {
+        window.location.href = "/";
+      })
     }, 2);
   };
 
