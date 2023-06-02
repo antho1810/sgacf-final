@@ -1,13 +1,12 @@
-import axios from 'axios'
 
-const token = localStorage.getItem('token')
-
-console.log(token)
+import axios from "axios"
 
 export default axios.create({
-    baseURL: "https://sgacfi-back-mern.up.railway.app/sgacfi-api/",
-    headers: {
-        "Content-Type": "application/json",
-        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDc2MzkzZDk4MDE5NzAyNTk0ZjkxYTciLCJub21icmUiOiJFZG5hIiwiYXBlbGxpZG8iOiJDb25kZSIsImNhcmdvIjoiU2VjcmV0YXJpYSIsInJvbCI6W10sImlhdCI6MTY4NTQ2OTUwMSwiZXhwIjoxNjg2MDc0MzAxfQ._y-H8G9sc6ZVu9NS_tuUCW9ChtDZridhdRepe_rIMAk"
-    }
-})
+  baseURL: "https://sgacfi-back-mern.up.railway.app/sgacfi-api/",
+  // baseURL: "http://localhost:4000/sgacfi-api",
+  headers: {
+    "Content-type": "application/json",
+    "x-access-token":
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NjY2ZjRiMGM5NDY2YzNmZTdmODdhYyIsImlhdCI6MTY4NDQzNDc2NCwiZXhwIjoxNjg1MDM5NTY0fQ.xSTLtRQ4PB6eOLbn9vHgHbh1iwgJVL_BtngPu8auEgU",
+  },
+});
