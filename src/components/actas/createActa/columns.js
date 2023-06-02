@@ -1,20 +1,19 @@
-import Badge from "react-bootstrap/Badge";
+import Form from "react-bootstrap/Form"
 
-import { Dropdown, IconButton } from "rsuite";
-
-import { HiDotsHorizontal, HiDocumentDownload } from "react-icons/hi";
-import Form from "react-bootstrap/Form";
-
-const renderIconButton = (props, ref) => {
-  return <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />;
+const handleCheckboxChange = (selectedId) => {
+  // Aquí puedes hacer lo que necesites con el _id seleccionado
+  console.log("Miembro seleccionado:", selectedId);
 };
 
 export const COLUMNS = [
   {
     Header: "seleccionar",
     accessor: "_id",
-    Cell: ({ value }) => (
-      <Form.Check aria-label="option 1" />
+    Cell: ({ row }) => (
+      <Form.Check
+        aria-label="Seleccionar miembro"
+        onChange={() => handleCheckboxChange(row.original._id)}
+      />
     )
   },
 

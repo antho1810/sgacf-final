@@ -1,30 +1,221 @@
-import React, { useMemo, useState } from "react";
-import { useSortBy, useTable, useGlobalFilter } from "react-table";
+import React, { useMemo, useState, useRef } from "react";
+import {
+  useSortBy,
+  useTable,
+  useGlobalFilter,
+  usePagination,
+} from "react-table";
+import emailjs from "@emailjs/browser";
 
 import ActaService from "../../services/ActasDataService";
 import { useLoaderData, NavLink } from "react-router-dom";
+import moment from "moment";
+// import { COLUMNS } from "./columns";
 
-import { COLUMNS } from "./columns";
+import { Dropdown, IconButton } from "rsuite";
 
-import Navbarside from "../../routesLayouts/RootLayout";
-import CrearActa from "../actas/createActa/CreateActa";
-import UpdateActa from "../actas/updateActa/UpdateActa";
-
-import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
+import Badge from "react-bootstrap/Badge";
+import { HiDotsHorizontal, HiDocumentDownload } from "react-icons/hi";
+import { BsEyeglasses } from "react-icons/bs";
+import { AiOutlineLike } from "react-icons/ai";
+import { FaShareAlt, FaRegEdit } from "react-icons/fa";
+import { RiDeleteBinLine } from "react-icons/ri";
+
+import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable";
 
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 
 import "./Dashboard.css";
 import "./Table.css";
-import CreateActa from "../actas/createActa/CreateActa";
-import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable";
-import GlobalActasFilter from "./GlobalFilter";
+import GlobalActasFilter from "./filters/GlobalFilter";
 
 function Dashboard() {
+  // Modals
+  const [isEmailOpen, setIsEmailOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const handleChangeStatusModalFalse = () => {
+    setIsDeleteModalOpen(false);
+    setIsUpdateModalOpen(false);
+    setIsEmailOpen(false);
+  };
+
+  const handleShowConfirmDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleShowConfirmUpdateModal = () => {
+    setIsUpdateModalOpen(true);
+  };
+  const handleShowEmailModal = () => {
+    setIsEmailOpen(true);
+  };
+
+  // Email Modal
+  const handleEmail = () => {
+    sendEmail();
+  };
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    // Configura EmailJS con tu Service ID
+    emailjs
+      .sendForm(
+        "service_0c37kw4",
+        "template_znez8vj",
+        e.target,
+        "lKnR9ZvyvLPcJxoin"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          closeModal();
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+
+  // Update Status Modal
+  const handleUpdateStatus = () => {
+    updateStatusActa();
+  };
+
+  const updateStatusActa = async () => {
+    const response = await ActaService.updateStatusActa()
+      .then((response) => {
+        console.log(
+          "El estado del acta ha sido actualizada exitosamente: ",
+          response.data
+        );
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el estado del acta: ", error);
+      });
+    setTimeout(() => {
+      // Recargar la página
+      window.location.reload();
+    }, 2000);
+  };
+  // Delete Modal
+  const handleConfirmDelete = () => {
+    deleteActa();
+  };
+
+  const deleteActa = async () => {
+    // peticion
+    const response = await ActaService.deleteActa()
+      .then((response) => {
+        console.log("Participante borrado exitosamente: ", response.data);
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el participante: ", error);
+      });
+    setTimeout(() => {
+      // Recargar la página
+      window.location.reload();
+    }, 2000);
+  };
+
+  const renderIconButton = (props, ref) => {
+    return (
+      <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />
+    );
+  };
+  const columns = React.useMemo(
+    () => [
+      { Header: "# Ref", accessor: "numeroRef" },
+
+      {
+        Header: "Fecha de creación",
+        accessor: "fechaCreacion",
+        Cell: ({ value }) => moment(value).format("DD/MM/YYYY"),
+      },
+      { Header: "Miembros presentes", accessor: "miembrosPresentes" },
+      { Header: "Lugar", accessor: "lugar" },
+      { Header: "Modalidad", accessor: "modalidad" },
+      {
+        Header: "Estado",
+        accessor: "estado",
+        Cell: ({ value }) =>
+          value === "En proceso" ? (
+            <Badge className="inProcess">
+              {" "}
+              <span>{value}</span>{" "}
+            </Badge>
+          ) : (
+            <Badge className="confirmed">
+              <span>{value}</span>
+            </Badge>
+          ),
+      },
+      { Header: "Articulos", accessor: "articulos" },
+      {
+        Header: "",
+        accessor: "_id",
+        Cell: ({ value }) => (
+          <Dropdown renderToggle={renderIconButton} className="accion-drop">
+            <Dropdown.Item
+              className="i-revisar"
+              as={NavLink}
+              to="detalle-acta"
+              icon={<BsEyeglasses />}
+            >
+              {" "}
+              <span>Revisar</span>{" "}
+            </Dropdown.Item>
+            <Dropdown.Item
+              className="i-aprobar"
+              onClick={handleShowConfirmUpdateModal}
+              icon={<AiOutlineLike />}
+            >
+              {" "}
+              <span>Aprobar</span>{" "}
+            </Dropdown.Item>
+            <Dropdown.Item
+              className="i-editar"
+              // onClick={}
+              icon={<FaRegEdit />}
+            >
+              {" "}
+              <span>Editar</span>{" "}
+            </Dropdown.Item>
+            <Dropdown.Item
+              className="i-borrar"
+              onClick={handleShowConfirmDeleteModal}
+              icon={<RiDeleteBinLine />}
+            >
+              {"  "}
+              <span>Borrar</span>
+            </Dropdown.Item>
+            <Dropdown.Item
+              className="i-compartir"
+              onClick={handleShowEmailModal}
+              icon={<FaShareAlt />}
+            >
+              {" "}
+              <span>Compartir</span>{" "}
+            </Dropdown.Item>
+            <Dropdown.Item
+              className="i-descargar"
+              icon={<HiDocumentDownload />}
+            >
+              {" "}
+              <span> Descargar PDF</span>
+            </Dropdown.Item>
+          </Dropdown>
+        ),
+      },
+    ],
+    []
+  );
+
   const responseActas = useLoaderData();
-  const participantes = useLoaderData();
 
   const data = useMemo(
     () =>
@@ -42,35 +233,129 @@ function Dashboard() {
     [responseActas]
   );
 
-  const tableInstance = useTable(
-    {
-      columns: COLUMNS,
-      data,
-    },
-    useGlobalFilter,
-    useSortBy
-  );
-
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
     prepareRow,
     state,
-    setGlobalFilter
-  } = tableInstance;
+    setGlobalFilter,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 5 }, // Estado inicial de la paginación
+    },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
 
-  const { globalFilter } = state;
+  const { pageIndex, pageSize, globalFilter } = state;
 
   return (
     <>
+      {/* MODAL Actualizar Estado Acta CERRAR */}
+      {isEmailOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2 className="mb-4 h4 text-center">
+              ¿Está seguro que desea enviar el acta por correo?
+            </h2>
+            <div className="mt-4 mb-4">
+              <label className="Email">Email:</label>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Ingrese el correo electrónico"
+                // onChange={handleEmailChange}
+              />
+              <label className="Mensaje">Mensaje:</label>
+              <textarea
+                className="form-control"
+                placeholder="Ingrese el mensaje"
+                // onChange={handleMensajeChange}
+              />
+              <div>
+                <label className="Archivo">Archivo: </label>
+                Espacio para el archivo seleccionado
+              </div>
+            </div>
+            <div className="ct-btn d-flex justify-content-evenly">
+              <button
+                className="btn btn-warning"
+                onClick={handleChangeStatusModalFalse}
+              >
+                Atrás
+              </button>
+              <button className="btn btn-primary" onClick={handleEmail}>
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL Actualizar Estado Acta CERRAR */}
+      {isUpdateModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2 className="mb-4 h4 text-center">
+              ¿Está seguro que desea actualizar el estado del acta?
+            </h2>
+            <div className="ct-btn d-flex justify-content-evenly">
+              <button
+                className="btn btn-warning"
+                onClick={handleChangeStatusModalFalse}
+              >
+                Atrás
+              </button>
+              <button className="btn btn-primary" onClick={handleUpdateStatus}>
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* MODAL Eliminar CERRAR */}
+      {isDeleteModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2 className="mb-4 h4 text-center">
+              ¿Está seguro que desea eliminar el acta?
+            </h2>
+            <div className="ct-btn d-flex justify-content-evenly">
+              <button
+                className="btn btn-warning"
+                onClick={handleChangeStatusModalFalse}
+              >
+                Atrás
+              </button>
+              <button className="btn btn-primary" onClick={handleConfirmDelete}>
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="ct-header-actas">
         <div className="title-actas">
           <h2>Lista de actas</h2>
         </div>
         <div>
-          <Button className="plus-acta-btn" as={NavLink} to="crear-acta">+ Añadir acta</Button>
+          <Button as={NavLink} to="crear-acta" className="plus-acta-btn">
+            + Añadir acta
+          </Button>
         </div>
       </div>
 
@@ -104,7 +389,7 @@ function Dashboard() {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <>
@@ -123,6 +408,58 @@ function Dashboard() {
           })}
         </tbody>
       </Table>
+      <div
+        className="container-fluid d-flex justify-content-end mb-4"
+        style={{ gap: "10px" }}
+      >
+        <div>
+          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            {"<<"}
+          </button>{" "}
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            {"<"}
+          </button>{" "}
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            {">"}
+          </button>{" "}
+          <button
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+          >
+            {">>"}
+          </button>{" "}
+          <span>
+            Página{" "}
+            <strong>
+              {pageIndex + 1} de {pageOptions.length}
+            </strong>{" "}
+          </span>
+          <span>
+            | Ir a la página:{" "}
+            <input
+              type="number"
+              defaultValue={pageIndex + 1}
+              onChange={(e) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                gotoPage(page);
+              }}
+              style={{ width: "50px" }}
+            />
+          </span>{" "}
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+            }}
+          >
+            {[5, 10, 15, 20].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Mostrar {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
 
       <ParticipantesTable />
     </>
@@ -131,7 +468,6 @@ function Dashboard() {
 
 export const dashboardLoader = async () => {
   const responseActas = await ActaService.getAllActas();
-  console.log(responseActas.data)
   return responseActas.data;
 };
 
