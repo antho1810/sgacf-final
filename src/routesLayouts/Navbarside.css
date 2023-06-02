@@ -1,5 +1,5 @@
 * {
-  font-family: "Nunito";
+  font-family: "Nunito"; 
 }
 
 :root {
@@ -14,9 +14,10 @@
   align-items: stretch;
   align-content: stretch;
   flex-direction: column;
+
 }
 
-.flex.items:nth-child(1) {
+.flex-items:nth-child(1) {
   display: block;
   flex-grow: 0;
   flex-shrink: 1;
@@ -25,7 +26,7 @@
   order: 0;
 }
 
-.flex.items:nth-child(2) {
+.flex-items:nth-child(2) {
   display: block;
   flex-grow: 1;
   flex-shrink: 1;
@@ -34,7 +35,7 @@
   order: 0;
 }
 
-.flex.items:nth-child(3) {
+.flex-items:nth-child(3) {
   display: block;
   flex-grow: 0;
   flex-shrink: 1;
@@ -62,7 +63,7 @@ nav {
 
 .rs-sidenav-nav .rs-sidenav-item,
 .rs-sidenav-nav .rs-dropdown .rs-dropdown-menu li .rs-dropdown-item,
-.rs-sidenav-nav .rs-dropdown .rs-sidenav-item{
+.rs-sidenav-nav .rs-dropdown .rs-sidenav-item {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -72,42 +73,42 @@ nav {
 
 .rs-sidenav-nav .rs-sidenav-item span,
 .rs-sidenav-nav .rs-dropdown .rs-dropdown-menu li .rs-dropdown-item span,
-.rs-sidenav-nav .rs-dropdown .rs-sidenav-item span{
-  font-size: 16px;
+.rs-sidenav-nav .rs-dropdown .rs-sidenav-item span {
   font-weight: 600;
+  font-size: 16px;
   margin-left: 16px;
 }
 
 .rs-sidenav-nav .rs-sidenav-item svg,
 .rs-sidenav-nav .rs-dropdown .rs-dropdown-menu li .rs-dropdown-item svg,
-.rs-sidenav-nav .rs-dropdown .rs-sidenav-item svg{
+.rs-sidenav-nav .rs-dropdown .rs-sidenav-item svg {
   width: 26px !important;
   color: var(--blue-cake);
 }
 
-.ct-user{
+.ct-user {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
   align-content: center;
+  align-items: center;
   padding: 30px 0;
 }
 
 .ct-user .ct-info-user{
-  margin-left: 4px;
+    margin-left: 4px;
 }
 
 .ct-user .ct-info-user h4{
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 10px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 10px;
 }
 
 .ct-user .ct-info-user span{
-  font-weight: 400;
-  font-size: 10px;
-  color: rgba(0, 0, 0, .7)
+    font-weight: 400;
+    font-size: 10px;
+    color: rgba(0, 0, 0, .7);
 }

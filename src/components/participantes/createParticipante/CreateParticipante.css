@@ -1,0 +1,29 @@
+.ct-header-ca {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-start;
+  width: 100%;
+  overflow: auto;
+  margin-bottom: 33px;
+}
+
+.ct-header-ca .title {
+  font-weight: 700;
+  font-size: 24px;
+  color: #030229;
+}
+
+div.container-fluid{
+  padding: 0;
+}
+
+.ct-inputs{
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  align-items: center;
+  justify-content: flex-start;
+}
