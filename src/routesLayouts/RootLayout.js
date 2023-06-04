@@ -17,7 +17,6 @@ import { HiDocumentAdd, HiDocumentText } from 'react-icons/hi';
 import './Navbarside.css';
 
 function Navbarside() {
-
   const [userInfo, setUserInfo] = useState({});
 
   const loadUserData = async () => {
