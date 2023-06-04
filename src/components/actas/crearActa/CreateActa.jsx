@@ -10,7 +10,13 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 
-import { HiPlus, HiX, HiChevronDown, HiChevronUp } from "react-icons/hi";
+import {
+  HiPlus,
+  HiBadgeCheck,
+  HiChevronDown,
+  HiChevronUp,
+  HiX,
+} from "react-icons/hi";
 
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -33,16 +39,29 @@ const CreateActa = () => {
     horaInicio: "",
     horaFinal: "",
     cronograma: "",
-    miembrosPresentes: [],
-    miembrosAusentes: [],
-    miembrosInvitados: [],
+    miembrosPresentes: [
+      {
+        id: "",
+      },
+    ],
+    miembrosAusentes: [
+      {
+        id: "",
+      },
+    ],
+    miembrosInvitados: [
+      {
+        id: "",
+      },
+    ],
     articulos: [],
-    docsSoporte: [],
+    documentosSoporte: [],
   });
 
-  // ENVIAR EL FORMULARIO LOCALHOST:4000/API/ACTAS
-  const handleSubmitted = () => {
-    ActaService.createActa(actaInicial)
+  const handleConfirmSend = () => {
+    console.log(actaInicial);
+
+    ActaService.createActa(JSON.stringify(actaInicial))
       .then((response) => {
         console.log("Acta enviada exitosamente:", response.data);
       })
@@ -50,7 +69,9 @@ const CreateActa = () => {
         console.error("Error al enviar el acta:", error);
       });
 
-    window.location.href = "/";
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
   };
 
   // MODALES
@@ -76,20 +97,6 @@ const CreateActa = () => {
     window.location.href = "/";
   };
 
-  const handleConfirmSend = () => {
-    ActaService.createActa(actaInicial)
-      .then((response) => {
-        console.log("Acta enviada exitosamente:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error al enviar el acta:", error);
-      });
-
-    setTimeout(() => {
-      // window.location.href = "/";
-    }, 2000);
-  };
-
   // FUNCIONALIDAD PASO A PASO
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -99,6 +106,80 @@ const CreateActa = () => {
 
   const handleDecrementStep = () => {
     setCurrentStep(currentStep - 1);
+  };
+
+  // PASO 2 RECOPILACIONES: MIEMBROS
+
+  const [isMiembrosPresentesModalOpen, setIsMiembrosPresentesModalOpen] =
+    useState(false);
+  const [isMiembrosInvitadosModalOpen, setIsMiembrosInvitadosModalOpen] =
+    useState(false);
+  const [isMiembrosAusentesModalOpen, setIsMiembrosAusentesModalOpen] =
+    useState(false);
+
+  // REHACER ACCION DE CONFIRMAR MIEMBROS POR CATEGORIA
+
+  const closeModalMiembro = () => {
+    setIsMiembrosPresentesModalOpen(false);
+    setIsMiembrosInvitadosModalOpen(false);
+    setIsMiembrosAusentesModalOpen(false);
+  };
+
+  const handleConfirmIdPresentes = () => {
+    const miembrosPresentesActa = {
+      miembrosPresentes: objIdPresentes,
+    };
+
+    const updatePresentesActa = {
+      ...actaInicial,
+      ...miembrosPresentesActa,
+    };
+
+    setActaInicial(updatePresentesActa);
+    setIsPresentesAdded(true);
+    setIsMiembrosPresentesModalOpen(false);
+  };
+
+  const handleConfirmIdInvitados = () => {
+    const miembrosInvitadosActa = {
+      miembrosInvitados: objIdInvitados,
+    };
+
+    const updateInvitadosActa = {
+      ...actaInicial,
+      ...miembrosInvitadosActa,
+    };
+
+    setActaInicial(updateInvitadosActa);
+    setIsInvitadosAdded(true);
+    setIsMiembrosInvitadosModalOpen(false);
+  };
+
+  const handleConfirmIdAusentes = () => {
+    const miembrosAusentesActa = {
+      miembrosAusentes: objIdAusentes,
+    };
+
+    const updateAusentesActa = {
+      ...actaInicial,
+      ...miembrosAusentesActa,
+    };
+
+    setActaInicial(updateAusentesActa);
+    setIsAusentesAdded(true);
+    setIsMiembrosAusentesModalOpen(false);
+  };
+
+  const handleUndoPresentes = () => {
+    setIsPresentesAdded(false);
+  };
+
+  const handleUndoInvitados = () => {
+    setIsInvitadosAdded(false);
+  };
+
+  const handleUndoAusentes = () => {
+    setIsAusentesAdded(false);
   };
 
   // PARTE 1 : INFORMACIÓN BÁSICA
@@ -127,28 +208,11 @@ const CreateActa = () => {
   // PARTE 2: MIEMBROS DEL ACTA
   // -----------------------------------------------------------------------------
 
-  // ESTADO INICIAL PARA LA SELECCIÓN DEL PARTICIPANTE CON EL CHECKBOX
-  const [selectedParticipant, setSelectedParticipant] = useState(null);
-
-  // ARREGLOS Y OBJETOS INICIALES PARA LA INDEXACIÓN DE LOS MIEMBROS
-  const [groupPresentes, setGroupPresentes] = useState([]);
-  const [groupAusentes, setGroupAusentes] = useState([]);
-  const [groupInvitados, setGroupInvitados] = useState([]);
-
-  // ESTADO QUE MUESTRA EL TEXTO INICIAL DE UNA ALERTA PARA INFORMAR SI UN MIEMBRO YA FUE
-  // AÑADIDO
-  const [isAdded, setIsAdded] = useState(false);
-
-  // ARREGLO DE OBJETOS QUE RECOPILA LOS _ID DE CADA PARTICIPANTE PARA ENVIAR
-  // AL BODY REQUEST MEDIANTE onSubmitted()
-  const [objIdPresentes, setObjIdPresentes] = useState([{ _id: "" }]);
-  const [objIdAusentes, setObjIdAusentes] = useState([{ _id: "" }]);
-  const [objIdInvitados, setObjIdInvitados] = useState([{ _id: "" }]);
+  // OBTENER DATOS DE LA TABLA
 
   // ESTADO INICIAL PARA LOS DATOS DE LA TABLA <<PARTICIPANTES>>
   const [participantes, setParticipantes] = useState([]);
 
-  // OBTENER DATOS DE LA TABLA
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -173,13 +237,31 @@ const CreateActa = () => {
     [participantes]
   );
 
+  // ESTADO QUE MUESTRA EL TEXTO INICIAL DE UNA ALERTA PARA INFORMAR SI UN MIEMBRO YA FUE
+  // AÑADIDO
+  const [isAdded, setIsAdded] = useState(false);
+
+  // ESTADO INICIAL PARA LA SELECCIÓN DEL PARTICIPANTE CON EL CHECKBOX
+  const [selectedParticipant, setSelectedParticipant] = useState(null);
+
   // CAMBIA EL ESTADO DEL CHECKBOX EN ESE MOMENTO
   const handleCheckboxChange = (participantId) => {
     setSelectedParticipant(participantId);
   };
 
-  // AQUÍ HAY TRES FUNCIONES PARA LOS TRES BOTONES
-  // EL FUNCIONAMIENTO DE ESTOS BOTONES YA ESTÁ VERIFICADO, SÓLO ES PARA MEJORAR EL CONTEXTO
+  // ARREGLOS Y OBJETOS INICIALES PARA LA INDEXACIÓN DE LOS MIEMBROS
+  const [groupPresentes, setGroupPresentes] = useState([
+    {
+      _id: "",
+      nombre: "",
+      apellido: "",
+    },
+  ]);
+
+  // ESTADO DE LAS CONFIRMACIONES PARA RECOPILAR LOS MIEMBROS
+  const [isPresentesAdded, setIsPresentesAdded] = useState(false);
+  const [objIdPresentes, setObjIdPresentes] = useState([]);
+
   // ESTE ES EL BOTÓN PARA RECOPILAR LOS MIEMBROS PRESENTES
   const handleBtnPresClick = (e) => {
     e.preventDefault();
@@ -191,55 +273,64 @@ const CreateActa = () => {
 
       if (selectedParticipantData) {
         const { _id, nombre, apellido } = selectedParticipantData;
-        const fullName = `${nombre} ${apellido}`;
+        const newObject = { _id, nombre, apellido };
 
-        if (!groupPresentes.includes(fullName)) {
-          setTimeout(() => {
-            setGroupPresentes((prevGroupPresentes) => [
-              ...prevGroupPresentes,
-              fullName,
-            ]);
-          }, 2);
+        const verifyEntry = groupPresentes.some((presente) => {
+          return (
+            presente._id === newObject._id &&
+            presente.nombre === newObject.nombre &&
+            presente.apellido === newObject.apellido
+          );
+        });
 
-          setObjIdPresentes((prevObjIdPresentes) => [
-            ...prevObjIdPresentes,
-            { _id: _id },
+        if (verifyEntry) {
+          setIsAdded(true);
+        } else {
+          setGroupPresentes((prevGroupPresentes) => [
+            ...prevGroupPresentes,
+            { _id, nombre, apellido },
           ]);
 
-          console.log(objIdPresentes);
           setIsAdded(false);
-        } else {
-          setIsAdded(true);
         }
       }
     }
   };
 
-  // ESTE ES EL BOTÓN PARA RECOPILAR LOS MIEMBROS INVITADOS
-  const handleBtnInvClick = (e) => {
-    e.preventDefault();
+  // CREA EL ARREGLO _ID PARA PARTICIPANTES AL ACTA
+  const handleConfirmMiembrosPresentes = () => {
+    const miembPresentesSeleccionados = groupPresentes.map((presente) => {
+      return { _id: presente._id };
+    });
 
-    if (selectedParticipant) {
-      const selectedParticipantData = data.find(
-        (participant) => participant._id === selectedParticipant
-      );
+    miembPresentesSeleccionados.shift();
 
-      if (selectedParticipantData) {
-        const { nombre, apellido } = selectedParticipantData;
-        const fullName = `${nombre} ${apellido}`;
+    setObjIdPresentes(miembPresentesSeleccionados);
 
-        if (groupInvitados.includes(fullName)) {
-          setIsAdded(true);
-        } else {
-          setIsAdded(false);
-          setGroupInvitados((prevGroupInvitados) => [
-            ...prevGroupInvitados,
-            fullName,
-          ]);
-        }
-      }
-    }
+    const miembrosPresentesActa = {
+      miembrosPresentes: objIdPresentes,
+    };
+
+    const updatePresentesActa = {
+      ...actaInicial,
+      ...miembrosPresentesActa,
+    };
+
+    setActaInicial(updatePresentesActa);
+    setIsMiembrosPresentesModalOpen(true);
   };
+
+  // MIEMBROS AUSENTES
+  const [groupAusentes, setGroupAusentes] = useState([
+    {
+      _id: "",
+      nombre: "",
+      apellido: "",
+    },
+  ]);
+
+  const [isAusentesAdded, setIsAusentesAdded] = useState(false);
+  const [objIdAusentes, setObjIdAusentes] = useState([]);
 
   // ESTE ES EL BOTÓN PARA RECOPILAR LOS MIEMBROS AUSENTES
   const handleBtnAusClick = (e) => {
@@ -251,20 +342,123 @@ const CreateActa = () => {
       );
 
       if (selectedParticipantData) {
-        const { nombre, apellido } = selectedParticipantData;
-        const fullName = `${nombre} ${apellido}`;
+        const { _id, nombre, apellido } = selectedParticipantData;
 
-        if (groupAusentes.includes(fullName)) {
+        const newObject = { _id, nombre, apellido };
+
+        const verifyEntry = groupAusentes.some((ausente) => {
+          return (
+            ausente._id === newObject._id &&
+            ausente.nombre === newObject.nombre &&
+            ausente.apellido === newObject.apellido
+          );
+        });
+
+        if (verifyEntry) {
           setIsAdded(true);
         } else {
-          setIsAdded(false);
-          setGroupAusentes((prevGrouAusentes) => [
-            ...prevGrouAusentes,
-            fullName,
+          setGroupAusentes((prevGroupAusentes) => [
+            ...prevGroupAusentes,
+            { _id, nombre, apellido },
           ]);
+
+          setIsAdded(false);
         }
       }
     }
+  };
+
+  // CREA EL ARREGLO _ID PARA PARTICIPANTES AL ACTA
+  const handleConfirmMiembrosAusentes = () => {
+    const miembAusentesSeleccionados = groupAusentes.map((ausente) => {
+      return { _id: ausente._id };
+    });
+
+    miembAusentesSeleccionados.shift();
+
+    setObjIdAusentes(miembAusentesSeleccionados);
+
+    const miembrosAusentesActa = {
+      miembrosAusentes: objIdAusentes,
+    };
+
+    const updateAusentesActa = {
+      ...actaInicial,
+      ...miembrosAusentesActa,
+    };
+
+    setActaInicial(updateAusentesActa);
+    setIsMiembrosAusentesModalOpen(true);
+  };
+
+  // MIEMBROS INVITADOS
+  const [groupInvitados, setGroupInvitados] = useState([
+    {
+      _id: "",
+      nombre: "",
+      apellido: "",
+    },
+  ]);
+
+  const [isInvitadosAdded, setIsInvitadosAdded] = useState(false);
+  const [objIdInvitados, setObjIdInvitados] = useState([]);
+
+  // ESTE ES EL BOTÓN PARA RECOPILAR LOS MIEMBROS INVITADOS
+  const handleBtnInvClick = (e) => {
+    e.preventDefault();
+
+    if (selectedParticipant) {
+      const selectedParticipantData = data.find(
+        (participant) => participant._id === selectedParticipant
+      );
+
+      if (selectedParticipantData) {
+        const { _id, nombre, apellido } = selectedParticipantData;
+
+        const newObject = { _id, nombre, apellido };
+
+        const verifyEntry = groupInvitados.some((invitado) => {
+          return (
+            invitado._id === newObject._id &&
+            invitado.nombre === newObject.nombre &&
+            invitado.apellido === newObject.apellido
+          );
+        });
+
+        if (verifyEntry) {
+          setIsAdded(true);
+        } else {
+          setGroupInvitados((prevGroupInvitados) => [
+            ...prevGroupInvitados,
+            { _id, nombre, apellido },
+          ]);
+          console.log(groupInvitados);
+          setIsAdded(false);
+        }
+      }
+    }
+  };
+
+  // CREA EL ARREGLO _ID PARA PARTICIPANTES AL ACTA
+  const handleConfirmMiembrosInvitados = () => {
+    const miembInvitadosSeleccionados = groupInvitados.map((invitado) => {
+      return { _id: invitado._id };
+    });
+    miembInvitadosSeleccionados.shift();
+
+    setObjIdInvitados(miembInvitadosSeleccionados);
+
+    const miembrosInvitadosActa = {
+      miembrosInvitados: objIdInvitados,
+    };
+
+    const updateInvitadosActa = {
+      ...actaInicial,
+      ...miembrosInvitadosActa,
+    };
+
+    setActaInicial(updateInvitadosActa);
+    setIsMiembrosInvitadosModalOpen(true);
   };
 
   const columns = React.useMemo(
@@ -324,8 +518,23 @@ const CreateActa = () => {
   const [votoSeleccionado, setVotoSeleccionado] = useState("");
   const [formulario, setFormulario] = useState({});
 
+  const handleRecopilarVotos = () => {
+    const finalActa = {
+      articulos: formulario,
+    };
+
+    const definitiveActa = {
+      ...actaInicial,
+      ...finalActa,
+    };
+
+    setActaInicial(definitiveActa);
+    setCurrentStep(currentStep + 1);
+  };
+
   const handleChangeVotos = (event) => {
     const voto = event.target.value;
+
     setVotoSeleccionado(voto);
   };
 
@@ -380,25 +589,40 @@ const CreateActa = () => {
     });
   };
 
+  // PARTE 4 : ADJUNTAR DOCUMENTOS DE SOPORTE
+  // -----------------------------------------------------------------------------
+
+  const [files, setFiles] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const handleFileUpload = () => {
+    if (selectedFile) {
+      setFiles([...files, selectedFile]);
+      setSelectedFile(null);
+    }
+  };
+
   return (
     <>
-      {/* MODAL CERRAR */}
-      {isOpen && (
+      {/* MODAL MIEMBROS PRESENTES */}
+      {isMiembrosPresentesModalOpen && (
         <div className="modal">
           <div className="modal-content">
             <h2 className="mb-4 h4 text-center">
-              ¿Está seguro que desea salir?
+              ¿Está seguro que desea confirmar los miembros presentes?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
-              <button
-                className="btn btn-warning"
-                onClick={handleChangeStatusModalFalse}
-              >
+              <button class="btn btn-warning" onClick={closeModalMiembro}>
                 Atrás
               </button>
               <button
-                className="btn btn-primary"
-                onClick={handleConfirmExitBtn}
+                class="btn btn-primary"
+                onClick={handleConfirmIdPresentes}
               >
                 Confirmar
               </button>
@@ -407,7 +631,70 @@ const CreateActa = () => {
         </div>
       )}
 
-      {/* MODAL Enviar CERRAR */}
+      {/* MODAL MIEMBROS INVITADOS */}
+      {isMiembrosInvitadosModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2 className="mb-4 h4 text-center">
+              ¿Está seguro que desea confirmar los miembros invitados?
+            </h2>
+            <div className="ct-btn d-flex justify-content-evenly">
+              <button class="btn btn-warning" onClick={closeModalMiembro}>
+                Atrás
+              </button>
+              <button
+                class="btn btn-primary"
+                onClick={handleConfirmIdInvitados}
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL MIEMBROS AUSENTES */}
+      {isMiembrosAusentesModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2 className="mb-4 h4 text-center">
+              ¿Está seguro que desea confirmar los miembros ausentes?
+            </h2>
+            <div className="ct-btn d-flex justify-content-evenly">
+              <button class="btn btn-warning" onClick={closeModalMiembro}>
+                Atrás
+              </button>
+              <button class="btn btn-primary" onClick={handleConfirmIdAusentes}>
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL SALIR DE CREAR EL ACTA */}
+      {isOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2 className="mb-4 h4 text-center">
+              ¿Está seguro que desea salir?
+            </h2>
+            <div className="ct-btn d-flex justify-content-evenly">
+              <button
+                class="btn btn-warning"
+                onClick={handleChangeStatusModalFalse}
+              >
+                Atrás
+              </button>
+              <button class="btn btn-primary" onClick={handleConfirmExitBtn}>
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL CERRAR */}
       {isSendModalOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -416,12 +703,12 @@ const CreateActa = () => {
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                className="btn btn-warning"
+                class="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button className="btn btn-primary" onClick={handleConfirmSend}>
+              <button class="btn btn-primary" onClick={handleConfirmSend}>
                 Confirmar
               </button>
             </div>
@@ -672,7 +959,7 @@ const CreateActa = () => {
                       onClick={(e) => handleBtnAusClick(e)}
                     >
                       <HiPlus />
-                      <span className="small-btn-text">Miembros ausentes</span>
+                      <span className="small-btn-text">Miembros ausente</span>
                     </Button>
                   </div>
                   <div className="d-flex justify-content-center mt-3">
@@ -698,40 +985,160 @@ const CreateActa = () => {
                         style={{ gap: "30px" }}
                       >
                         <div className="col-auto">
-                          <h3 className="h3">Miembros presentes</h3>
+                          <div className="d-flex justify-content-between">
+                            <h3 className="h3">Miembros presentes</h3>
+                            {isPresentesAdded && (
+                              <div className="d-flex justify-content-between">
+                                <button
+                                  onClick={handleUndoPresentes}
+                                  className="btn btn-sm d-flex align-items-center"
+                                  style={{
+                                    backgroundColor: "#ea0e0e",
+                                    color: "#fff",
+                                    gap: "8px",
+                                  }}
+                                >
+                                  Deshacer
+                                  <HiX></HiX>
+                                </button>
+                                <button
+                                  className="btn btn-light d-flex align-items-center justify-content-between"
+                                  style={{ gap: "8px" }}
+                                  disabled={true}
+                                >
+                                  Confirmado
+                                  <HiBadgeCheck />
+                                </button>
+                              </div>
+                            )}
+                            {!isPresentesAdded && (
+                              <button
+                                className="btn"
+                                style={{
+                                  backgroundColor: "#028306",
+                                  border: "none",
+                                  color: "#fff",
+                                }}
+                                onClick={handleConfirmMiembrosPresentes}
+                              >
+                                Guardar miembros
+                              </button>
+                            )}
+                          </div>
                           <div
-                            className="container-fluid mt-3 d-flex w-100 flex-wrap"
+                            className="container-fluid mt-4 d-flex w-100 flex-wrap"
                             style={{ gap: "20px" }}
                           >
-                            {groupPresentes.map((presente) => (
+                            {groupPresentes.slice(1).map((presente) => (
                               <div className="tag-miembro tag-pres">
-                                {presente}
+                                {presente.nombre + " " + presente.apellido}
                               </div>
                             ))}
                           </div>
                         </div>
                         <div className="col-auto">
-                          <h3 className="h3">Miembros invitados</h3>
+                          <div className="d-flex justify-content-between">
+                            <h3 className="h3">Miembros invitados</h3>
+                            {isInvitadosAdded && (
+                              <div className="d-flex justify-content-between">
+                                <button
+                                  onClick={handleUndoInvitados}
+                                  className="btn btn-sm d-flex align-items-center"
+                                  style={{
+                                    backgroundColor: "#ea0e0e",
+                                    color: "#fff",
+                                    gap: "8px",
+                                  }}
+                                >
+                                  Deshacer
+                                  <HiX></HiX>
+                                </button>
+                                <button
+                                  className="btn btn-light d-flex align-items-center justify-content-between"
+                                  style={{ gap: "8px" }}
+                                  disabled={true}
+                                >
+                                  Confirmado
+                                  <HiBadgeCheck />
+                                </button>
+                              </div>
+                            )}
+                            {!isInvitadosAdded && (
+                              <button
+                                className="btn btn btn-warning"
+                                style={{
+                                  color: "#fff",
+                                  backgroundColor: "#028306",
+                                  border: "none",
+                                }}
+                                onClick={handleConfirmMiembrosInvitados}
+                              >
+                                Guardar miembros
+                              </button>
+                            )}
+                          </div>
                           <div
-                            className="container-fluid mt-3 d-flex w-100 flex-wrap"
+                            className="container-fluid mt-4 d-flex w-100 flex-wrap"
                             style={{ gap: "20px" }}
                           >
-                            {groupInvitados.map((invitado) => (
-                              <div className="tag-miembro tag-inv">
-                                {invitado}
+                            {groupInvitados.slice(1).map((invitado) => (
+                              <div
+                                className="tag-miembro tag-inv"
+                                key={invitado._id}
+                              >
+                                {invitado.nombre + " " + invitado.apellido}
                               </div>
                             ))}
                           </div>
                         </div>
                         <div className="col-auto">
-                          <h3 className="h3">Miembros ausentes</h3>
+                          <div className="d-flex justify-content-between">
+                            <h3 className="h3">Miembros ausente</h3>
+                            {isAusentesAdded && (
+                              <div className="d-flex justify-content-between">
+                                <button
+                                  onClick={handleUndoAusentes}
+                                  className="btn btn-sm d-flex align-items-center"
+                                  style={{
+                                    backgroundColor: "#ea0e0e",
+                                    color: "#fff",
+                                    gap: "8px",
+                                  }}
+                                >
+                                  Deshacer
+                                  <HiX></HiX>
+                                </button>
+                                <button
+                                  className="btn btn-light d-flex align-items-center justify-content-between"
+                                  style={{ gap: "8px" }}
+                                  disabled={true}
+                                >
+                                  Confirmado
+                                  <HiBadgeCheck />
+                                </button>
+                              </div>
+                            )}
+                            {!isAusentesAdded && (
+                              <button
+                                className="btn btn btn-warning"
+                                style={{
+                                  color: "#fff",
+                                  backgroundColor: "#028306",
+                                  border: "none",
+                                }}
+                                onClick={handleConfirmMiembrosAusentes}
+                              >
+                                Guardar miembros
+                              </button>
+                            )}
+                          </div>
                           <div
-                            className="container-fluid mt-3 d-flex w-100 flex-wrap"
+                            className="container-fluid mt-4 d-flex w-100 flex-wrap"
                             style={{ gap: "20px" }}
                           >
-                            {groupAusentes.map((ausente) => (
+                            {groupAusentes.slice(1).map((ausente) => (
                               <div className="tag-miembro tag-aus">
-                                {ausente}
+                                {ausente.nombre + " " + ausente.apellido}
                               </div>
                             ))}
                           </div>
@@ -757,8 +1164,8 @@ const CreateActa = () => {
                 <div className="col-auto">
                   <Form.Label>Seleccionar votos:</Form.Label>
                   <Form.Select
-                    id="votos"
-                    name="votos"
+                    id="titulo"
+                    name="titulo"
                     value={votoSeleccionado}
                     onChange={handleChangeVotos}
                   >
@@ -784,6 +1191,19 @@ const CreateActa = () => {
             <>
               <div className="create-acta-header mb-4">
                 <h3 className="h3 mt-2">Adjuntar documentos de soporte</h3>
+                <input type="file" accept=".pdf" onChange={handleFileChange} />
+                <button onClick={handleFileUpload}>Adjuntar</button>
+
+                {files.length > 0 && (
+                  <div>
+                    <h4>Archivos adjuntados:</h4>
+                    <ul>
+                      {files.map((file, index) => (
+                        <li key={index}>{file.name}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
               <div className="row mb-4"></div>
             </>
@@ -797,7 +1217,7 @@ const CreateActa = () => {
           style={{ gap: "15px" }}
         >
           <button
-            className="btn btn-danger"
+            class="btn btn-danger"
             role="button"
             onClick={handleChangeStatusModalOk}
           >
@@ -806,23 +1226,27 @@ const CreateActa = () => {
           <div className="container-fluid d-flex justify-content-end">
             {currentStep > 1 && (
               <button
-                className="btn btn-secondary me-2"
+                class="btn btn-secondary me-2"
                 onClick={handleDecrementStep}
               >
                 Atrás
               </button>
             )}
-            {currentStep < 4 && (
-              <button className="btn btn-primary" onClick={handleIncrementStep}>
+
+            {currentStep < 3 && (
+              <button class="btn btn-primary" onClick={handleIncrementStep}>
+                Siguiente
+              </button>
+            )}
+
+            {currentStep == 3 && (
+              <button class="btn btn-primary" onClick={handleRecopilarVotos}>
                 Siguiente
               </button>
             )}
 
             {currentStep >= 4 && (
-              <button
-                className="btn btn-success"
-                onClick={handleShowConfirmModal}
-              >
+              <button class="btn btn-success" onClick={handleShowConfirmModal}>
                 Enviar acta
               </button>
             )}

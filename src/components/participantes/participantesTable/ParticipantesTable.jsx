@@ -81,16 +81,6 @@ const ParticipantesTable = () => {
       <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />
     );
   };
-  const data = useMemo(
-    () =>
-      participantes.map((participante) => ({
-        nombre: participante.nombre,
-        apellido: participante.apellido,
-        cargo: participante.cargo,
-      })),
-    [participantes]
-  );
-
   const columns = React.useMemo(
     () => [
       { Header: "nombre", accessor: "nombre" },
@@ -106,12 +96,12 @@ const ParticipantesTable = () => {
       {
         Header: "",
         accessor: "_id", //localhost:4000/api/actas/id/_id
-        Cell: ({ value }) => (
+        Cell: ({ row }) => (
           <Dropdown renderToggle={renderIconButton} className="accion-drop">
             <Dropdown.Item
               className="i-editar"
               as={NavLink}
-              to="actualizar-participante"
+              to={`actualizar-participante/id/${row.original._id}`}
               icon={<FaRegEdit />}
             >
               {" "}
@@ -131,6 +121,16 @@ const ParticipantesTable = () => {
       },
     ],
     []
+  );
+  const data = useMemo(
+    () =>
+      participantes.map((participante) => ({
+        nombre: participante.nombre,
+        apellido: participante.apellido,
+        cargo: participante.cargo,
+        _id: participante._id,
+      })),
+    [participantes]
   );
 
   const {

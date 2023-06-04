@@ -1,44 +1,49 @@
-import moment from "moment";
+import { useCallback } from 'react';
 
-import ActaService from '../../services/ActasDataService'
+import moment from 'moment';
 
-import {NavLink} from 'react-router-dom'
+import ActaService from '../../services/ActasDataService';
 
-import Badge from "react-bootstrap/Badge";
+import { NavLink } from 'react-router-dom';
 
-import { Dropdown, IconButton } from "rsuite";
+import Badge from 'react-bootstrap/Badge';
 
-import { HiDotsHorizontal, HiDocumentDownload } from "react-icons/hi";
-import { BsEyeglasses } from "react-icons/bs";
-import { AiOutlineLike } from "react-icons/ai";
-import { FaShareAlt, FaRegEdit } from "react-icons/fa";
-import { RiDeleteBinLine } from "react-icons/ri";
-// import Button from "react-bootstrap/Button";
+import { Dropdown, IconButton } from 'rsuite';
+
+import { HiDotsHorizontal, HiDocumentDownload } from 'react-icons/hi';
+import { BsEyeglasses } from 'react-icons/bs';
+import { AiOutlineLike } from 'react-icons/ai';
+import { FaShareAlt, FaRegEdit } from 'react-icons/fa';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import Button from 'react-bootstrap/Button';
 
 const renderIconButton = (props, ref) => {
   return <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />;
 };
 
+const btnDelete = async (id) => {
+  // await ActaService.deleteActa(id)
+  console.log(id);
+};
 
 export const COLUMNS = [
-  { Header: "# Ref", accessor: "numeroRef" },
-
+  { Header: '# Ref', accessor: 'numeroRef' },
   {
-    Header: "Fecha de creación",
-    accessor: "fechaCreacion",
-    Cell: ({ value }) => moment(value).format("DD/MM/YYYY"),
+    Header: 'Fecha de creación',
+    accessor: 'fechaCreacion',
+    Cell: ({ value }) => moment(value).format('DD/MM/YYYY'),
   },
-  { Header: "Miembros presentes", accessor: "miembrosPresentes" },
-  { Header: "Lugar", accessor: "lugar" },
-  { Header: "Modalidad", accessor: "modalidad" },
+  { Header: 'Miembros presentes', accessor: 'miembrosPresentes' },
+  { Header: 'Lugar', accessor: 'lugar' },
+  { Header: 'Modalidad', accessor: 'modalidad' },
   {
-    Header: "Estado",
-    accessor: "estado",
+    Header: 'Estado',
+    accessor: 'estado',
     Cell: ({ value }) =>
-      value === "En proceso" ? (
+      value === 'En proceso' ? (
         <Badge className="inProcess">
-          {" "}
-          <span>{value}</span>{" "}
+          {' '}
+          <span>{value}</span>{' '}
         </Badge>
       ) : (
         <Badge className="confirmed">
@@ -46,37 +51,46 @@ export const COLUMNS = [
         </Badge>
       ),
   },
-  { Header: "Articulos", accessor: "articulos" },
+  { Header: 'Articulos', accessor: 'articulos' },
   {
-    Header: "",
-    accessor: "_id",
-    Cell: ({ value }) => (
-      <Dropdown renderToggle={renderIconButton} className="accion-drop">
-        <Dropdown.Item className="i-revisar" as={NavLink } to="detalle-acta" icon={<BsEyeglasses />}>
-          {" "}
-          <span>Revisar</span>{" "}
-        </Dropdown.Item>
-        <Dropdown.Item className="i-aprobar" icon={<AiOutlineLike />}>
-          {" "}
-          <span>Aprobar</span>{" "}
-        </Dropdown.Item>
-        <Dropdown.Item className="i-editar" onClick={async () => { ActaService.updateActa(value) }} icon={<FaRegEdit />}>
-          {" "}
-          <span>Editar</span>{" "}
-        </Dropdown.Item>
-        <Dropdown.Item className="i-borrar" onClick={async () => { await ActaService.deleteActa(value) }} icon={<RiDeleteBinLine />}>
-          {"  "}
-          <span>Borrar</span>
-        </Dropdown.Item>
-        <Dropdown.Item className="i-compartir" icon={<FaShareAlt />}>
-          {" "}
-          <span>Compartir</span>{" "}
-        </Dropdown.Item>
-        <Dropdown.Item className="i-descargar" icon={<HiDocumentDownload />}>
-          {" "}
-          <span> Descargar PDF</span>
-        </Dropdown.Item>
-      </Dropdown>
-    ),
+    Header: '',
+    accessor: '_id',
+    Cell: ({ value }) => {
+      const handleDelete = useCallback(() => btnDelete(value), [value]);
+
+      return (
+        <Dropdown renderToggle={renderIconButton} className="accion-drop">
+          <Dropdown.Item className="i-revisar" icon={<BsEyeglasses />}>
+            {' '}
+            <span>Revisar</span>{' '}
+          </Dropdown.Item>
+          <Dropdown.Item className="i-aprobar" icon={<AiOutlineLike />}>
+            {' '}
+            <span>Aprobar</span>{' '}
+          </Dropdown.Item>
+          <Dropdown.Item className="i-editar" icon={<FaRegEdit />}>
+            {' '}
+            <span>Editar</span>{' '}
+          </Dropdown.Item>
+          <Dropdown.Item
+            as={Button}
+            onClick={handleDelete}
+            className="i-borrar"
+            icon={<RiDeleteBinLine />}
+          >
+            {'  '}
+            <span>Borrar</span>
+          </Dropdown.Item>
+          <Dropdown.Item className="i-compartir" icon={<FaShareAlt />}>
+            {' '}
+            <span>Compartir</span>{' '}
+          </Dropdown.Item>
+          <Dropdown.Item className="i-descargar" icon={<HiDocumentDownload />}>
+            {' '}
+            <span> Descargar PDF</span>
+          </Dropdown.Item>
+        </Dropdown>
+      );
+    },
   },
 ];

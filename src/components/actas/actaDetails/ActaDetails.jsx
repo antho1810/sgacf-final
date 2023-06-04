@@ -2,63 +2,24 @@ import React, { useState, useMemo, useEffect } from "react";
 import ActaService from "../../../services/ActasDataService";
 import { Container, Row, Col, Badge } from "react-bootstrap";
 import moment from "moment";
+import { useParams } from "react-router-dom";
 
 const ActaDetails = () => {
   const [acta, setActa] = useState([]);
+
+  const { ref } = useParams();
 
   const fechaCreacion = acta.fechaCreacion;
   const fechaFormateada = moment(fechaCreacion).format("DD/MM/YYYY");
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await ActaService.getActa(acta._id);
+      const response = await ActaService.getActa(ref);
       setActa(response.data);
       console.log(response.data);
-      console.log(acta);
     };
     fetchData();
   }, []);
-
-  // const data = useMemo(
-  //   () => {
-  //     return acta.map((acta) => ({
-  //       id: acta._id,
-  //       numeroRef: acta.numeroRef,
-  //       fechaCreacion: acta.fechaCreacion,
-  //       miembrosPresentes: acta.miembrosPresentes,
-  //       miembrosAusentes: acta.miembrosAusentes,
-  //       miembrosInvitados: acta.miembrosInvitados,
-  //       lugar: acta.lugar,
-  //       modalidad: acta.modalidad,
-  //       estado: acta.estado,
-  //       horaInicio: acta.horaInicia,
-  //       horaFinal: acta.horaFinal,
-  //       docsSoporte: acta.docsSoporte
-  //     }))
-  //   }
-  // )
-
-  // const [acta, setActa] = useState({});
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await ActaService.getActa("646b9a3cf31d14ee45504c32");
-  //     setActa(response.data);
-  //     console.log(response.data);
-  //     console.log(acta);
-  //   };
-  //   fetchData();
-  // }, []);
-  // return (
-  //   <>
-  //     <p> {acta.numeroRef} </p>
-  //     <div className="d-flex">
-  //       <h1 className="h4 me-4">Lugar</h1>
-  //       <p> {acta.lugar} </p>
-  //     </div>
-  //   </>
-  // );
-  // import React, { useEffect, useState } from "react";
-  // import ActaService from "../../services/ActasDataService";
 
   return (
     <div>
@@ -115,7 +76,7 @@ const ActaDetails = () => {
         <div className="d-flex mt-2">
           <div className="me-4 text-center">
             <h1 className="h4">Miembros presentes</h1>
-            {/* {acta.miembrosPresentes ? (
+            {acta.miembrosPresentes ? (
               acta.miembrosPresentes.map((item) => (
                 <div key={item._id}>
                   <p>
@@ -125,29 +86,20 @@ const ActaDetails = () => {
               ))
             ) : (
               <span>No hay miembros presentes</span>
-            )} */}
+            )}
           </div>
         </div>
       </div>
       <div className="d-flex mt-2">
         <div className="me-4 text-center">
-          
           <h1 className="h4">Cronograma</h1>
-          <p className="center">{ acta.cronograma}</p>
-           {/*
-          {acta.desarrolloActa.map((item) => (
-            <div key={item._id}>
-              <p>Hora: {moment(item.HORA, "HH:mm").format("hh:mm A")}></p>
-              <p>Descripción: {item.DESCRIPCION}</p>
-            </div>
-          ))}; */}
+          <p className="center">{acta.cronograma}</p>
         </div>
       </div>
       {/* </div> */}
       {/* Container Articulos */}
       <Container className="ct-articulos">
         <span className="header">Articulos</span>
-        
       </Container>
       {/* Container Documentos Soporte */}
       <div className="ct-docsSoprot">Documentos adjuntos</div>
