@@ -617,11 +617,11 @@ const CreateActa = () => {
               ¿Está seguro que desea confirmar los miembros presentes?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
-              <button class="btn btn-warning" onClick={closeModalMiembro}>
+              <button className="btn btn-warning" onClick={closeModalMiembro}>
                 Atrás
               </button>
               <button
-                class="btn btn-primary"
+                className="btn btn-primary"
                 onClick={handleConfirmIdPresentes}
               >
                 Confirmar
@@ -639,11 +639,11 @@ const CreateActa = () => {
               ¿Está seguro que desea confirmar los miembros invitados?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
-              <button class="btn btn-warning" onClick={closeModalMiembro}>
+              <button className="btn btn-warning" onClick={closeModalMiembro}>
                 Atrás
               </button>
               <button
-                class="btn btn-primary"
+                className="btn btn-primary"
                 onClick={handleConfirmIdInvitados}
               >
                 Confirmar
@@ -661,10 +661,13 @@ const CreateActa = () => {
               ¿Está seguro que desea confirmar los miembros ausentes?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
-              <button class="btn btn-warning" onClick={closeModalMiembro}>
+              <button className="btn btn-warning" onClick={closeModalMiembro}>
                 Atrás
               </button>
-              <button class="btn btn-primary" onClick={handleConfirmIdAusentes}>
+              <button
+                className="btn btn-primary"
+                onClick={handleConfirmIdAusentes}
+              >
                 Confirmar
               </button>
             </div>
@@ -676,17 +679,21 @@ const CreateActa = () => {
       {isOpen && (
         <div className="modal">
           <div className="modal-content">
-            <h2 className="mb-4 h4 text-center">
+            <h2 className="h4 text-center">
               ¿Está seguro que desea salir?
             </h2>
+            <span className="h6 mb-4 text-center">Recuerda que se borrara todo lo que has hecho</span>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button class="btn btn-primary" onClick={handleConfirmExitBtn}>
+              <button
+                className="btn btn-primary"
+                onClick={handleConfirmExitBtn}
+              >
                 Confirmar
               </button>
             </div>
@@ -703,12 +710,12 @@ const CreateActa = () => {
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button class="btn btn-primary" onClick={handleConfirmSend}>
+              <button className="btn btn-primary" onClick={handleConfirmSend}>
                 Confirmar
               </button>
             </div>
@@ -1217,7 +1224,7 @@ const CreateActa = () => {
           style={{ gap: "15px" }}
         >
           <button
-            class="btn btn-danger"
+            className="btn btn-danger"
             role="button"
             onClick={handleChangeStatusModalOk}
           >
@@ -1226,7 +1233,7 @@ const CreateActa = () => {
           <div className="container-fluid d-flex justify-content-end">
             {currentStep > 1 && (
               <button
-                class="btn btn-secondary me-2"
+                className="btn btn-secondary me-2"
                 onClick={handleDecrementStep}
               >
                 Atrás
@@ -1234,19 +1241,25 @@ const CreateActa = () => {
             )}
 
             {currentStep < 3 && (
-              <button class="btn btn-primary" onClick={handleIncrementStep}>
+              <button className="btn btn-primary" onClick={handleIncrementStep}>
                 Siguiente
               </button>
             )}
 
             {currentStep == 3 && (
-              <button class="btn btn-primary" onClick={handleRecopilarVotos}>
+              <button
+                className="btn btn-primary"
+                onClick={handleRecopilarVotos}
+              >
                 Siguiente
               </button>
             )}
 
             {currentStep >= 4 && (
-              <button class="btn btn-success" onClick={handleShowConfirmModal}>
+              <button
+                className="btn btn-success"
+                onClick={handleShowConfirmModal}
+              >
                 Enviar acta
               </button>
             )}

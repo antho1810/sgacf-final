@@ -13,7 +13,7 @@ import "rsuite/dist/rsuite.min.css"
 import Login from "./components/login/Login";
 import RootLayout from "./routesLayouts/RootLayout"
 import Dashboard, { dashboardLoader } from "./components/dashboard/Dashboard";
-import UpdateActa from "./components/actas/updateActa/UpdateActa";
+import UpdateActa from "./components/actas/updateActa/UpdateActa-viejo";
 // import CreateActa from "./components/actas/createActa/CreateActa";
 import CreateActa from "./components/actas/crearActa/CreateActa";
 import CreateParticipante from "./components/participantes/createParticipante/CreateParticipante";

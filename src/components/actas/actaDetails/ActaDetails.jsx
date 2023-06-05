@@ -1,4 +1,8 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, {
+  useState,
+  // useMemo,
+  useEffect
+} from "react";
 import ActaService from "../../../services/ActasDataService";
 import { Container, Row, Col, Badge } from "react-bootstrap";
 import moment from "moment";

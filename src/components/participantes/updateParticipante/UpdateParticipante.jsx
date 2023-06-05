@@ -49,9 +49,9 @@ const UpdateParticipante = () => {
         console.error("Error al actualizar el participante:", error);
       });
 
-    // setTimeout(() => {
-    //   window.location.href = "/";
-    // }, 2000);
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
   };
 
   return (
