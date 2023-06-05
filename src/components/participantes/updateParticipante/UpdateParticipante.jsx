@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ParticipantesService from "../../../services/ParticipantesDataServices";
+import { useParams } from "react-router-dom";
 
 const UpdateParticipante = () => {
   //   const [participantes, setParticipantes] = useState([]);
@@ -18,19 +19,7 @@ const UpdateParticipante = () => {
     });
   };
 
-  const updateParticipante = async (req) => {
-    ParticipantesService.updateParticipante(participante)
-      .then((response) => {
-        console.log("Participante actualizado exitosamente:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error al actualizar el participante:", error);
-      });
-
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 2000);
-  };
+  const { id } = useParams();
 
   useEffect((req, res) => {
     ParticipantesService.getParticipante(participante);
@@ -52,7 +41,17 @@ const UpdateParticipante = () => {
   };
 
   const handleConfirmUpdate = () => {
-    updateParticipante();
+    ParticipantesService.updateParticipante(id, participante)
+      .then((response) => {
+        console.log("Participante actualizado correctamente:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el participante:", error);
+      });
+
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
   };
 
   return (

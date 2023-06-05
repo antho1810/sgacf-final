@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "sgacfi-final",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -8,6 +8,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.1",
     "@mui/x-date-pickers": "^6.4.0",
+    "@react-pdf/renderer": "^3.1.10",
     "@syncfusion/ej2-react-calendars": "^21.2.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -17,10 +18,13 @@
     "crypto-browserify": "^3.12.0",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
+    "emailjs": "^4.0.2",
+    "file-saver": "^2.0.5",
     "joi": "^17.9.2",
     "joi-password-complexity": "^5.1.0",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
+    "qs": "^6.11.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",

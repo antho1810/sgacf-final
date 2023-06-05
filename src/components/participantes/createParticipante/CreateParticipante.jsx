@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 // import Button from "react-bootstrap/Button";
-import "./CreateParticipante.css"
-import ParticipantesService from "../../../services/ParticipantesDataServices"
+import "./CreateParticipante.css";
+import ParticipantesService from "../../../services/ParticipantesDataServices";
 
 const CreateParticipante = () => {
   // const participanteInfo = {
@@ -11,12 +11,11 @@ const CreateParticipante = () => {
   //   cargo: "",
   // };
 
-  const [participante, setPartici] = useState ({
+  const [participante, setPartici] = useState({
     nombre: "",
     apellido: "",
     cargo: "",
   });
-  // const [submitted, setSubmitted] = useState(false);
 
   const handleInputChange = (e) => {
     // const { name, value } = e.target;
@@ -33,23 +32,19 @@ const CreateParticipante = () => {
 
   // ENVÍO DEL FORMULARIO PARA LA CREACIÓN DE PARTICIPANTE
   const handleSubmitted = () => {
-    setPartici({
-      ...participante,
-    });
-
     // Aquí puedes hacer uso de axios para enviar la información a la base de datos
-    setTimeout(() => {
-      ParticipantesService.createParticipante(participante)
-        .then((response) => {
-          console.log("Participante enviado exitosamente:", response.data);
-        })
-        .catch((error) => {
-          console.error("Error al enviar el participante:", error);
-        });
-      setTimeout(() => {
-        window.location.href = "/";
+
+    ParticipantesService.createParticipante(participante)
+      .then((response) => {
+        console.log("Participante enviado exitosamente:", response.data);
       })
-    }, 2);
+      .catch((error) => {
+        console.error("Error al enviar el participante:", error);
+      });
+
+    setTimeout(() => {
+      window.location.href = "/";
+    })
   };
 
   // const newParticipante = () => {
@@ -109,33 +104,17 @@ const CreateParticipante = () => {
                 name="cargo"
                 placeholder="Cargo"
                 value={participante.cargo}
-                required
                 onChange={handleInputChange}
-                />
+                required
+              />
             </div>
           </div>
         </div>
       </Container>
       <div className="submit-form">
-        
-          <button onClick={handleSubmitted} className="btn btn-success">
-            Registrar participante
-          </button>
-      
-        {/* {submitted ? (
-          <div>
-            <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={newParticipante}>
-              Add
-            </button>
-          </div>
-        ) : (
-          <div>
-            <button onClick={handleSubmitted} className="btn btn-success">
-              Registrar participante
-            </button>
-          </div>
-        )} */}
+        <button onClick={handleSubmitted} className="btn btn-success">
+          Registrar participante
+        </button>
       </div>
     </div>
   );

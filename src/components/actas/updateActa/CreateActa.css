@@ -19,7 +19,7 @@
     90deg,
     rgba(0, 48, 255, 1) 0%,
     rgba(142, 167, 228, 1) 52%,
-    rgba(231, 236, 255, 1) 100%
+    rgb(239, 242, 248) 100%
   );
   color: #fff;
 }
@@ -33,6 +33,16 @@
   color: #111;
 }
 
+.formulario {
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: 0.7s;
+}
+
+.formulario.oculto {
+  opacity: 0;
+}
+
 .tabla-participantes-header{
   width:80%;
   text-align: center;
@@ -41,6 +51,13 @@
 .form-control-custom,
 .MuiInputBase-root {
   height: 38px;
+}
+
+.cronograma-textarea{
+  border: none;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 16px;
 }
 
 .MuiInputBase-root {

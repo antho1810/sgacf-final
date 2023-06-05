@@ -3,6 +3,12 @@ export const votosData = [
     nombre: 'Autorización de expedición de títulos académicos',
     campos: [
       {
+        nombre: 'titulo',
+        etiqueta: 'Titulo del voto',
+        subElementos: ['Autorización de expedición de títulos académicos'],
+        tipo: 'text'
+      },
+      {
         nombre: 'nombreAspirante',
         etiqueta: 'Nombre del aspirante',
         tipo: 'text',
@@ -33,6 +39,12 @@ export const votosData = [
   {
     nombre: 'Homologaciones',
     campos: [
+      {
+        nombre: 'titulo',
+        etiqueta: 'Titulo del voto',
+        subElementos: ['Homologaciones'],
+        tipo: 'text'
+      },
       {
         nombre: 'tipo',
         etiqueta: 'Tipo de homologación',
@@ -92,8 +104,15 @@ export const votosData = [
     nombre: 'Otros votos',
     campos: [
       {
+        nombre: 'titulo',
+        etiqueta: 'Titulo del voto',
+        subElementos: ['Otros votos'],
+        tipo: 'text'
+      },
+      {
         nombre: 'tituloVoto',
         etiqueta: 'Título voto',
+        subElementos: ['Transferencia interna', 'Suficiencia', 'Materia dirigida', 'Reingreso', 'Autorizacion para cursar materia con otra malla', 'Matricula de honor', 'modificacion de calificaciones a un periodo cerrado', 'Materia intesiva'],
         tipo: 'text',
       },
       {
