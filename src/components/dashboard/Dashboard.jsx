@@ -1,44 +1,38 @@
-import React, { useMemo } from "react";
-
-import ActaService from "../../services/ActasDataService";
-import { NavLink } from "react-router-dom";
-
-import Button from "react-bootstrap/Button";
-import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable";
-import emailjs from "@emailjs/browser";
-import "./Dashboard.css";
-
+import React, { useMemo, useRef, useState, useEffect } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { useLoaderData, NavLink } from "react-router-dom";
 import {
   useSortBy,
   useTable,
   useGlobalFilter,
   usePagination,
 } from "react-table";
+import moment from "moment";
+import jwtDecode from "jwt-decode";
 
+// Email
+import emailjs from "@emailjs/browser";
+// import sgMail from "@sendgrid/mail";
+
+import ActaService from "../../services/ActasDataService";
+import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable";
+import "./Dashboard.css";
+
+import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
-
-import { HiChevronDown, HiChevronUp } from "react-icons/hi";
+import Badge from "react-bootstrap/Badge";
 
 import "./Table.css";
 import GlobalActasFilter from "./filters/GlobalFilter";
-
-import moment from "moment";
-import jwtDecode from "jwt-decode";
-import { useLoaderData } from "react-router-dom";
-
-import Badge from "react-bootstrap/Badge";
-
 import { Dropdown, IconButton } from "rsuite";
 
+import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 import { HiDotsHorizontal, HiDocumentDownload } from "react-icons/hi";
 import { BsEyeglasses } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaShareAlt, FaRegEdit } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { useState } from "react";
-import { useEffect } from "react";
 import DocuPDF from "./DocuPDF";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const renderIconButton = (props, ref) => {
   return <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />;
@@ -120,32 +114,95 @@ const COLUMNS = [
       };
 
       // Modal Email Acta
-       const handleEmail = () => {
-         sendEmail();
-       };
+      const form = useRef();
+      const [destinatario, setDestinatario] = useState("");
+      const [mensaje, setMensaje] = useState("");
+      const [error, setError] = useState("");
 
-       const sendEmail = (e) => {
-         e.preventDefault();
+      // SendGrid
+      // sgMail.setApiKey(
+      //   "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"
+      // );
 
-         // Configura EmailJS con tu Service ID
-         emailjs
-           .sendForm(
-             "service_0c37kw4",
-             "template_znez8vj",
-             e.target,
-             "lKnR9ZvyvLPcJxoin"
-           )
-           .then(
-             (result) => {
-               console.log(result.text);
-               // Actualiza el estado del modal del email a 'false' para que se cierre
-               setIsEmailOpen(false);
-             },
-             (error) => {
-               console.log(error.text);
-             }
-           );
-       };
+      // const enviarCorreo = async () => {
+      //   // Validar campos requeridos
+      //   if (!destinatario || !mensaje) {
+      //     setError("Por favor, complete todos los campos.");
+      //     return;
+      //   }
+
+      //   const msg = {
+      //     to: destinatario,
+      //     from: "remitente@example.com",
+      //     subject: "Asunto del correo",
+      //     text: mensaje,
+      //   };
+
+      //   try {
+      //     await sgMail.send(msg);
+      //     console.log("Correo enviado exitosamente");
+      //     setError("");
+      //   } catch (error) {
+      //     console.error("Error al enviar el correo:", error);
+      //     setError("Ocurrió un error al enviar el correo.");
+      //   }
+      // };
+
+      // const handleInputChange = (e) => {
+      //   if (e.target.name === "destinatario") {
+      //     setDestinatario(e.target.value);
+      //   } else if (e.target.name === "mensaje") {
+      //     setMensaje(e.target.value);
+      //   }
+      // };
+
+      // EMAILJS
+      const sendEmail = () => {
+        const parametros = {
+          to_email: destinatario,
+          message: mensaje,
+        };
+
+        // Validar campos requeridos
+        if (!destinatario || !mensaje) {
+          setError("Por favor, complete todos los campos.");
+          return;
+        }
+
+        // Configura EmailJS con tu Service ID
+        emailjs
+          .sendForm(
+            "service_0c37kw4",
+            "template_xj0pfhk",
+            form.current,
+            // parametros,
+            "lKnR9ZvyvLPcJxoin"
+          )
+          .then((result) => {
+            console.log(result.text);
+            // console.log("message sent");
+            console.log("Correo enviado exitosamente");
+
+            // setError(""); // Limpia el mensaje de error si el envio es exitoso
+
+            // Actualiza el estado del modal del email a 'false' para que se cierre
+            setIsEmailOpen(false);
+          })
+          .catch((error) => {
+            // console.log(error.text);
+            // console.error("Error al enviar el correo:", error);
+            setError("Ocurrió un error al enviar el correo.");
+          });
+      };
+
+      const handleInputChangeEmail = (e) => {
+        if (e.target.name === "destinatario") {
+          setDestinatario(e.target.value);
+        }
+        if (e.target.name === "mensaje") {
+          setMensaje(e.target.value);
+        }
+      };
 
       const showStatus = (estado) => {
         console.log(estado);
@@ -182,40 +239,49 @@ const COLUMNS = [
           {/* MODAL Email Acta CERRAR */}
           {isEmailOpen && (
             <div className="modal">
-              <div className="modal-content">
-                <h2 className="mb-4 h4 text-center">
-                  ¿Está seguro que desea enviar el acta por correo?
+              <div className="modal-content h-auto">
+                <h2 className="mb-2 h4 text-center">
+                  {/* ¿Está seguro que desea enviar el acta por correo? */}
                 </h2>
-                <div className="mt-4 mb-4">
+                <form ref={form} onSubmit={sendEmail} className="mt-1 mb-1">
                   <label className="Email">Email:</label>
                   <input
                     type="email"
+                    name="destinatario"
+                    value={destinatario}
+                    onChange={handleInputChangeEmail}
                     className="form-control"
-                    placeholder="Ingrese el correo electrónico"
-                    // onChange={handleEmailChange}
+                    placeholder="Ingrese el o los destinatarios"
                   />
                   <label className="Mensaje">Mensaje:</label>
                   <textarea
                     className="form-control"
-                    placeholder="Ingrese el mensaje"
-                    // onChange={handleMensajeChange}
+                    name="mensaje"
+                    value={mensaje}
+                    onChange={handleInputChangeEmail}
+                    placeholder="Mensaje"
                   />
-                  <div>
+                  <div className="mt-1">
                     <label className="Archivo">Archivo: </label>
                     Espacio para el archivo seleccionado
                   </div>
-                </div>
-                <div className="ct-btn d-flex justify-content-evenly">
-                  <button
-                    className="btn btn-warning"
-                    onClick={handleChangeStatusModalFalse}
-                  >
-                    Atrás
-                  </button>
-                  <button className="btn btn-primary" onClick={handleEmail}>
-                    Enviar
-                  </button>
-                </div>
+                  <div className="ct-btn d-flex justify-content-evenly">
+                    <button
+                      className="btn btn-danger"
+                      onClick={handleChangeStatusModalFalse}
+                    >
+                      Atrás
+                    </button>
+                    <button
+                      className="btn btn-primary"
+                      type="submit"
+                      value="Send"
+                      // onClick={handleEmail}
+                    >
+                      Enviar
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           )}
@@ -276,6 +342,7 @@ const COLUMNS = [
                 <Dropdown.Item
                   onClick={() => showStatus(row.original.id)}
                   to={`detalle-acta/referencia/${row.original.numeroRef}`}
+                  as={NavLink}
                   className="i-revisar"
                   icon={<BsEyeglasses />}
                 >
@@ -321,6 +388,7 @@ const COLUMNS = [
                 <Dropdown.Item
                   onClick={() => showStatus(row.original.id)}
                   to={`detalle-acta/referencia/${row.original.numeroRef}`}
+                  as={NavLink}
                   className="i-revisar"
                   icon={<BsEyeglasses />}
                 >
