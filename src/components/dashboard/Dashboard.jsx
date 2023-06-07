@@ -149,7 +149,7 @@ const COLUMNS = [
           .then(
             (result) => {
               console.log(result.text);
-              closeModal();
+              handleChangeStatusModalFalse();
             },
             (error) => {
               console.log(error.text);
@@ -201,7 +201,7 @@ const COLUMNS = [
           {isEmailOpen && (
             <div
               className="modal align-items-center"
-              style={{ width: "40%", height: "50%" }}
+              style={{ width: "30%", height: "50%" }}
             >
               <div className="modal-content h-auto">
                 <h2 className="mb-2 h4 text-center">

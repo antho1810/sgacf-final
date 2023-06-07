@@ -38,19 +38,6 @@ const ParticipantesTable = () => {
     }
   }, []);
 
- 
-
-  // await ParticipantesService.deleteParticipante(id);
-  // .then((response) => {
-  //   console.log("Participante borrado exitosamente: ", response.data);
-  // })
-  // .catch((error) => {
-  //   console.error("Error al eliminar el participante: ", error);
-  // });
-  // setTimeout(() => {
-  //   window.location.reload;
-  // }, 2000);
-
   const renderIconButton = (props, ref) => {
     return (
       <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />
