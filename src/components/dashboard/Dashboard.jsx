@@ -12,7 +12,6 @@ import jwtDecode from "jwt-decode";
 
 // Email
 import emailjs from "@emailjs/browser";
-// import sgMail from "@sendgrid/mail";
 
 import ActaService from "../../services/ActasDataService";
 import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable";
@@ -32,10 +31,10 @@ import { BsEyeglasses } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaShareAlt, FaRegEdit } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
-import DocuPDF from "./DocuPDF";
+import DocuPDF from "./PDF/DocuPDF";
 
 const renderIconButton = (props, ref) => {
-  return <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />;
+  return (<IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />)
 };
 
 const COLUMNS = [
@@ -63,7 +62,12 @@ const COLUMNS = [
         </Badge>
       ),
   },
-  { Header: "Articulos", accessor: "articulos" },
+  {
+    Header: "Cronograma", accessor: "cronograma",
+  //   Cell: ({ row }) => {
+  // con
+  //   }
+  },
   {
     Header: "",
     accessor: "id",
@@ -101,6 +105,16 @@ const COLUMNS = [
         setIsEmailOpen(true);
       };
 
+      // const handleActaFindByRef = (ref) => {
+      //  ActaService.getActa(ref)
+      //     .then((response) => {
+      //       setActa(response.data);
+      //     })
+      //     .catch((e) => {
+      //       console.log(e);
+      //     });
+      // }
+
       // Modal Delete Acta
       const handleDelete = async (id) => {
         await ActaService.deleteActa(id);
@@ -114,95 +128,41 @@ const COLUMNS = [
       };
 
       // Modal Email Acta
-      const form = useRef();
+      // const form = useRef();
+      
+      // EMAILJS
       const [destinatario, setDestinatario] = useState("");
       const [mensaje, setMensaje] = useState("");
-      const [error, setError] = useState("");
+      emailjs.init('lKnR9ZvyvLPcJxoin');
+      const sendEmail = (e) => {
+        e.preventDefault();
 
-      // SendGrid
-      // sgMail.setApiKey(
-      //   "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"
-      // );
+       // Configura EmailJS con tu Service ID
+       emailjs
+         .sendForm(
+           "template_xj0pfhk",
+           "service_cj0a2om",
+           e.target,
+           "lKnR9ZvyvLPcJxoin"
+         )
+         .then(
+           (result) => {
+             console.log(result.text);
+             closeModal();
+           },
+           (error) => {
+             console.log(error.text);
+           }
+         );
+     };
 
-      // const enviarCorreo = async () => {
-      //   // Validar campos requeridos
-      //   if (!destinatario || !mensaje) {
-      //     setError("Por favor, complete todos los campos.");
-      //     return;
-      //   }
-
-      //   const msg = {
-      //     to: destinatario,
-      //     from: "remitente@example.com",
-      //     subject: "Asunto del correo",
-      //     text: mensaje,
-      //   };
-
-      //   try {
-      //     await sgMail.send(msg);
-      //     console.log("Correo enviado exitosamente");
-      //     setError("");
-      //   } catch (error) {
-      //     console.error("Error al enviar el correo:", error);
-      //     setError("Ocurrió un error al enviar el correo.");
-      //   }
-      // };
-
-      // const handleInputChange = (e) => {
-      //   if (e.target.name === "destinatario") {
-      //     setDestinatario(e.target.value);
-      //   } else if (e.target.name === "mensaje") {
-      //     setMensaje(e.target.value);
-      //   }
-      // };
-
-      // EMAILJS
-      const sendEmail = () => {
-        const parametros = {
-          to_email: destinatario,
-          message: mensaje,
-        };
-
-        // Validar campos requeridos
-        if (!destinatario || !mensaje) {
-          setError("Por favor, complete todos los campos.");
-          return;
-        }
-
-        // Configura EmailJS con tu Service ID
-        emailjs
-          .sendForm(
-            "service_0c37kw4",
-            "template_xj0pfhk",
-            form.current,
-            // parametros,
-            "lKnR9ZvyvLPcJxoin"
-          )
-          .then((result) => {
-            console.log(result.text);
-            // console.log("message sent");
-            console.log("Correo enviado exitosamente");
-
-            // setError(""); // Limpia el mensaje de error si el envio es exitoso
-
-            // Actualiza el estado del modal del email a 'false' para que se cierre
-            setIsEmailOpen(false);
-          })
-          .catch((error) => {
-            // console.log(error.text);
-            // console.error("Error al enviar el correo:", error);
-            setError("Ocurrió un error al enviar el correo.");
-          });
-      };
-
-      const handleInputChangeEmail = (e) => {
-        if (e.target.name === "destinatario") {
-          setDestinatario(e.target.value);
-        }
-        if (e.target.name === "mensaje") {
-          setMensaje(e.target.value);
-        }
-      };
+  const handleInputChangeEmail = (e) => {
+    if (e.target.name === 'destinatario') {
+      setDestinatario(e.target.value);
+    } else if (e.target.name === 'mensaje') {
+      setMensaje(e.target.value);
+    }
+  };
 
       const showStatus = (estado) => {
         console.log(estado);
@@ -238,12 +198,12 @@ const COLUMNS = [
         <>
           {/* MODAL Email Acta CERRAR */}
           {isEmailOpen && (
-            <div className="modal">
+            <div className="modal align-items-center" style={{width: '40%', height: '50%'}}>
               <div className="modal-content h-auto">
                 <h2 className="mb-2 h4 text-center">
-                  {/* ¿Está seguro que desea enviar el acta por correo? */}
+                  ¿Está seguro que desea enviar el acta por correo?
                 </h2>
-                <form ref={form} onSubmit={sendEmail} className="mt-1 mb-1">
+                <form onSubmit={sendEmail} className="mt-1 mb-1">
                   <label className="Email">Email:</label>
                   <input
                     type="email"
@@ -352,7 +312,7 @@ const COLUMNS = [
                 <Dropdown.Item
                   className="i-editar"
                   as={NavLink}
-                  to={`actualizar-acta/referencia/${row.original.ref}`}
+                  to={`actualizar-acta/referencia/${row.original.numeroRef}`}
                   icon={<FaRegEdit />}
                 >
                   {" "}
@@ -368,6 +328,27 @@ const COLUMNS = [
                   {"  "}
                   <span>Borrar</span>
                 </Dropdown.Item>
+                <PDFDownloadLink
+                  document={<DocuPDF acta={acta} />}
+                  fileName="acta.pdf"
+                >
+                  <Dropdown.Item
+                  // onClick={()=>handleActaFindByRef(row.original.numeroRef)}
+                    className="i-descargar"
+                    icon={<HiDocumentDownload />}
+                  >
+                    {" "}
+                    <span> Descargar PDF</span>
+                  </Dropdown.Item>
+                </PDFDownloadLink>
+                  <Dropdown.Item
+                    className="i-compartir"
+                    onClick={handleShowEmailModal}
+                    icon={<FaShareAlt />}
+                  >
+                    {" "}
+                    <span>Compartir</span>{" "}
+                  </Dropdown.Item>
               </>
             )}
 
@@ -385,6 +366,25 @@ const COLUMNS = [
             {/* ACCIONES PARA DECANO */}
             {checkExistedRolDecano && (
               <>
+                <Dropdown.Item
+                  className="i-editar"
+                  as={NavLink}
+                  to={`actualizar-acta/referencia/${row.original.numeroRef}`}
+                  icon={<FaRegEdit />}
+                >
+                  {" "}
+                  <span>Editar</span>{" "}
+                </Dropdown.Item>
+
+                <Dropdown.Item
+                  // onClick={() => handleDelete(row.original._id)}
+                  className="i-borrar"
+                  onClick={handleShowConfirmDeleteModal}
+                  icon={<RiDeleteBinLine />}
+                >
+                  {"  "}
+                  <span>Borrar</span>
+                </Dropdown.Item>
                 <Dropdown.Item
                   onClick={() => showStatus(row.original.id)}
                   to={`detalle-acta/referencia/${row.original.numeroRef}`}

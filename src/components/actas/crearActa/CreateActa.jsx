@@ -679,10 +679,10 @@ const CreateActa = () => {
       {isOpen && (
         <div className="modal">
           <div className="modal-content">
-            <h2 className="h4 text-center">
-              ¿Está seguro que desea salir?
-            </h2>
-            <span className="h6 mb-4 text-center">Recuerda que se borrara todo lo que has hecho</span>
+            <h2 className="h4 text-center">¿Está seguro que desea salir?</h2>
+            <span className="h6 mb-4 text-center">
+              Recuerda que se borrara todo lo que has hecho
+            </span>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
                 className="btn btn-warning"
@@ -728,6 +728,9 @@ const CreateActa = () => {
         <div className="create-acta-main-header mb-2">
           <div className="title-actas">
             <h1 className="h1">Crear un acta</h1>
+          </div>
+          <div className="subtitle">
+            <span>Rellene los campos y crear un nuevo acta</span>
           </div>
         </div>
 

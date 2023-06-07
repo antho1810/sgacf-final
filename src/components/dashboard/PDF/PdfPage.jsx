@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import ActaService from "../../services/ActasDataService";
+import ActaService from "../../../services/ActasDataService";
 import DocuPDF from "./DocuPDF";
 import VistaWeb from "./VistaWeb";
 

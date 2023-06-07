@@ -13,16 +13,15 @@ import "rsuite/dist/rsuite.min.css"
 import Login from "./components/login/Login";
 import RootLayout from "./routesLayouts/RootLayout"
 import Dashboard, { dashboardLoader } from "./components/dashboard/Dashboard";
-import UpdateActa from "./components/actas/updateActa/UpdateActa-viejo";
+import UpdateActa from "./components/actas/updateActa/UpdateActa";
 // import CreateActa from "./components/actas/createActa/CreateActa";
 import CreateActa from "./components/actas/crearActa/CreateActa";
 import CreateParticipante from "./components/participantes/createParticipante/CreateParticipante";
 import ActaDetails from "./components/actas/actaDetails/ActaDetails";
 import UpdateParticipante from "./components/participantes/updateParticipante/UpdateParticipante";
 
-// Despues de terminar pruebas eliminar estas importaciones
-import Test from "./components/test/Test";
-import PdfPage from "./components/dashboard/PdfPage";
+// Despues de terminar pruebas, eliminar estas importaciones
+import PdfPage from "./components/dashboard/PDF/PdfPage";
 
 const user = localStorage.getItem("token")
 
@@ -45,7 +44,6 @@ const router = createBrowserRouter(
           <Route path="actualizar-acta/referencia/:ref" element={<UpdateActa />}></Route>
           <Route path="detalle-acta/referencia/:ref" element={<ActaDetails />}></Route>
           <Route path="actualizar-participante/id/:id" element={<UpdateParticipante />} />
-          <Route path="test" element={<Test />}></Route>
           <Route path="pdf" element={<PdfPage />}></Route>
 
         </Route>

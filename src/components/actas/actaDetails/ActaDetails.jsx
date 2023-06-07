@@ -1,17 +1,23 @@
 import React, {
   useState,
   // useMemo,
-  useEffect
+  useEffect,
 } from "react";
 import ActaService from "../../../services/ActasDataService";
 import { Container, Row, Col, Badge } from "react-bootstrap";
 import moment from "moment";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import { votosData } from "./votosData";
+// import '../../dashboard/Table.css'
 
 const ActaDetails = () => {
   const [acta, setActa] = useState([]);
 
   const { ref } = useParams();
+
+  const handleConfirmExitBtn = () => {
+    window.location.href = "/";
+  };
 
   const fechaCreacion = acta.fechaCreacion;
   const fechaFormateada = moment(fechaCreacion).format("DD/MM/YYYY");
@@ -49,11 +55,11 @@ const ActaDetails = () => {
               {acta.estado === "En proceso" ? (
                 <Badge className="inProcess">
                   {" "}
-                  <span>{acta.estado}</span>{" "}
+                  <span className="fw-400">{acta.estado}</span>{" "}
                 </Badge>
               ) : (
                 <Badge className="confirmed">
-                  <span>{acta.estado}</span>
+                  <span className="fw-400">{acta.estado}</span>
                 </Badge>
               )}
             </p>
@@ -92,26 +98,96 @@ const ActaDetails = () => {
               <span>No hay miembros presentes</span>
             )}
           </div>
+          <div className="me-4 text-center">
+            <h1 className="h4">Miembros Invitados</h1>
+            {acta.miembrosInvitados ? (
+              acta.miembrosInvitados.map((item) => (
+                <div key={item._id}>
+                  <p>
+                    {item.nombre} {item.apellido}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <span>No hay miembros Invitados</span>
+            )}
+          </div>
+          <div className="me-4 text-center">
+            <h1 className="h4">Miembros Ausentes</h1>
+            {acta.miembrosAusentes ? (
+              acta.miembrosAusentes.map((item) => (
+                <div key={item._id}>
+                  <p>
+                    {item.nombre} {item.apellido}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <span>No hay miembros Ausentes</span>
+            )}
+          </div>
         </div>
       </div>
-      <div className="d-flex mt-2">
+      <div className="mt-2">
         <div className="me-4 text-center">
-          <h1 className="h4">Cronograma</h1>
-          <p className="center">{acta.cronograma}</p>
+          <div className="me-4 text-center">
+            <h1 className="h4">Cronograma</h1>
+            <p className="center">{acta.cronograma}</p>
+          </div>
         </div>
       </div>
-      {/* </div> */}
       {/* Container Articulos */}
-      <Container className="ct-articulos">
-        <span className="header">Articulos</span>
+      <Container className="ct-articulos mt-2 mb-2">
+        <span className="h4">Articulos</span>
+         {acta.articulos ? (
+    acta.articulos.map((item) => (
+      <div key={item.nombre}>
+        <h3>{item.nombre}</h3>
+        {votosData.map((voto) => (
+          voto.nombre === item.nombre && (
+            <ul key={voto.nombre}>
+              {voto.campos.map((campo) => (
+                <li key={campo.nombre}>
+                  {campo.etiqueta}
+                  <input
+                    type={campo.tipo}
+                    name={campo.nombre}
+                    placeholder={campo.etiqueta}
+                  />
+                  {campo.subElementos && (
+                    <select>
+                      {campo.subElementos.map((subElem) => (
+                        <option key={subElem}>{subElem}</option>
+                      ))}
+                    </select>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )
+        ))}
+      </div>
+    ))) : (
+          <span>No hay Articulos</span>
+        )}
       </Container>
       {/* Container Documentos Soporte */}
-      <div className="ct-docsSoprot">Documentos adjuntos</div>
+      <div className="ct-docsSoprot mt-2">
+        <div className="me-4 text-center">
+          <span className="h4">Documentos adjuntos</span>
+          <span className="center me-1">No hay Documentos de soporte</span>
+        </div>
+      </div>
       <Container fluid>
         <Row className="mb-3">
           <Col style={{ height: "80px" }}></Col>
         </Row>
       </Container>
+      <div className="ct-btn d-flex mt-2 justify-content-evenly">
+        <button className="btn btn-warning" onClick={handleConfirmExitBtn}>
+          Atrás
+        </button>
+      </div>
     </div>
   );
 };

@@ -135,3 +135,18 @@ export const votosData = [
 ]
 
 export default votosData;
+
+
+// actas.articulos.map( articulo => {
+//   articulo.nombre,
+//   articulo.campos.map( campo => {
+//     campo.nombre,
+//     campo.etiqueta // UTILIZAS ESTE PARA DESPLEGAR LA INFORMACION DEL CAMPO,
+//     campo.tipo,
+//     campo.definiciones.map( definicion => {
+//       definicion.nombre,
+//       definicion.fecha,
+//       definicion.garantia
+//     })
+//   })
+// })

@@ -83,8 +83,16 @@ const UpdateParticipante = () => {
         <div className="title">
           <h2>Actalizando el participante</h2>
         </div>
-        <div className="subtitle">
-          <span>Rellene los campos y actualice el participante</span>
+        <div>
+          <div className="subtitle">
+            <span>Rellene los campos y actualice el participante</span>
+          </div>
+          <div className="subtitle">
+            <span className="fw-bold text-danger">
+              Nota: Si dejas los campos de vacios, los campos se actualizan
+              vacios.
+            </span>
+          </div>
         </div>
       </div>
 
