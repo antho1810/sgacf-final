@@ -37,7 +37,7 @@ const ParticipantesTable = () => {
       console.error("Error al obtener los participantes:", error);
     }
   }, []);
-  
+
   const renderIconButton = (props, ref) => {
     return (
       <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />
@@ -92,9 +92,8 @@ const ParticipantesTable = () => {
         // TRUE SI ES DECANO
         const checkExistedRolDecano = checkRol.includes("decano");
         
-          // TRUE SI ES PARTICIPANTES
+      // TRUE SI ES PARTICIPANTES
       const checkExistedRolParticipante = checkRol.includes("participante");
-
 
         return (
           <>
@@ -171,7 +170,6 @@ const ParticipantesTable = () => {
                   </Dropdown.Item>
                 </>
               )}
-              
             </Dropdown>
           </>
         );
