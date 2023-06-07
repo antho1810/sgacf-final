@@ -148,7 +148,7 @@ const COLUMNS = [
          .then(
            (result) => {
              console.log(result.text);
-             closeModal();
+             handleChangeStatusModalFalse();
            },
            (error) => {
              console.log(error.text);
