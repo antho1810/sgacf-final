@@ -155,6 +155,7 @@ const ParticipantesTable = () => {
                     <span> Borrar</span>
                   </Dropdown.Item>
                 </>
+                
               )}
 
               {checkExistedRolDecano && (
@@ -176,6 +177,20 @@ const ParticipantesTable = () => {
                   >
                     {" "}
                     <span> Borrar</span>
+                  </Dropdown.Item>
+                </>
+              )}
+              
+              {checkExistedRolParticipante && (
+                <>
+                  <Dropdown.Item
+                    className="i-editar"
+                    as={NavLink}
+                    to={`actualizar-participante/id/${row.original._id}`}
+                    icon={<FaRegEdit />}
+                  >
+                    {" "}
+                    <span>Editar</span>{" "}
                   </Dropdown.Item>
                 </>
               )}
