@@ -137,7 +137,7 @@ const COLUMNS = [
       emailjs.init("lKnR9ZvyvLPcJxoin");
       const sendEmail = (e) => {
         e.preventDefault();
-
+        
         // Configura EmailJS con tu Service ID
         emailjs
           .sendForm(
