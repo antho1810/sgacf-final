@@ -26,7 +26,7 @@ function Navbarside() {
         const decodedUser = await jwtDecode(token);
         localStorage.setItem('userInfo', JSON.stringify(decodedUser));
         setUserInfo(decodedUser)
-        // console.log(userInfo)
+        console.log(userInfo)
       } catch (e) {
         console.log('Error al decodificar el token:', e);
       }

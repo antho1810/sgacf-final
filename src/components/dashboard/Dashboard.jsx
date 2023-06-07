@@ -373,16 +373,6 @@ const COLUMNS = [
             {checkExistedRolDecano && (
               <>
                 <Dropdown.Item
-                  onClick={() => showStatus(row.original.id)}
-                  to={`detalle-acta/referencia/${row.original.numeroRef}`}
-                  as={NavLink}
-                  className="i-revisar"
-                  icon={<BsEyeglasses />}
-                >
-                  {" "}
-                  <span>Revisar</span>{" "}
-                </Dropdown.Item>
-                <Dropdown.Item
                   className="i-editar"
                   as={NavLink}
                   to={`actualizar-acta/referencia/${row.original.numeroRef}`}
@@ -402,12 +392,31 @@ const COLUMNS = [
                   <span>Borrar</span>
                 </Dropdown.Item>
                 <Dropdown.Item
+                  onClick={() => showStatus(row.original.id)}
+                  to={`detalle-acta/referencia/${row.original.numeroRef}`}
+                  as={NavLink}
+                  className="i-revisar"
+                  icon={<BsEyeglasses />}
+                >
+                  {" "}
+                  <span>Revisar</span>{" "}
+                </Dropdown.Item>
+                <Dropdown.Item
                   className="i-compartir"
                   onClick={handleShowEmailModal}
                   icon={<FaShareAlt />}
                 >
                   {" "}
                   <span>Compartir</span>{" "}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className="i-editar"
+                  as={NavLink}
+                  to={`actualizar-acta/id/${row.original._id}`}
+                  icon={<FaRegEdit />}
+                >
+                  {" "}
+                  <span>Editar</span>{" "}
                 </Dropdown.Item>
                 <PDFDownloadLink
                   document={<DocuPDF acta={acta} />}
@@ -445,7 +454,7 @@ function Dashboard() {
         lugar: acta.lugar,
         modalidad: acta.modalidad,
         estado: acta.estado,
-        cronograma: acta.cronogama,
+        articulo: acta.articulos,
       })),
     [responseActas]
   );
