@@ -106,16 +106,6 @@ const COLUMNS = [
         setIsEmailOpen(true);
       };
 
-      // const handleActaFindByRef = (ref) => {
-      //  ActaService.getActa(ref)
-      //     .then((response) => {
-      //       setActa(response.data);
-      //     })
-      //     .catch((e) => {
-      //       console.log(e);
-      //     });
-      // }
-
       // Modal Delete Acta
       const handleDelete = async (id) => {
         await ActaService.deleteActa(id);
@@ -129,26 +119,26 @@ const COLUMNS = [
       };
 
       // Modal Email Acta
-      // const form = useRef();
+      const form = useRef();
 
       // EMAILJS
       const [destinatario, setDestinatario] = useState("");
       const [mensaje, setMensaje] = useState("");
-      emailjs.init("lKnR9ZvyvLPcJxoin");
       const sendEmail = (e) => {
         e.preventDefault();
 
         // Configura EmailJS con tu Service ID
         emailjs
           .sendForm(
+            "service_73shi0p",
             "template_xj0pfhk",
-            "service_cj0a2om",
-            e.target,
+            form.current,
             "lKnR9ZvyvLPcJxoin"
           )
           .then(
             (result) => {
-              console.log(result.text);
+              // console.log(result.text);
+              console.log("Correo enviado")
               handleChangeStatusModalFalse();
             },
             (error) => {
@@ -157,7 +147,7 @@ const COLUMNS = [
           );
       };
 
-      const handleInputChangeEmail = (e) => {
+      const  handleInputChangeEmail = (e) => {
         if (e.target.name === "destinatario") {
           setDestinatario(e.target.value);
         } else if (e.target.name === "mensaje") {
@@ -190,9 +180,6 @@ const COLUMNS = [
       // TRUE SI ES DECANO
       const checkExistedRolDecano = checkRol.includes("decano");
 
-      // TRUE SI ES PARTICIPANTES
-      const checkExistedRolParticipante = checkRol.includes("participante");
-
       // console.log(checkExistedRolSecretaria);
 
       return (
@@ -207,19 +194,21 @@ const COLUMNS = [
                 <h2 className="mb-2 h4 text-center">
                   ¿Está seguro que desea enviar el acta por correo?
                 </h2>
-                <form onSubmit={sendEmail} className="mt-1 mb-1">
+                <form ref={form} onSubmit={sendEmail} className="mt-1 mb-1">
                   <label className="Email">Email:</label>
                   <input
                     type="email"
+                    // name="user_email"
                     name="destinatario"
                     value={destinatario}
                     onChange={handleInputChangeEmail}
                     className="form-control"
-                    placeholder="Ingrese el o los destinatarios"
+                    placeholder="Ingrese nombre"
                   />
                   <label className="Mensaje">Mensaje:</label>
                   <textarea
                     className="form-control"
+                    // name="message"
                     name="mensaje"
                     value={mensaje}
                     onChange={handleInputChangeEmail}
