@@ -12,8 +12,8 @@ const PdfPage = () => {
   const [verWeb, setVerWeb] = useState(false);
   const [verPDF, setVerPDF] = useState(false);
 
-  const getData = async (ref) => {
-    const response = await ActaService.getActa(ref);
+  const getData = async () => {
+    const response = await ActaService.getActa("1");
     setActa(response.data);
     console.log(acta);
   };
