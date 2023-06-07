@@ -32,6 +32,7 @@ import { useParams } from "react-router-dom";
 const UpdateActa = () => {
   const { ref } = useParams();
 
+
   // ESTADO DEL ACTA INICIAL
   const [actaInicial, setActaInicial] = useState({
     lugar: "",
@@ -65,7 +66,7 @@ const UpdateActa = () => {
   const handleConfirmSend = () => {
     console.log(actaInicial);
 
-    ActaService.updateActa(JSON.stringify(ref, actaInicial))
+    ActaService.updateActa(ref, actaInicial)
       .then((response) => {
         console.log("Acta actualizada exitosamente:", response.data);
       })
@@ -709,7 +710,7 @@ const UpdateActa = () => {
         <div className="modal">
           <div className="modal-content">
             <h2 className="mb-4 h4 text-center">
-              ¿Está seguro que desea enviar el acta?
+              ¿Está seguro que desea actualizar el acta?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
