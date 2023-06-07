@@ -104,6 +104,9 @@ const ParticipantesTable = () => {
 
         // TRUE SI ES DECANO
         const checkExistedRolDecano = checkRol.includes("decano");
+        
+      // TRUE SI ES PARTICIPANTES
+      const checkExistedRolParticipante = checkRol.includes("participante");
 
         return (
           <>
@@ -176,6 +179,19 @@ const ParticipantesTable = () => {
                   >
                     {" "}
                     <span> Borrar</span>
+                  </Dropdown.Item>
+                </>
+              )}
+              {checkExistedRolParticipante && (
+                <>
+                  <Dropdown.Item
+                    className="i-editar"
+                    as={NavLink}
+                    to={`actualizar-participante/id/${row.original._id}`}
+                    icon={<FaRegEdit />}
+                  >
+                    {" "}
+                    <span>Editar</span>{" "}
                   </Dropdown.Item>
                 </>
               )}

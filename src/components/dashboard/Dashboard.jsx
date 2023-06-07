@@ -34,7 +34,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import DocuPDF from "./PDF/DocuPDF";
 
 const renderIconButton = (props, ref) => {
-  return (<IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />)
+  return <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />;
 };
 
 const COLUMNS = [
@@ -63,10 +63,11 @@ const COLUMNS = [
       ),
   },
   {
-    Header: "Cronograma", accessor: "cronograma",
-  //   Cell: ({ row }) => {
-  // con
-  //   }
+    Header: "Cronograma",
+    accessor: "cronograma",
+    //   Cell: ({ row }) => {
+    // con
+    //   }
   },
   {
     Header: "",
@@ -129,40 +130,40 @@ const COLUMNS = [
 
       // Modal Email Acta
       // const form = useRef();
-      
+
       // EMAILJS
       const [destinatario, setDestinatario] = useState("");
       const [mensaje, setMensaje] = useState("");
-      emailjs.init('lKnR9ZvyvLPcJxoin');
+      emailjs.init("lKnR9ZvyvLPcJxoin");
       const sendEmail = (e) => {
         e.preventDefault();
 
-       // Configura EmailJS con tu Service ID
-       emailjs
-         .sendForm(
-           "template_xj0pfhk",
-           "service_cj0a2om",
-           e.target,
-           "lKnR9ZvyvLPcJxoin"
-         )
-         .then(
-           (result) => {
-             console.log(result.text);
-             closeModal();
-           },
-           (error) => {
-             console.log(error.text);
-           }
-         );
-     };
+        // Configura EmailJS con tu Service ID
+        emailjs
+          .sendForm(
+            "template_xj0pfhk",
+            "service_cj0a2om",
+            e.target,
+            "lKnR9ZvyvLPcJxoin"
+          )
+          .then(
+            (result) => {
+              console.log(result.text);
+              closeModal();
+            },
+            (error) => {
+              console.log(error.text);
+            }
+          );
+      };
 
-  const handleInputChangeEmail = (e) => {
-    if (e.target.name === 'destinatario') {
-      setDestinatario(e.target.value);
-    } else if (e.target.name === 'mensaje') {
-      setMensaje(e.target.value);
-    }
-  };
+      const handleInputChangeEmail = (e) => {
+        if (e.target.name === "destinatario") {
+          setDestinatario(e.target.value);
+        } else if (e.target.name === "mensaje") {
+          setMensaje(e.target.value);
+        }
+      };
 
       const showStatus = (estado) => {
         console.log(estado);
@@ -198,7 +199,10 @@ const COLUMNS = [
         <>
           {/* MODAL Email Acta CERRAR */}
           {isEmailOpen && (
-            <div className="modal align-items-center" style={{width: '40%', height: '50%'}}>
+            <div
+              className="modal align-items-center"
+              style={{ width: "40%", height: "50%" }}
+            >
               <div className="modal-content h-auto">
                 <h2 className="mb-2 h4 text-center">
                   ¿Está seguro que desea enviar el acta por correo?
@@ -333,7 +337,7 @@ const COLUMNS = [
                   fileName="acta.pdf"
                 >
                   <Dropdown.Item
-                  // onClick={()=>handleActaFindByRef(row.original.numeroRef)}
+                    // onClick={()=>handleActaFindByRef(row.original.numeroRef)}
                     className="i-descargar"
                     icon={<HiDocumentDownload />}
                   >
@@ -341,14 +345,14 @@ const COLUMNS = [
                     <span> Descargar PDF</span>
                   </Dropdown.Item>
                 </PDFDownloadLink>
-                  <Dropdown.Item
-                    className="i-compartir"
-                    onClick={handleShowEmailModal}
-                    icon={<FaShareAlt />}
-                  >
-                    {" "}
-                    <span>Compartir</span>{" "}
-                  </Dropdown.Item>
+                <Dropdown.Item
+                  className="i-compartir"
+                  onClick={handleShowEmailModal}
+                  icon={<FaShareAlt />}
+                >
+                  {" "}
+                  <span>Compartir</span>{" "}
+                </Dropdown.Item>
               </>
             )}
 
