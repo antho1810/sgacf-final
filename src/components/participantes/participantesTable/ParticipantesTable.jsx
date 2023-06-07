@@ -172,19 +172,6 @@ const ParticipantesTable = () => {
                 </>
               )}
               
-              {checkExistedRolParticipante && (
-                <>
-                  <Dropdown.Item
-                    className="i-editar"
-                    as={NavLink}
-                    to={`actualizar-participante/id/${row.original._id}`}
-                    icon={<FaRegEdit />}
-                  >
-                    {" "}
-                    <span>Editar</span>{" "}
-                  </Dropdown.Item>
-                </>
-              )}
             </Dropdown>
           </>
         );
