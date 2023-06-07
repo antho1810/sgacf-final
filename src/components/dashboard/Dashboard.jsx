@@ -127,7 +127,7 @@ const COLUMNS = [
       const [mensaje, setMensaje] = useState("");
       const sendEmail = (e) => {
         e.preventDefault();
-
+        
         // Configura EmailJS con tu Service ID
         emailjs
           .sendForm(
