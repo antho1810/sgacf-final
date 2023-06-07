@@ -122,7 +122,8 @@ const COLUMNS = [
       const form = useRef();
 
       // EMAILJS
-      const [destinatario, setDestinatario] = useState("");
+      const [emailRemitente, setEmailRemitente] = useState("");
+      const [remitente, setRemitente] = useState("");
       const [mensaje, setMensaje] = useState("");
       const sendEmail = (e) => {
         e.preventDefault();
@@ -148,10 +149,12 @@ const COLUMNS = [
       };
 
       const  handleInputChangeEmail = (e) => {
-        if (e.target.name === "destinatario") {
-          setDestinatario(e.target.value);
+        if (e.target.name === "emailRemitente") {
+          setEmailRemitente(e.target.value);
         } else if (e.target.name === "mensaje") {
           setMensaje(e.target.value);
+        } else if (e.target.name === "remitente") {
+          setRemitente(e.target.value);
         }
       };
 
@@ -188,19 +191,29 @@ const COLUMNS = [
           {isEmailOpen && (
             <div
               className="modal align-items-center"
-              style={{ width: "30%", height: "50%" }}
+              style={{ width: "35%", height: "60%" }}
             >
-              <div className="modal-content h-auto">
+              <div className="modal-content h-auto align-items-center">
                 <h2 className="mb-2 h4 text-center">
                   ¿Está seguro que desea enviar el acta por correo?
                 </h2>
                 <form ref={form} onSubmit={sendEmail} className="mt-1 mb-1">
+                  <label className="Email">Nombre:</label>
+                  <input
+                    type="text"
+                    // name="user_email"
+                    name="remitente"
+                    value={remitente}
+                    onChange={handleInputChangeEmail}
+                    className="form-control"
+                    placeholder="Ingrese nombre de quien lo envia"
+                  />
                   <label className="Email">Email:</label>
                   <input
                     type="email"
                     // name="user_email"
-                    name="destinatario"
-                    value={destinatario}
+                    name="emailRemitente"
+                    value={emailRemitente}
                     onChange={handleInputChangeEmail}
                     className="form-control"
                     placeholder="Ingrese nombre"
