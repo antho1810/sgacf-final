@@ -37,20 +37,7 @@ const ParticipantesTable = () => {
       console.error("Error al obtener los participantes:", error);
     }
   }, []);
-
- 
-
-  // await ParticipantesService.deleteParticipante(id);
-  // .then((response) => {
-  //   console.log("Participante borrado exitosamente: ", response.data);
-  // })
-  // .catch((error) => {
-  //   console.error("Error al eliminar el participante: ", error);
-  // });
-  // setTimeout(() => {
-  //   window.location.reload;
-  // }, 2000);
-
+  
   const renderIconButton = (props, ref) => {
     return (
       <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />
@@ -104,6 +91,10 @@ const ParticipantesTable = () => {
 
         // TRUE SI ES DECANO
         const checkExistedRolDecano = checkRol.includes("decano");
+        
+          // TRUE SI ES PARTICIPANTES
+      const checkExistedRolParticipante = checkRol.includes("participante");
+
 
         return (
           <>
