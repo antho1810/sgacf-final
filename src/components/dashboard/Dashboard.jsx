@@ -106,16 +106,6 @@ const COLUMNS = [
         setIsEmailOpen(true);
       };
 
-      // const handleActaFindByRef = (ref) => {
-      //  ActaService.getActa(ref)
-      //     .then((response) => {
-      //       setActa(response.data);
-      //     })
-      //     .catch((e) => {
-      //       console.log(e);
-      //     });
-      // }
-
       // Modal Delete Acta
       const handleDelete = async (id) => {
         await ActaService.deleteActa(id);
@@ -129,26 +119,27 @@ const COLUMNS = [
       };
 
       // Modal Email Acta
-      // const form = useRef();
+      const form = useRef();
 
       // EMAILJS
-      const [destinatario, setDestinatario] = useState("");
+      const [emailRemitente, setEmailRemitente] = useState("");
+      const [remitente, setRemitente] = useState("");
       const [mensaje, setMensaje] = useState("");
-      emailjs.init("lKnR9ZvyvLPcJxoin");
       const sendEmail = (e) => {
         e.preventDefault();
         
         // Configura EmailJS con tu Service ID
         emailjs
           .sendForm(
+            "service_73shi0p",
             "template_xj0pfhk",
-            "service_cj0a2om",
-            e.target,
+            form.current,
             "lKnR9ZvyvLPcJxoin"
           )
           .then(
             (result) => {
-              console.log(result.text);
+              // console.log(result.text);
+              console.log("Correo enviado")
               handleChangeStatusModalFalse();
             },
             (error) => {
@@ -157,11 +148,13 @@ const COLUMNS = [
           );
       };
 
-      const handleInputChangeEmail = (e) => {
-        if (e.target.name === "destinatario") {
-          setDestinatario(e.target.value);
+      const  handleInputChangeEmail = (e) => {
+        if (e.target.name === "emailRemitente") {
+          setEmailRemitente(e.target.value);
         } else if (e.target.name === "mensaje") {
           setMensaje(e.target.value);
+        } else if (e.target.name === "remitente") {
+          setRemitente(e.target.value);
         }
       };
 
@@ -190,9 +183,6 @@ const COLUMNS = [
       // TRUE SI ES DECANO
       const checkExistedRolDecano = checkRol.includes("decano");
 
-      // TRUE SI ES PARTICIPANTES
-      const checkExistedRolParticipante = checkRol.includes("participante");
-
       // console.log(checkExistedRolSecretaria);
 
       return (
@@ -201,25 +191,37 @@ const COLUMNS = [
           {isEmailOpen && (
             <div
               className="modal align-items-center"
-              style={{ width: "30%", height: "50%" }}
+              style={{ width: "35%", height: "60%" }}
             >
-              <div className="modal-content h-auto">
+              <div className="modal-content h-auto align-items-center">
                 <h2 className="mb-2 h4 text-center">
                   ¿Está seguro que desea enviar el acta por correo?
                 </h2>
-                <form onSubmit={sendEmail} className="mt-1 mb-1">
+                <form ref={form} onSubmit={sendEmail} className="mt-1 mb-1">
+                  <label className="Email">Nombre:</label>
+                  <input
+                    type="text"
+                    // name="user_email"
+                    name="remitente"
+                    value={remitente}
+                    onChange={handleInputChangeEmail}
+                    className="form-control"
+                    placeholder="Ingrese nombre de quien lo envia"
+                  />
                   <label className="Email">Email:</label>
                   <input
                     type="email"
-                    name="destinatario"
-                    value={destinatario}
+                    // name="user_email"
+                    name="emailRemitente"
+                    value={emailRemitente}
                     onChange={handleInputChangeEmail}
                     className="form-control"
-                    placeholder="Ingrese el o los destinatarios"
+                    placeholder="Ingrese nombre"
                   />
                   <label className="Mensaje">Mensaje:</label>
                   <textarea
                     className="form-control"
+                    // name="message"
                     name="mensaje"
                     value={mensaje}
                     onChange={handleInputChangeEmail}

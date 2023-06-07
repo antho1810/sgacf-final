@@ -32,15 +32,15 @@ const DocuPDF = () => {
 
   // const { ref } = useParams();
 
-  const getData = async (ref) => {
-    const response = await ActaService.getActa(ref);
-    setActa(response.data);
-    console.log(acta);
-  };
+  // const getData = async (ref) => {
+  //   const response = await ActaService.getActa(ref);
+  //   setActa(response.data);
+  //   console.log(acta);
+  // };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   return (
     <Document>
