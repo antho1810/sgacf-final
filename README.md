@@ -6,9 +6,9 @@
 - Participante
 
 ## Privigilegios de cada uno
-- Decano: crear, editar y borrar actividades, editar y borrar participantes,
+- SuperUsuario/Decano: aprobar, crear, editar y borrar actas, crear, editar y borrar participantes.
 - Secretaria: crear, editar y borrar actas, crear, editar y borrar participantes.
-- Participante: ver el listado de actas y participantes
+- Participante: ver el listado de actas y participantes.
 
 #### Nota
 
