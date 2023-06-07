@@ -40,7 +40,9 @@ function Navbarside() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userInfo');
-    window.location.href = '/login';
+    // window.location.href = '/login';
+    window.location.reload();
+
   };
 
   return (

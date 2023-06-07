@@ -409,15 +409,6 @@ const COLUMNS = [
                   {" "}
                   <span>Compartir</span>{" "}
                 </Dropdown.Item>
-                <Dropdown.Item
-                  className="i-editar"
-                  as={NavLink}
-                  to={`actualizar-acta/id/${row.original._id}`}
-                  icon={<FaRegEdit />}
-                >
-                  {" "}
-                  <span>Editar</span>{" "}
-                </Dropdown.Item>
                 <PDFDownloadLink
                   document={<DocuPDF acta={acta} />}
                   fileName="acta.pdf"

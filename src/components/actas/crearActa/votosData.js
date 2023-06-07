@@ -92,12 +92,6 @@ export const votosData = [
     nombre: 'Otros votos',
     campos: [
       {
-        nombre: 'titulo',
-        etiqueta: 'Titulo del voto',
-        subElementos: ['Otros votos'],
-        tipo: 'text'
-      },
-      {
         nombre: 'tituloVoto',
         etiqueta: 'Título voto',
         subElementos: ['Transferencia interna', 'Suficiencia', 'Materia dirigida', 'Reingreso', 'Autorizacion para cursar materia con otra malla', 'Matricula de honor', 'modificacion de calificaciones a un periodo cerrado', 'Materia intesiva'],
