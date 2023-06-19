@@ -177,6 +177,8 @@ const COLUMNS = [
         return userRol.nombre;
       });
 
+    
+
       // TRUE SI ES SECRETARIA
       const checkExistedRolSecretaria = checkRol.includes("secretaria");
 
@@ -334,19 +336,21 @@ const COLUMNS = [
                   {"  "}
                   <span>Borrar</span>
                 </Dropdown.Item>
-                <PDFDownloadLink
+                {/* <PDFDownloadLink
                   document={<DocuPDF acta={acta} />}
                   fileName="acta.pdf"
-                >
+                > */}
                   <Dropdown.Item
                     // onClick={()=>handleActaFindByRef(row.original.numeroRef)}
-                    className="i-descargar"
+                  className="i-descargar"
+                  as={NavLink}
+                  to={`pdf`}
                     icon={<HiDocumentDownload />}
                   >
                     {" "}
-                    <span> Descargar PDF</span>
+                    <span> PDF</span>
                   </Dropdown.Item>
-                </PDFDownloadLink>
+                {/* </PDFDownloadLink> */}
                 <Dropdown.Item
                   className="i-compartir"
                   onClick={handleShowEmailModal}
@@ -409,18 +413,20 @@ const COLUMNS = [
                   {" "}
                   <span>Compartir</span>{" "}
                 </Dropdown.Item>
-                <PDFDownloadLink
+                {/* <PDFDownloadLink
                   document={<DocuPDF acta={acta} />}
                   fileName="acta.pdf"
-                >
+                > */}
                   <Dropdown.Item
-                    className="i-descargar"
+                  className="i-descargar"
+                   as={NavLink}
+                  to={`pdf`}
                     icon={<HiDocumentDownload />}
                   >
                     {" "}
-                    <span> Descargar PDF</span>
+                    <span> PDF</span>
                   </Dropdown.Item>
-                </PDFDownloadLink>
+                {/* </PDFDownloadLink> */}
               </>
             )}
           </Dropdown>
@@ -449,6 +455,8 @@ function Dashboard() {
       })),
     [responseActas]
   );
+    // borrar despues de pru
+    console.log(data)
 
   const {
     getTableProps,

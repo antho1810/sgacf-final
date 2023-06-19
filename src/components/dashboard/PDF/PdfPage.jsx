@@ -23,22 +23,6 @@ const PdfPage = () => {
   }, []);
 
   const Menu = () => (
-    <div style={{ minHeight: "100vh" }}>
-      <Menu />
-      {acta ? (
-        <>
-          {verWeb ? <VistaWeb acta={acta} /> : null}
-          {verPDF ? (
-            <PDFViewer style={{ width: "100%", height: "90vh" }}>
-              <DocuPDF acta={acta} />
-            </PDFViewer>
-          ) : null}
-        </>
-      ) : null}
-    </div>
-  );
-
-  return (
     <div>
       <nav
         style={{
@@ -71,6 +55,23 @@ const PdfPage = () => {
         </PDFDownloadLink>
       </nav>
     </div>
+  );
+
+  return (
+    <div style={{ minHeight: "100vh" }}>
+      <Menu />
+      {acta ? (
+        <>
+          {verWeb ? <VistaWeb acta={acta} /> : null}
+          {verPDF ? (
+            <PDFViewer style={{ width: "100%", height: "90vh" }}>
+              <DocuPDF acta={acta} />
+            </PDFViewer>
+          ) : null}
+        </>
+      ) : null}
+    </div>
+    
   );
 };
 
