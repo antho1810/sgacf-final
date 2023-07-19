@@ -23,4 +23,5 @@ El rol participante solo tiene va a tener acceso para verificar si su informacio
 | Añadir mas articulos | ✅ |
 | Envio de PDF para multiples personas por medio de correo nodemailer | :hourglass: |
 | Almacenamiento de documentos de Soporte | :hourglass: |
+| Estilos del PDF | :hourglass: |
 
