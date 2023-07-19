@@ -1,5 +1,5 @@
 const actaData = {
-    NOMBRE_INSTITUCION: " CORPORACIÓN UNIVERSITARIA ADVENTISTA - UNAC ",
+    NOMBRE_INSTITUCION: " CORPORACIÓN UNIVERSITARIA ADVENTISTA - UNAC",
     TITULO: "CONSEJO DE FACULTAD DE INGENIERIA",
     SUBTITULO: "Sesión ordinaria",
     REFERENCIA: {
@@ -8,7 +8,7 @@ const actaData = {
     },
     PROLOGO: {
         descAntesDeLaFecha: "El consejo de Factultad de Ingenieria de la",
-        desDespuesFecha: "en armonía con lo dispuesto en los Estatutos Generales y la Estructura Orgánica, luego de la convocatoria efectuada a cada uno de los miembros vía",
+        desDespuesFecha: "en armonía con lo dispuesto en los Estatutos Generales y la Estructura Orgánica, luego de la convocatoria efectuada a cada uno de los miembros vía WhatsApp, sesionó de",
         desFinal: "teniendo en consieración"
     },
     FIRMAS: {

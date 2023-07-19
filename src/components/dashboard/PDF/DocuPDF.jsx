@@ -16,164 +16,237 @@ import UNACLogo from "./logo-unac.png";
 import actaData from "./acta";
 import ActaService from "../../../services/ActasDataService";
 import "./DocuPDF.css";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 
 const DocuPDF = () => {
   const [acta, setActa] = useState({
-    // lugar: "",
+    // lugar:"",
     // modalidad: "",
     // horaInicio: "",
     // horaFinal: "",
-    // cronograma: "",
+    // cronograma,
     // miembrosPresentes: [
     //   {
-    //     id: "",
+    //     id,
     //   },
     // ],
     // miembrosAusentes: [
     //   {
-    //     id: "",
+    //     id,
     //   },
     // ],
     // miembrosInvitados: [
     //   {
-    //     id: "",
+    //     id,
     //   },
     // ],
     // articulos: [],
     // documentosSoporte: [],
   });
 
-  // const { ref } = useParams();
 
-  // const getData = async (ref) => {
-  //   const response = await ActaService.getActa(ref);
-  //   setActa(response.data);
-  //   console.log(acta);
-  // };
+  const getData = async (ref) => {
+    const response = await ActaService.getActa("10");
+    setActa(response.data);
+    console.log(acta);
+  };
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+   let lugarTexto;
+   if (acta.lugar === "LDS") {
+     lugarTexto = "Laboratorio de sistemas (LDS)";
+   } else if (acta.lugar === "LADSIF") {
+     lugarTexto = "Laboratorio de análisis de datos e investigación (LADSIF)";
+   } else {
+     lugarTexto = acta ? acta.lugar : "...";
+   }
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const styles = StyleSheet.create({
-    body: {
-      paddingTop: 35,
-      paddingBottom: 65,
-      paddingHorizontal: 35,
+    // page: {
+    //   flexDirection: "row",
+    //   backgroundColor: "#E4E4E4",
+    // },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1,
     },
-    title: {
-      fontSize: 24,
+    table: {
+      display: "table",
+      width: "50%",
+      borderStyle: "solid",
+      borderWidth: 1,
+      borderColor: "#000",
+      marginBottom: 10,
+    },
+    tableRow: {
+      flexDirection: "row",
+    },
+    tableCell: {
+      flex: 1,
+      borderWidth: 1,
+      borderColor: "#000",
+      padding: 5,
       textAlign: "center",
-      fontFamily: "AntonFamily",
     },
-    text: {
-      margin: 12,
-      fontSize: 14,
-      textAlign: "justify",
-      fontFamily: "AntonFamily",
+    page: {
+      backgroundColor: "white",
+      padding: 20,
+    },
+    heading: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 10,
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
     },
     image: {
-      marginVertical: 15,
-      marginHorizontal: 100,
+      width: 100,
+      height: 100,
+      marginRight: 10,
     },
-    header: {
-      fontSize: 12,
-      marginBottom: 20,
+    subTitle: {
+      fontSize: 14,
       textAlign: "center",
-      color: "grey",
-      fontFamily: "AntonFamily",
     },
-
-    pageNumber: {
-      position: "absolute",
-      fontSize: 12,
-      bottom: 30,
-      left: 0,
-      right: 0,
+    reference: {
+      fontSize: 14,
       textAlign: "center",
-      color: "grey",
-      fontFamily: "AntonFamily",
+    },
+    paragraph: {
+      fontSize: 12,
+      marginBottom: 8,
+    },
+    tableContainer: {
+      marginBottom: 10,
+    },
+    // table: {
+    //   display: "table",
+    //   width: "auto",
+    //   marginBottom: 10,
+    // },
+    // tableRow: {
+    //   flexDirection: "row",
+    // },
+    th: {
+      border: "1px solid black",
+      backgroundColor: "#f2f2f2",
+      padding: 5,
+      flex: 1,
+    },
+    td: {
+      border: "1px solid black",
+      padding: 5,
+      flex: 1,
+    },
+    emptyMessage: {
+      fontStyle: "italic",
+    },
+    indexCell: {
+      width: "10%",
     },
   });
 
-  const pageColors = ["#f6d186", "#f67280", "#c06c84"];
-
-  const pages = [
-    { text: actaData?.TITULO || "...", image: UNACLogo },
-    // {text: 'Second page content goes here...', image: 'https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTcwMzExMzEwNTc0MTAxODM5/lebron-dunk.jpg' },
-    // {text: 'Third page content goes here...', image: 'https://s.yimg.com/ny/api/res/1.2/Aj5UoHHKnNOpdwE6Zz9GIQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MA--/https://s.yimg.com/os/creatr-uploaded-images/2023-01/b02a71d0-a774-11ed-bf7f-08714e8ad300' },
-  ];
+  const pages = [{ text: actaData?.TITULO || "...", image: UNACLogo }];
 
   return (
+   
     <Document>
-      <Page
-    size="A4"
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "white",
-    }}
-  >
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        // justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "white",
-        padding: 10,
-      }}
-    >
-      <Text
-        className=" pt-1 pe-3 text-right line-height-108 text-left"
-        style={{ color: "#3388af" }}
-      >
-        {actaData ? actaData.TITULO : "..."}
-      </Text>
-      <Text style={{ color: "#3388af" }}>
-        {actaData ? actaData.SUBTITULO : "..."}
-      </Text>
-      <View className="d-flex fs-3">
-        <Text style={{ color: "#3388af" }}>
-          {actaData ? actaData.REFERENCIA.acuerdo : "..."}
-          {acta ? acta.numeroRef : "..."}-
-          {actaData ? actaData.REFERENCIA.anno : "..."}
-        </Text>
-            {/* <Text style={{ color: "#3388af" }}></Text> */}
-      </View>
-      <Text style={{ color: "#3388af" }}>
-        {acta ? acta.fechaCreacion : "..."}
-      </Text>
+      <Page size="A4" style={styles.page}>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            // justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "white",
+            padding: 10,
+          }}
+        >
+          <View style={styles.heading}>
+            <Image src={UNACLogo} style={styles.image} />
+            <View style={{ alignItems: "center" }}>
+              <Text
+                className=" pt-1 pe-3 text-right line-height-108 text-left"
+                style={{ fontSize: 18 }}
+              >
+                {actaData ? actaData.TITULO : "..."}
+              </Text>
+              <Text style={styles.subTitle}>
+                {actaData ? actaData.SUBTITULO : "..."}
+              </Text>
+              <Text style={styles.reference}>
+                {actaData ? actaData.REFERENCIA.acuerdo : "..."}
+                {acta ? acta.numeroRef : "..."}-
+                {actaData ? actaData.REFERENCIA.anno : "..."}
+              </Text>
+              <Text style={styles.reference}>
+                {acta
+                  ? moment(acta.fechaCreacion).format(`D [de] MMMM [de] YYYY`)
+                  : "..."}
+              </Text>
+            </View>
+          </View>
 
-      <br />
+          <br />
 
-      <Text style={{ color: "#3388af" }}>
-        {actaData ? actaData.PROLOGO.descAntesDeLaFecha : "..."}
-        {actaData ? actaData.NOMBRE_INSTITUCION : "..."}
-        {acta ? acta.fechaCreacion : "..."}
-        {acta ? acta.lugar : "..."}
-        {actaData ? actaData.PROLOGO.descDespuesDeLaFecha : "..."}
-        {actaData ? (
-          <actaData className="PROLOGO descFinal"></actaData>
-        ) : (
-          "..."
-        )}
-      </Text>
+          <Text style={styles.paragraph}>
+            {actaData ? actaData.PROLOGO.descAntesDeLaFecha : "..."}
+            {actaData ? actaData.NOMBRE_INSTITUCION : "..."}, reunido el día{" "}
+            {acta
+              ? moment(acta.fechaCreacion).format(`dddd DD [de] MMMM [de] YYYY`)
+              : "..."}{" "}
+            en el
+            {lugarTexto} {actaData ? actaData.PROLOGO.desDespuesFecha : "..."}{" "}
+            {acta ? moment(acta.horaInicio).format("h:mm a") : "..."} -{" "}
+            {acta ? moment(acta.horaFinal).format("h:mm a") : "..."}{" "}
+            {actaData ? actaData.PROLOGO.desFinal : "..."}
+          </Text>
 
-      <Text>Lugar: {acta ? acta.lugar : "..."}</Text>
-      <Text
-        style={{
-          color: "gray",
-          fontStyle: "italic",
-          fontSize: "10px",
-        }}
-      >
-        Estado del acta: {acta.estado}
-      </Text>
-    </View>
-  </Page>
+             <View>
+        <View style={styles.tableContainer}>
+          <Text style={styles.heading}>Miembros presentes</Text>
+          {acta &&
+          acta.miembrosPresentes &&
+          acta.miembrosPresentes.length > 0 ? (
+            <View style={styles.table}>
+              <View style={styles.tableRow}>
+                <Text style={styles.th}>No.</Text>
+                <Text style={styles.th}>Nombre</Text>
+                <Text style={styles.th}>Cargo</Text>
+              </View>
+              {acta.miembrosPresentes.map((miembro, index) => (
+                <View key={`${miembro.nombre}-${miembro.apellido}`} style={styles.tableRow}>
+                  <Text style={(styles.td, styles.indexCell)}>{index + 1}</Text>
+                  <Text style={styles.td}>
+                    {miembro.nombre} {miembro.apellido}
+                  </Text>
+                  <Text style={styles.td}>{miembro.cargo}</Text>
+                </View>
+              ))}
+            </View>
+          ) : (
+            <Text style={styles.emptyMessage}>No hay miembros Presentes</Text>
+          )}
+        </View>
+       
+          <Text
+            style={{
+              color: "gray",
+              fontStyle: "italic",
+              fontSize: "10px",
+            }}
+          >
+            Estado del acta: {acta.estado}
+          </Text>
+          </View>
+        </View>
+      </Page>
     </Document>
   );
 };

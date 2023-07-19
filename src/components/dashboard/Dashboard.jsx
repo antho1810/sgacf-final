@@ -1,443 +1,75 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import React, { useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+
+import ActaService from "../../services/ActasDataService";
 import { useLoaderData, NavLink } from "react-router-dom";
+
+import Button from "react-bootstrap/Button";
+import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable";
+
+import "./Dashboard.css";
+
 import {
   useSortBy,
   useTable,
   useGlobalFilter,
   usePagination,
 } from "react-table";
-import moment from "moment";
-import jwtDecode from "jwt-decode";
 
-// Email
-import emailjs from "@emailjs/browser";
-
-import ActaService from "../../services/ActasDataService";
-import ParticipantesTable from "../participantes/participantesTable/ParticipantesTable";
-import "./Dashboard.css";
-
-import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
-import Badge from "react-bootstrap/Badge";
+
+import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 
 import "./Table.css";
 import GlobalActasFilter from "./filters/GlobalFilter";
+
+import moment from "moment";
+import jwtDecode from "jwt-decode";
+
+import Badge from "react-bootstrap/Badge";
+
 import { Dropdown, IconButton } from "rsuite";
 
-import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 import { HiDotsHorizontal, HiDocumentDownload } from "react-icons/hi";
 import { BsEyeglasses } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaShareAlt, FaRegEdit } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
-import DocuPDF from "./PDF/DocuPDF";
+import httpCommon from "../../http-common";
 
 const renderIconButton = (props, ref) => {
   return <IconButton {...props} ref={ref} icon={<HiDotsHorizontal />} circle />;
 };
 
-const COLUMNS = [
-  { Header: "# Ref", accessor: "numeroRef" },
-  {
-    Header: "Fecha de creación",
-    accessor: "fechaCreacion",
-    Cell: ({ value }) => moment(value).format("DD/MM/YYYY"),
-  },
-  { Header: "Miembros presentes", accessor: "miembrosPresentes" },
-  { Header: "Lugar", accessor: "lugar" },
-  { Header: "Modalidad", accessor: "modalidad" },
-  {
-    Header: "Estado",
-    accessor: "estado",
-    Cell: ({ value }) =>
-      value === "En proceso" ? (
-        <Badge className="inProcess">
-          {" "}
-          <span>{value}</span>{" "}
-        </Badge>
-      ) : (
-        <Badge className="confirmed">
-          <span>{value}</span>
-        </Badge>
-      ),
-  },
-  {
-    Header: "Cronograma",
-    accessor: "cronograma",
-    //   Cell: ({ row }) => {
-    // con
-    //   }
-  },
-  {
-    Header: "",
-    accessor: "id",
-    disableSortBy: true,
-    Cell: ({ row }) => {
-      const [acta, setActa] = useState({});
-
-      const loadUserInfo = () => {
-        const info = localStorage.getItem("");
-      };
-
-      useEffect(() => {
-        loadUserInfo();
-      }, []);
-
-      // Modals
-      const [isEmailOpen, setIsEmailOpen] = useState(false);
-      const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-      const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-      const handleChangeStatusModalFalse = () => {
-        setIsDeleteModalOpen(false);
-        setIsUpdateModalOpen(false);
-        setIsEmailOpen(false);
-      };
-
-      const handleShowConfirmDeleteModal = () => {
-        setIsDeleteModalOpen(true);
-      };
-
-      const handleShowUpdateStatusModal = () => {
-        setIsUpdateModalOpen(true);
-      };
-      const handleShowEmailModal = () => {
-        setIsEmailOpen(true);
-      };
-
-      // Modal Delete Acta
-      const handleDelete = async (id) => {
-        await ActaService.deleteActa(id);
-        window.location.reload();
-      };
-
-      // Modal Update Status Acta
-      const handleUpdateStatus = async (ref) => {
-        await ActaService.updateStatusActa(ref, { estado: "Aprobado" });
-        window.location.reload();
-      };
-
-      // Modal Email Acta
-      const form = useRef();
-
-      // EMAILJS
-      const [emailRemitente, setEmailRemitente] = useState("");
-      const [remitente, setRemitente] = useState("");
-      const [mensaje, setMensaje] = useState("");
-      const sendEmail = (e) => {
-        e.preventDefault();
-        
-        // Configura EmailJS con tu Service ID
-        emailjs
-          .sendForm(
-            "service_73shi0p",
-            "template_xj0pfhk",
-            form.current,
-            "lKnR9ZvyvLPcJxoin"
-          )
-          .then(
-            (result) => {
-              // console.log(result.text);
-              console.log("Correo enviado")
-              handleChangeStatusModalFalse();
-            },
-            (error) => {
-              console.log(error.text);
-            }
-          );
-      };
-
-      const  handleInputChangeEmail = (e) => {
-        if (e.target.name === "emailRemitente") {
-          setEmailRemitente(e.target.value);
-        } else if (e.target.name === "mensaje") {
-          setMensaje(e.target.value);
-        } else if (e.target.name === "remitente") {
-          setRemitente(e.target.value);
-        }
-      };
-
-      const showStatus = (estado) => {
-        console.log(estado);
-      };
-
-      const estado = row.original.estado;
-
-      const token = localStorage.getItem("token");
-      const decodeToken = jwtDecode(token);
-
-      localStorage.setItem("userDashboardInfo", JSON.stringify(decodeToken));
-
-      const user = localStorage.getItem("userDashboardInfo");
-
-      const fixedUser = JSON.parse(user);
-
-      const checkRol = fixedUser.rol.map((userRol) => {
-        return userRol.nombre;
-      });
-
-    
-
-      // TRUE SI ES SECRETARIA
-      const checkExistedRolSecretaria = checkRol.includes("secretaria");
-
-      // TRUE SI ES DECANO
-      const checkExistedRolDecano = checkRol.includes("decano");
-
-      // console.log(checkExistedRolSecretaria);
-
-      return (
-        <>
-          {/* MODAL Email Acta CERRAR */}
-          {isEmailOpen && (
-            <div
-              className="modal align-items-center"
-              style={{ width: "35%", height: "60%" }}
-            >
-              <div className="modal-content h-auto align-items-center">
-                <h2 className="mb-2 h4 text-center">
-                  ¿Está seguro que desea enviar el acta por correo?
-                </h2>
-                <form ref={form} onSubmit={sendEmail} className="mt-1 mb-1">
-                  <label className="Email">Nombre:</label>
-                  <input
-                    type="text"
-                    // name="user_email"
-                    name="remitente"
-                    value={remitente}
-                    onChange={handleInputChangeEmail}
-                    className="form-control"
-                    placeholder="Ingrese nombre de quien lo envia"
-                  />
-                  <label className="Email">Email:</label>
-                  <input
-                    type="email"
-                    // name="user_email"
-                    name="emailRemitente"
-                    value={emailRemitente}
-                    onChange={handleInputChangeEmail}
-                    className="form-control"
-                    placeholder="Ingrese nombre"
-                  />
-                  <label className="Mensaje">Mensaje:</label>
-                  <textarea
-                    className="form-control"
-                    // name="message"
-                    name="mensaje"
-                    value={mensaje}
-                    onChange={handleInputChangeEmail}
-                    placeholder="Mensaje"
-                  />
-                  <div className="mt-1">
-                    <label className="Archivo">Archivo: </label>
-                    Espacio para el archivo seleccionado
-                  </div>
-                  <div className="ct-btn d-flex justify-content-evenly">
-                    <button
-                      className="btn btn-danger"
-                      onClick={handleChangeStatusModalFalse}
-                    >
-                      Atrás
-                    </button>
-                    <button
-                      className="btn btn-primary"
-                      type="submit"
-                      value="Send"
-                      // onClick={handleEmail}
-                    >
-                      Enviar
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
-
-          {/* MODAL Actualizar Estado Acta CERRAR */}
-          {isUpdateModalOpen && (
-            <div className="modal">
-              <div className="modal-content">
-                <h2 className="mb-4 h4 text-center">
-                  ¿Está seguro que desea actualizar el estado del acta?
-                </h2>
-                <div className="ct-btn d-flex justify-content-evenly">
-                  <button
-                    className="btn btn-warning"
-                    onClick={handleChangeStatusModalFalse}
-                  >
-                    Atrás
-                  </button>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleUpdateStatus(row.original.numeroRef)}
-                  >
-                    Confirmar
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-          {/* MODAL Eliminar CERRAR */}
-          {isDeleteModalOpen && (
-            <div className="modal">
-              <div className="modal-content">
-                <h2 className="mb-4 h4 text-center">
-                  ¿Está seguro que desea eliminar el acta?
-                </h2>
-                <div className="ct-btn d-flex justify-content-evenly">
-                  <button
-                    className="btn btn-warning"
-                    onClick={handleChangeStatusModalFalse}
-                  >
-                    Atrás
-                  </button>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleDelete(row.original._id)}
-                  >
-                    Confirmar
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <Dropdown renderToggle={renderIconButton} className="accion-drop">
-            {/* ACCIONES PARA SECREATARIO */}
-            {checkExistedRolSecretaria && (
-              <>
-                <Dropdown.Item
-                  onClick={() => showStatus(row.original.id)}
-                  to={`detalle-acta/referencia/${row.original.numeroRef}`}
-                  as={NavLink}
-                  className="i-revisar"
-                  icon={<BsEyeglasses />}
-                >
-                  {" "}
-                  <span>Revisar</span>{" "}
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="i-editar"
-                  as={NavLink}
-                  to={`actualizar-acta/referencia/${row.original.numeroRef}`}
-                  icon={<FaRegEdit />}
-                >
-                  {" "}
-                  <span>Editar</span>{" "}
-                </Dropdown.Item>
-
-                <Dropdown.Item
-                  // onClick={() => handleDelete(row.original._id)}
-                  className="i-borrar"
-                  onClick={handleShowConfirmDeleteModal}
-                  icon={<RiDeleteBinLine />}
-                >
-                  {"  "}
-                  <span>Borrar</span>
-                </Dropdown.Item>
-                {/* <PDFDownloadLink
-                  document={<DocuPDF acta={acta} />}
-                  fileName="acta.pdf"
-                > */}
-                  <Dropdown.Item
-                    // onClick={()=>handleActaFindByRef(row.original.numeroRef)}
-                  className="i-descargar"
-                  as={NavLink}
-                  to={`pdf`}
-                    icon={<HiDocumentDownload />}
-                  >
-                    {" "}
-                    <span> PDF</span>
-                  </Dropdown.Item>
-                {/* </PDFDownloadLink> */}
-                <Dropdown.Item
-                  className="i-compartir"
-                  onClick={handleShowEmailModal}
-                  icon={<FaShareAlt />}
-                >
-                  {" "}
-                  <span>Compartir</span>{" "}
-                </Dropdown.Item>
-              </>
-            )}
-
-            {checkExistedRolDecano && estado === "En proceso" && (
-              <Dropdown.Item
-                onClick={handleShowUpdateStatusModal}
-                className="i-aprobar"
-                icon={<AiOutlineLike />}
-              >
-                {" "}
-                <span>Aprobar</span>{" "}
-              </Dropdown.Item>
-            )}
-
-            {/* ACCIONES PARA DECANO */}
-            {checkExistedRolDecano && (
-              <>
-                <Dropdown.Item
-                  className="i-editar"
-                  as={NavLink}
-                  to={`actualizar-acta/referencia/${row.original.numeroRef}`}
-                  icon={<FaRegEdit />}
-                >
-                  {" "}
-                  <span>Editar</span>{" "}
-                </Dropdown.Item>
-
-                <Dropdown.Item
-                  // onClick={() => handleDelete(row.original._id)}
-                  className="i-borrar"
-                  onClick={handleShowConfirmDeleteModal}
-                  icon={<RiDeleteBinLine />}
-                >
-                  {"  "}
-                  <span>Borrar</span>
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => showStatus(row.original.id)}
-                  to={`detalle-acta/referencia/${row.original.numeroRef}`}
-                  as={NavLink}
-                  className="i-revisar"
-                  icon={<BsEyeglasses />}
-                >
-                  {" "}
-                  <span>Revisar</span>{" "}
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="i-compartir"
-                  onClick={handleShowEmailModal}
-                  icon={<FaShareAlt />}
-                >
-                  {" "}
-                  <span>Compartir</span>{" "}
-                </Dropdown.Item>
-                {/* <PDFDownloadLink
-                  document={<DocuPDF acta={acta} />}
-                  fileName="acta.pdf"
-                > */}
-                  <Dropdown.Item
-                  className="i-descargar"
-                   as={NavLink}
-                  to={`pdf`}
-                    icon={<HiDocumentDownload />}
-                  >
-                    {" "}
-                    <span> PDF</span>
-                  </Dropdown.Item>
-                {/* </PDFDownloadLink> */}
-              </>
-            )}
-          </Dropdown>
-        </>
-      );
-    },
-  },
-];
-
 function Dashboard() {
   const responseActas = useLoaderData();
+  const [isEmailOpen, setIsEmailOpen] = useState(false);
+  const [ref, setRef] = useState(0);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    // const response = await httpCommon.post("/services/mails/send", data);
+    const token = localStorage.getItem('token')
+    
+    const response = await httpCommon.post("/services/mails/send-pdf", data, {
+      ...data, ref: ref, token: token
+    })
+
+    const status = response.status;
+    const message = response.data.message;
+    console.log(`Status: ${status} --- Response: ${message}`);
+  };
+
+  const handleEmailModal = (state, ref) => {
+    setIsEmailOpen(state);
+    setRef(ref)
+  };
 
   const data = useMemo(
     () =>
@@ -455,8 +87,159 @@ function Dashboard() {
       })),
     [responseActas]
   );
-    // borrar despues de pru
-    console.log(data)
+
+  const COLUMNS = [
+    { Header: "# Ref", accessor: "numeroRef" },
+    {
+      Header: "Fecha de creación",
+      accessor: "fechaCreacion",
+      Cell: ({ value }) => moment(value).format("DD/MM/YYYY"),
+    },
+    { Header: "Miembros presentes", accessor: "miembrosPresentes" },
+    { Header: "Lugar", accessor: "lugar" },
+    { Header: "Modalidad", accessor: "modalidad" },
+    {
+      Header: "Estado",
+      accessor: "estado",
+      Cell: ({ value }) =>
+        value === "En proceso" ? (
+          <Badge className="inProcess">
+            {" "}
+            <span>{value}</span>{" "}
+          </Badge>
+        ) : (
+          <Badge className="confirmed">
+            <span>{value}</span>
+          </Badge>
+        ),
+    },
+    { Header: "Articulos", accessor: "articulos" },
+    {
+      Header: "",
+      accessor: "id",
+      disableSortBy: true,
+      Cell: ({ row }) => {
+// Global accessors
+        const rowId = row.original._id;
+        const rowRef = row.original.numeroRef;
+        const rowState = row.original.estado;
+
+        const handleDelete = async (id) => {
+          await ActaService.deleteActa(id);
+          window.location.reload();
+        };
+
+        const handleUpdateStatus = async (ref) => {
+          await ActaService.updateStatusActa(ref, { estado: "aprobado" });
+          window.location.reload();
+        };
+
+        const showStatus = (estado) => {
+          console.log(estado);
+        };
+
+        const estado = row.original.estado;
+
+        const token = localStorage.getItem("token");
+
+        if (token) {
+          const decodeToken = jwtDecode(token);
+
+          const checkRol = decodeToken.rol.map((userRol) => {
+            return userRol.nombre;
+          });
+
+          // TRUE SI ES SECRETARIO
+          var checkExistedRolSecretaria = checkRol.includes("secretaria");
+
+          // TRUE SI ES Decano
+          var checkExistedRolDecano = checkRol.includes("decano");
+
+          // TRUE SI ES PARTICIPANTES
+          var checkExistedRolParticipante = checkRol.includes("participante");
+        }
+
+        return (
+          <Dropdown renderToggle={renderIconButton} className="accion-drop">
+            {/* ACCIONES PARA SECREATARIO */}
+            {checkExistedRolSecretaria && (
+              <>
+                <Dropdown.Item
+                  className="i-editar"
+                  to={`actualizar-acta/referencia/${rowRef}`}
+                  as={NavLink}
+                  icon={<FaRegEdit />}
+                >
+                  {" "}
+                  <span>Editar</span>{" "}
+                </Dropdown.Item>
+
+                <Dropdown.Item
+                  onClick={() => handleDelete(rowId)}
+                  className="i-borrar"
+                  icon={<RiDeleteBinLine />}
+                >
+                  {"  "}
+                  <span>Borrar</span>
+                </Dropdown.Item>
+              </>
+            )}
+
+            {checkExistedRolDecano && estado === "En proceso" && (
+              <Dropdown.Item
+                onClick={() => handleUpdateStatus(rowRef)}
+                className="i-aprobar"
+                icon={<AiOutlineLike />}
+              >
+                {" "}
+                <span>Aprobar</span>{" "}
+              </Dropdown.Item>
+            )}
+
+            {/* ACCIONES PARA Decano */}
+            {checkExistedRolDecano && (
+              <>
+                <Dropdown.Item
+                  onClick={() => showStatus(rowState)}
+                  to={`detalle-acta/referencia/${rowRef}`}
+                  as={NavLink}
+                  className="i-revisar"
+                  icon={<BsEyeglasses />}
+                >
+                  {" "}
+                  <span>Revisar</span>{" "}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => handleEmailModal(true, rowRef)}
+                  className="i-compartir"
+                  icon={<FaShareAlt />}
+                >
+                  {" "}
+                  <span>Compartir</span>{" "}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  to={`actualizar-acta/referencia/${rowRef}`}
+                  as={NavLink}
+                  className="i-editar"
+                  icon={<FaRegEdit />}
+                >
+                  {" "}
+                  <span>Editar</span>{" "}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className="i-descargar"
+                  icon={<HiDocumentDownload />}
+                >
+                  {" "}
+                  <span> Descargar PDF</span>
+                </Dropdown.Item>
+              </>
+            )}
+          </Dropdown>
+        );
+      },
+    },
+  ];
 
   const {
     getTableProps,
@@ -489,6 +272,80 @@ function Dashboard() {
 
   return (
     <>
+      {isEmailOpen && (
+        <div
+          className="modal align-items-center"
+          style={{ width: "fit-content", height: "fit-content" }}
+        >
+          <div className="modal-content py-4 h-auto align-items-center">
+            <h2 className="mb-2 h4 text-center">
+              Complete la información de la persona a la que le llegará el
+              correo
+            </h2>
+            <form onSubmit={handleSubmit(onSubmit)} className="p-3">
+              <div className="d-flex gap-2">
+                <div className="d-flex flex-column">
+                  <label className="form-label">Nombre:</label>
+                  <input
+                    {...register("name")}
+                    type="text"
+                    className="form-control"
+                    placeholder="Ingrese nombre de quien lo envia"
+                  />
+                </div>
+
+                <div className="d-flex flex-column">
+                  <label className="form-label">Email:</label>
+                  <input
+                    {...register("to")}
+                    type="text"
+                    className="form-control"
+                    placeholder="Ingrese el correo de la persona que recibirá el correo"
+                  />
+                </div>
+              </div>
+
+              <div className="d-flex mt-3 gap-2">
+                <div className="d-flex flex-column">
+                  <label className="form-label">Asunto del mensaje:</label>
+                  <input
+                    {...register("subject")}
+                    type="text"
+                    className="form-control"
+                    placeholder="Asunto del mensaje"
+                  />
+                </div>
+                <div className="d-flex flex-column">
+                  <label className="form-label">Cuerpo del mensaje:</label>
+                  <textarea
+                    {...register("bodyEmail")}
+                    className="form-control"
+                    placeholder="Mensaje"
+                    style={{ height: "70px" }}
+                  />
+                </div>
+              </div>
+
+              <div className="d-flex gap-3 mt-4 justify-content-end">
+                <button
+                  onClick={() => handleEmailModal(false)}
+                  className="btn btn-danger"
+                >
+                  Atrás
+                </button>
+                <button
+                  className="btn btn-primary"
+                  value="Send"
+                  type="submit"
+                  // onClick={handleEmail}
+                >
+                  Enviar correo
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       <div className="ct-header-actas">
         <div className="title-actas">
           <h2>Lista de actas</h2>

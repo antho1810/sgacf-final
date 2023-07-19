@@ -12,6 +12,7 @@ import { votosData } from "./votosData";
 
 const ActaDetails = () => {
   const [acta, setActa] = useState([]);
+  const [groupVotos, setGroupVotos] = useState([])
 
   const { ref } = useParams();
 
@@ -76,11 +77,11 @@ const ActaDetails = () => {
           </div>
           <div className="me-4 text-center">
             <h1 className="h4">Hora inico</h1>
-            <p> {acta.horaInicia} </p>
+            <p> {moment(acta.horaInicio).format("h:mm a")} </p>
           </div>
           <div className="me-4 text-center">
             <h1 className="h4">Hora final</h1>
-            <p> {acta.horaFinal} </p>
+            <p> {moment(acta.horaFinal).format("h:mm a")} </p>
           </div>
         </div>
         <div className="d-flex mt-2">
@@ -90,7 +91,7 @@ const ActaDetails = () => {
               acta.miembrosPresentes.map((item) => (
                 <div key={item._id}>
                   <p>
-                    {item.nombre} {item.apellido}
+                    {item.nombre} {item.apellido} | {item.cargo}
                   </p>
                 </div>
               ))
@@ -104,7 +105,7 @@ const ActaDetails = () => {
               acta.miembrosInvitados.map((item) => (
                 <div key={item._id}>
                   <p>
-                    {item.nombre} {item.apellido}
+                    {item.nombre} {item.apellido} | {item.cargo}
                   </p>
                 </div>
               ))
@@ -118,7 +119,7 @@ const ActaDetails = () => {
               acta.miembrosAusentes.map((item) => (
                 <div key={item._id}>
                   <p>
-                    {item.nombre} {item.apellido}
+                    {item.nombre} {item.apellido} | {item.cargo}
                   </p>
                 </div>
               ))
@@ -139,40 +140,42 @@ const ActaDetails = () => {
       {/* Container Articulos */}
       <Container className="ct-articulos mt-2 mb-2">
         <span className="h4">Articulos</span>
-         {acta.articulos ? (
-    acta.articulos.map((item) => (
-      <div key={item.nombre}>
-        <h3>{item.nombre}</h3>
-        {votosData.map((voto) => (
-          voto.nombre === item.nombre && (
-            <ul key={voto.nombre}>
-              {voto.campos.map((campo) => (
-                <li key={campo.nombre}>
-                  {campo.etiqueta}
-                  <input
-                    type={campo.tipo}
-                    name={campo.nombre}
-                    placeholder={campo.etiqueta}
-                  />
-                  {campo.subElementos && (
-                    <select>
-                      {campo.subElementos.map((subElem) => (
-                        <option key={subElem}>{subElem}</option>
+        {acta.articulos ? (
+          acta.articulos.map((item) => (
+            <div key={item.nombre}>
+              <h3>{item.nombre}</h3>
+              {votosData.map(
+                (voto) =>
+                  voto.nombre === item.nombre && (
+                    <ul key={voto.nombre}>
+                      {voto.campos.map((campo) => (
+                        <li key={campo.nombre}>
+                          {campo.etiqueta}
+                          <input
+                            type={campo.tipo}
+                            name={campo.nombre}
+                            placeholder={campo.etiqueta}
+                          />
+                          {campo.subElementos && (
+                            <select>
+                              {campo.subElementos.map((subElem) => (
+                                <option key={subElem}>{subElem}</option>
+                              ))}
+                            </select>
+                          )}
+                        </li>
                       ))}
-                    </select>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )
-        ))}
-      </div>
-    ))) : (
+                    </ul>
+                  )
+              )}
+            </div>
+          ))
+        ) : (
           <span>No hay Articulos</span>
         )}
       </Container>
       {/* Container Documentos Soporte */}
-      <div className="ct-docsSoprot mt-2">
+      <div className="ct-docsSoprot mt-3">
         <div className="me-4 text-center">
           <span className="h4">Documentos adjuntos</span>
           <span className="center me-1">No hay Documentos de soporte</span>
@@ -187,6 +190,7 @@ const ActaDetails = () => {
         <button className="btn btn-warning" onClick={handleConfirmExitBtn}>
           Atrás
         </button>
+        <button className="btn btn-success">Editar</button>
       </div>
     </div>
   );
