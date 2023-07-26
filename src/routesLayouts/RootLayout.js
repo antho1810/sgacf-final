@@ -5,7 +5,7 @@ import jwtDecode from "jwt-decode";
 
 import Container from "react-bootstrap/Container";
 
-import { Sidenav, Nav, Avatar } from "rsuite";
+import { Sidenav, Nav, Avatar, Button } from "rsuite";
 
 import logo from "./UNACazul.png";
 
@@ -38,9 +38,8 @@ function Navbarside() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    // window.location.href = "/login";
+    window.location.href = "/login";
   };
-  // window.location.reload();
 
   return (
     <>

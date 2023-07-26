@@ -53,13 +53,15 @@ function Dashboard() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    // const response = await httpCommon.post("/services/mails/send", data);
-    const token = localStorage.getItem('token')
-    
-    const response = await httpCommon.post("/services/mails/send-pdf", data, {
-      ...data, ref: ref, token: token
-    })
+    // const response = await httpCommon.post("/services/mails/send", data)
+
+    const token = localStorage.getItem("token");
+
+    const response = await httpCommon.post("/services/mails/send-pdf", {
+      ...data,
+      ref: ref,
+      token: token,
+    });
 
     const status = response.status;
     const message = response.data.message;
@@ -68,7 +70,7 @@ function Dashboard() {
 
   const handleEmailModal = (state, ref) => {
     setIsEmailOpen(state);
-    setRef(ref)
+    setRef(ref);
   };
 
   const data = useMemo(
@@ -119,7 +121,7 @@ function Dashboard() {
       accessor: "id",
       disableSortBy: true,
       Cell: ({ row }) => {
-// Global accessors
+        // GLOBAL ACCESSORS
         const rowId = row.original._id;
         const rowRef = row.original.numeroRef;
         const rowState = row.original.estado;
@@ -149,11 +151,11 @@ function Dashboard() {
             return userRol.nombre;
           });
 
-          // TRUE SI ES SECRETARIO
-          var checkExistedRolSecretaria = checkRol.includes("secretaria");
+          // TRUE SI ES secretaria
+          var checkExistedRolSecretario = checkRol.includes("secretaria");
 
-          // TRUE SI ES Decano
-          var checkExistedRolDecano = checkRol.includes("decano");
+          // TRUE SI ES decano
+          var checkExistedRolMaestro = checkRol.includes("decano");
 
           // TRUE SI ES PARTICIPANTES
           var checkExistedRolParticipante = checkRol.includes("participante");
@@ -162,14 +164,9 @@ function Dashboard() {
         return (
           <Dropdown renderToggle={renderIconButton} className="accion-drop">
             {/* ACCIONES PARA SECREATARIO */}
-            {checkExistedRolSecretaria && (
+            {checkExistedRolSecretario && (
               <>
-                <Dropdown.Item
-                  className="i-editar"
-                  to={`actualizar-acta/referencia/${rowRef}`}
-                  as={NavLink}
-                  icon={<FaRegEdit />}
-                >
+                <Dropdown.Item className="i-editar" icon={<FaRegEdit />}>
                   {" "}
                   <span>Editar</span>{" "}
                 </Dropdown.Item>
@@ -185,7 +182,7 @@ function Dashboard() {
               </>
             )}
 
-            {checkExistedRolDecano && estado === "En proceso" && (
+            {checkExistedRolMaestro && estado === "En proceso" && (
               <Dropdown.Item
                 onClick={() => handleUpdateStatus(rowRef)}
                 className="i-aprobar"
@@ -196,13 +193,11 @@ function Dashboard() {
               </Dropdown.Item>
             )}
 
-            {/* ACCIONES PARA Decano */}
-            {checkExistedRolDecano && (
+            {/* ACCIONES PARA decano */}
+            {checkExistedRolMaestro && (
               <>
                 <Dropdown.Item
                   onClick={() => showStatus(rowState)}
-                  to={`detalle-acta/referencia/${rowRef}`}
-                  as={NavLink}
                   className="i-revisar"
                   icon={<BsEyeglasses />}
                 >
@@ -217,12 +212,7 @@ function Dashboard() {
                   {" "}
                   <span>Compartir</span>{" "}
                 </Dropdown.Item>
-                <Dropdown.Item
-                  to={`actualizar-acta/referencia/${rowRef}`}
-                  as={NavLink}
-                  className="i-editar"
-                  icon={<FaRegEdit />}
-                >
+                <Dropdown.Item className="i-editar" icon={<FaRegEdit />}>
                   {" "}
                   <span>Editar</span>{" "}
                 </Dropdown.Item>
