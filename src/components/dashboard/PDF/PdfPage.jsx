@@ -13,7 +13,7 @@ const PdfPage = () => {
   const [verPDF, setVerPDF] = useState(false);
 
   const getData = async () => {
-    const response = await ActaService.getActa("1");
+    const response = await ActaService.getActa("10");
     setActa(response.data);
     console.log(acta);
   };
@@ -25,6 +25,7 @@ const PdfPage = () => {
   const Menu = () => (
     <div>
       <nav
+        className="navbar navbar-expand-lg navbar-dark bg-dark"
         style={{
           display: "flex",
           borderBottom: "1px solid black",
@@ -33,7 +34,7 @@ const PdfPage = () => {
         }}
       >
         <Button
-          variant="dark"
+          variant="outline-light"
           onClick={() => {
             setVerWeb(!verWeb);
             setVerPDF(false);
@@ -42,7 +43,7 @@ const PdfPage = () => {
           {verWeb ? "Ocultar Web" : "Ver Web"}
         </Button>
         <Button
-          variant="dark"
+          variant="outline-light"
           onClick={() => {
             setVerPDF(!verPDF);
             setVerWeb(false);
@@ -62,16 +63,19 @@ const PdfPage = () => {
       <Menu />
       {acta ? (
         <>
-          {verWeb ? <VistaWeb acta={acta} /> : null}
-          {verPDF ? (
-            <PDFViewer style={{ width: "100%", height: "90vh" }}>
-              <DocuPDF acta={acta} />
-            </PDFViewer>
-          ) : null}
+          <div className={`transition-container`}>
+            {verWeb ? <VistaWeb acta={acta} /> : null}
+          </div>
+          <div className={`transition-container`}>
+            {verPDF ? (
+              <PDFViewer style={{ width: "100%", height: "90vh" }}>
+                <DocuPDF acta={acta} />
+              </PDFViewer>
+            ) : null}
+          </div>
         </>
       ) : null}
     </div>
-    
   );
 };
 

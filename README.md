@@ -13,3 +13,15 @@
 #### Nota
 
 El rol participante solo tiene va a tener acceso para verificar si su informacion esta correcta en dado caso que los roles superiores no tenga la información correcta.
+
+
+### Requerimientos faltantes
+
+| Requerimiento | Estado |
+| ------------- | :------: |
+| Corregir desbordamiento de algunas partes de pagina | ✅ |
+| Añadir mas articulos | ✅ |
+| Envio de PDF para multiples personas por medio de correo nodemailer | :hourglass: |
+| Almacenamiento de documentos de Soporte | :hourglass: |
+| Estilos del PDF | :hourglass: |
+

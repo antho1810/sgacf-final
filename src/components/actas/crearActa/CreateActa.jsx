@@ -517,10 +517,17 @@ const CreateActa = () => {
 
   const [votoSeleccionado, setVotoSeleccionado] = useState("");
   const [formulario, setFormulario] = useState({});
+  const [groupVotos, setGroupVotos] = useState([]);
+
+  const addVoto = () => {
+    setGroupVotos((prevGroupVotos) => [...prevGroupVotos, formulario]);
+    setFormulario({});
+    setVotoSeleccionado("");
+  };
 
   const handleRecopilarVotos = () => {
     const finalActa = {
-      articulos: formulario,
+      articulos: groupVotos,
     };
 
     const definitiveActa = {
@@ -1189,7 +1196,188 @@ const CreateActa = () => {
                 </div>
               </div>
 
-              <div className="row mb-4">{renderCampos()}</div>
+              <div style={{ maxWidth: "90%" }} className="row mb-4">
+                {renderCampos()}
+              </div>
+
+              <div className="container m-0 p-0">
+                {groupVotos.length > 0 &&
+                  groupVotos.map((voto, index) => (
+                    <div
+                      className="container p-0 m-0 mb-4"
+                      style={{ maxWidth: "100%" }}
+                    >
+                      <div
+                        style={{
+                          maxWidth: "100%",
+                          overflowX: "scroll",
+                          overflowY: "hidden",
+                        }}
+                        className="container-fluid p-0 m-0"
+                      >
+                        <table
+                          key={index}
+                          className="table table-striped table-bordered"
+                        >
+                          <thead>
+                            <tr>
+                              {Object.keys(voto).map((votoInd, index) => (
+                                <th key={index}>{votoInd}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              {Object.values(voto).map((valor, i) => (
+                                <td key={i}>{valor}</td>
+                              ))}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              <button className="btn btn-primary" onClick={addVoto}>
+                Añadir nuevo voto +
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* PARTE 4: DOCUMENTOS DE SOPORTE */}
+        {/* -------------------------------------------------------------------------------- */}
+        <div className={`formulario ${currentStep !== 4 && "oculto"}`}>
+          {currentStep === 4 && (
+            <>
+              <div className="create-acta-header mb-4">
+                <h3 className="h3 mt-2">Adjuntar documentos de soporte</h3>
+                <input type="file" accept=".pdf" onChange={handleFileChange} />
+                <button onClick={handleFileUpload}>Adjuntar</button>
+
+                {files.length > 0 && (
+                  <div>
+                    <h4>Archivos adjuntados:</h4>
+                    <ul>
+                      {files.map((file, index) => (
+                        <li key={index}>{file.name}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <div className="row mb-4"></div>
+              <div className="container m-0 p-0">
+                {groupVotos.length > 0 &&
+                  groupVotos.map((voto, index) => (
+                    <div
+                      className="container p-0 m-0 mb-4"
+                      style={{ maxWidth: "100%" }}
+                    >
+                      <div
+                        style={{
+                          maxWidth: "100%",
+                          overflowX: "scroll",
+                          overflowY: "hidden",
+                        }}
+                        className="container-fluid p-0 m-0"
+                      >
+                        <table
+                          key={index}
+                          className="table table-striped table-bordered"
+                        >
+                          <thead>
+                            <tr>
+                              {Object.keys(voto).map((votoInd, index) => (
+                                <th key={index}>{votoInd}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              {Object.values(voto).map((valor, i) => (
+                                <td key={i}>{valor}</td>
+                              ))}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              <button className="btn btn-primary" onClick={addVoto}>
+                Añadir nuevo voto +
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* PARTE 4: DOCUMENTOS DE SOPORTE */}
+        {/* -------------------------------------------------------------------------------- */}
+        <div className={`formulario ${currentStep !== 4 && "oculto"}`}>
+          {currentStep === 4 && (
+            <>
+              <div className="create-acta-header mb-4">
+                <h3 className="h3 mt-2">Adjuntar documentos de soporte</h3>
+                <input type="file" accept=".pdf" onChange={handleFileChange} />
+                <button onClick={handleFileUpload}>Adjuntar</button>
+
+                {files.length > 0 && (
+                  <div>
+                    <h4>Archivos adjuntados:</h4>
+                    <ul>
+                      {files.map((file, index) => (
+                        <li key={index}>{file.name}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <div className="row mb-4"></div>
+              <div className="container m-0 p-0">
+                {groupVotos.length > 0 &&
+                  groupVotos.map((voto, index) => (
+                    <div
+                      className="container p-0 m-0 mb-4"
+                      style={{ maxWidth: "100%" }}
+                    >
+                      <div
+                        style={{
+                          maxWidth: "100%",
+                          overflowX: "scroll",
+                          overflowY: "hidden",
+                        }}
+                        className="container-fluid p-0 m-0"
+                      >
+                        <table
+                          key={index}
+                          className="table table-striped table-bordered"
+                        >
+                          <thead>
+                            <tr>
+                              {Object.keys(voto).map((votoInd, index) => (
+                                <th key={index}>{votoInd}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              {Object.values(voto).map((valor, i) => (
+                                <td key={i}>{valor}</td>
+                              ))}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              <button className="btn btn-primary" onClick={addVoto}>
+                Añadir nuevo voto +
+              </button>
             </>
           )}
         </div>
@@ -1223,12 +1411,11 @@ const CreateActa = () => {
         {/* BOTONES DE ACCIONES (CANCELAR, ATRÁS, SIGUIENTE) */}
         {/* -------------------------------------------------------------------------------- */}
         <div
-          className="container-fluid mt-4 d-flex justify-content-between"
-          style={{ gap: "15px" }}
+          className="mt-4 d-flex justify-content-around"
+          style={{ maxWidth: "95%" }}
         >
           <button
             className="btn btn-danger"
-            role="button"
             onClick={handleChangeStatusModalOk}
           >
             Salir
@@ -1249,7 +1436,7 @@ const CreateActa = () => {
               </button>
             )}
 
-            {currentStep == 3 && (
+            {currentStep === 3 && (
               <button
                 className="btn btn-primary"
                 onClick={handleRecopilarVotos}
