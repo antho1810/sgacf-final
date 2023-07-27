@@ -73,27 +73,24 @@ const ParticipantesTable = () => {
            await ParticipantesService.deleteParticipante(id);
            window.location.reload();
          };
-        const token = localStorage.getItem("token");
-        const decodeToken = jwtDecode(token);
 
-        localStorage.setItem("userDashboardInfo", JSON.stringify(decodeToken));
+         const token = localStorage.getItem("token");
 
-        const user = localStorage.getItem("userDashboardInfo");
+         if (token) {
+           const decodeToken = jwtDecode(token);
+           const checkRol = decodeToken.rol.map((userRol) => {
+               return userRol.nombre;
+           });
 
-        const fixedUser = JSON.parse(user);
+          // TRUE SI ES secretaria
+          var checkExistedRolSecretaria = checkRol.includes("secretaria");
 
-        const checkRol = fixedUser.rol.map((userRol) => {
-          return userRol.nombre;
-        });
+         // TRUE SI ES decano
+         var checkExistedRolDecano = checkRol.includes("decano");
 
-        // TRUE SI ES SECRETARIA
-        const checkExistedRolSecretaria = checkRol.includes("secretaria");
-
-        // TRUE SI ES DECANO
-        const checkExistedRolDecano = checkRol.includes("decano");
-        
-      // TRUE SI ES PARTICIPANTES
-      const checkExistedRolParticipante = checkRol.includes("participante");
+         // TRUE SI ES PARTICIPANTES
+         var checkExistedRolParticipante = checkRol.includes("participante");
+        }
 
         return (
           <>
