@@ -58,42 +58,41 @@ const ParticipantesTable = () => {
       Header: "",
       accessor: "_id", //localhost:4000/sgacfi-api/participantes/_id
       Cell: ({ row }) => {
+        const rowId = row.original._id;
 
-         const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+        const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-         const handleChangeStatusModalFalse = () => {
-           setIsDeleteModalOpen(false);
-         };
+        const handleChangeStatusModalFalse = () => {
+          setIsDeleteModalOpen(false);
+        };
 
-         const handleShowConfirmModal = () => {
-           setIsDeleteModalOpen(true);
-         };
+        const handleShowConfirmModal = () => {
+          setIsDeleteModalOpen(true);
+        };
 
-         const handleConfirmDelete = async (id) => {
-           await ParticipantesService.deleteParticipante(id);
-           window.location.reload();
-         };
+        const handleConfirmDelete = async (id) => {
+          await ParticipantesService.deleteParticipante(id);
+          window.location.reload();
+        };
+
         const token = localStorage.getItem("token");
-        const decodeToken = jwtDecode(token);
 
-        localStorage.setItem("userDashboardInfo", JSON.stringify(decodeToken));
+        if (token) {
+          const decodeToken = jwtDecode(token);
 
-        const user = localStorage.getItem("userDashboardInfo");
+          const checkRol = decodeToken.rol.map((userRol) => {
+            return userRol.nombre;
+          });
 
-        const fixedUser = JSON.parse(user);
+          // TRUE SI ES secretaria
+          var checkExistedRolSecretaria = checkRol.includes("secretaria");
 
-        const checkRol = fixedUser.rol.map((userRol) => {
-          return userRol.nombre;
-        });
+          // TRUE SI ES decano
+          var checkExistedRolDecano = checkRol.includes("decano");
 
-        // TRUE SI ES SECRETARIA
-        const checkExistedRolSecretaria = checkRol.includes("secretaria");
-
-        // TRUE SI ES DECANO
-        const checkExistedRolDecano = checkRol.includes("decano");
-        
-      // TRUE SI ES PARTICIPANTES
-      const checkExistedRolParticipante = checkRol.includes("participante");
+          // TRUE SI ES PARTICIPANTES
+          var checkExistedRolParticipante = checkRol.includes("participante");
+        }
 
         return (
           <>
@@ -113,7 +112,7 @@ const ParticipantesTable = () => {
                     </button>
                     <button
                       className="btn btn-primary"
-                      onClick={() => handleConfirmDelete(row.original._id)}
+                      onClick={() => handleConfirmDelete(rowId)}
                     >
                       Confirmar
                     </button>
@@ -122,14 +121,14 @@ const ParticipantesTable = () => {
               </div>
             )}
             <Dropdown renderToggle={renderIconButton} className="accion-drop">
-              {/* Acciones para el secretario */}
+              {/* Acciones para el secretaria */}
               {checkExistedRolSecretaria && (
                 <>
                   {" "}
                   <Dropdown.Item
                     className="i-editar"
                     as={NavLink}
-                    to={`actualizar-participante/id/${row.original._id}`}
+                    to={`actualizar-participante/id/${rowId}`}
                     icon={<FaRegEdit />}
                   >
                     {" "}
@@ -145,7 +144,6 @@ const ParticipantesTable = () => {
                     <span> Borrar</span>
                   </Dropdown.Item>
                 </>
-                
               )}
 
               {checkExistedRolDecano && (
@@ -153,7 +151,7 @@ const ParticipantesTable = () => {
                   <Dropdown.Item
                     className="i-editar"
                     as={NavLink}
-                    to={`actualizar-participante/id/${row.original._id}`}
+                    to={`actualizar-participante/id/${rowId}`}
                     icon={<FaRegEdit />}
                   >
                     {" "}

@@ -158,7 +158,7 @@ function Dashboard() {
           var checkExistedRolMaestro = checkRol.includes("decano");
 
           // TRUE SI ES PARTICIPANTES
-          var checkExistedRolParticipante = checkRol.includes("participante");
+          // var checkExistedRolParticipante = checkRol.includes("participante");
         }
 
         return (
@@ -166,18 +166,54 @@ function Dashboard() {
             {/* ACCIONES PARA SECREATARIO */}
             {checkExistedRolSecretario && (
               <>
-                <Dropdown.Item className="i-editar" icon={<FaRegEdit />}>
+                <Dropdown.Item
+                  onClick={() => showStatus(row.original.id)}
+                  to={`details-acta/referencia/${rowRef}`}
+                  as={NavLink}
+                  className="i-revisar"
+                  icon={<BsEyeglasses />}
+                >
+                  {" "}
+                  <span>Revisar</span>{" "}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className="i-editar"
+                  as={NavLink}
+                  to={`actualizar-acta/referencia/${rowRef}`}
+                  icon={<FaRegEdit />}
+                >
                   {" "}
                   <span>Editar</span>{" "}
                 </Dropdown.Item>
 
                 <Dropdown.Item
-                  onClick={() => handleDelete(rowId)}
                   className="i-borrar"
+                  onClick={() => handleDelete(rowId)}
                   icon={<RiDeleteBinLine />}
                 >
                   {"  "}
                   <span>Borrar</span>
+                </Dropdown.Item>
+                {/* <PDFDownloadLink
+                  document={<DocuPDF acta={acta} />}
+                  fileName="acta.pdf"
+                > */}
+                <Dropdown.Item
+                  // onClick={()=>handleActaFindByRef(row.original.numeroRef)}
+                  className="i-descargar"
+                  icon={<HiDocumentDownload />}
+                >
+                  {" "}
+                  <span> Descargar PDF</span>
+                </Dropdown.Item>
+                {/* </PDFDownloadLink> */}
+                <Dropdown.Item
+                  className="i-compartir"
+                  onClick={() => handleEmailModal(true, rowRef)}
+                  icon={<FaShareAlt />}
+                >
+                  {" "}
+                  <span>Compartir</span>{" "}
                 </Dropdown.Item>
               </>
             )}
@@ -197,7 +233,17 @@ function Dashboard() {
             {checkExistedRolMaestro && (
               <>
                 <Dropdown.Item
+                  className="i-borrar"
+                  onClick={() => handleDelete(rowId)}
+                  icon={<RiDeleteBinLine />}
+                >
+                  {"  "}
+                  <span>Borrar</span>
+                </Dropdown.Item>
+                <Dropdown.Item
                   onClick={() => showStatus(rowState)}
+                  to={`details-acta/referencia/${rowRef}`}
+                  as={NavLink}
                   className="i-revisar"
                   icon={<BsEyeglasses />}
                 >
@@ -212,7 +258,12 @@ function Dashboard() {
                   {" "}
                   <span>Compartir</span>{" "}
                 </Dropdown.Item>
-                <Dropdown.Item className="i-editar" icon={<FaRegEdit />}>
+                <Dropdown.Item
+                  className="i-editar"
+                  as={NavLink}
+                  to={`actualizar-acta/referencia/${rowRef}`}
+                  icon={<FaRegEdit />}
+                >
                   {" "}
                   <span>Editar</span>{" "}
                 </Dropdown.Item>

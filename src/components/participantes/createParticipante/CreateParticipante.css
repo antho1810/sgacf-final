@@ -16,11 +16,11 @@
   color: #030229;
 }
 
-div.container-fluid{
+div.container-fluid {
   padding: 0;
 }
 
-.ct-inputs{
+.ct-inputs {
   display: flex;
   flex-direction: row;
   gap: 25px;

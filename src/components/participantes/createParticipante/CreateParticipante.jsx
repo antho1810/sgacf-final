@@ -44,7 +44,7 @@ const CreateParticipante = () => {
 
     setTimeout(() => {
       window.location.href = "/";
-    })
+    });
   };
 
   // const newParticipante = () => {
