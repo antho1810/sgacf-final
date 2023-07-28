@@ -14,12 +14,9 @@ code {
     monospace;
 }
 
-input:focus,
-select:focus,
-select,
-input.form-control:focus,
-textarea:focus {
-  outline: none !important;
+input:focus, select:focus, select, input.form-control:focus {
+
+  outline:none !important;
 
   outline-width: 0 !important;
 
@@ -28,4 +25,5 @@ textarea:focus {
   -moz-box-shadow: none;
 
   -webkit-box-shadow: none;
+
 }
