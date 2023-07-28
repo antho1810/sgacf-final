@@ -114,7 +114,7 @@ function Navbarside() {
                   />
                     <div className="ct-info-user">
                       <h4> { userInfo.nombre + ' ' + userInfo.apellido } </h4>
-                      <span> { userInfo.cargo } - UNAC</span>
+                      <span> { userInfo.cargo } FI - UNAC</span>
                     </div>
                 </div>
               </div>
