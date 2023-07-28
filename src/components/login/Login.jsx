@@ -15,7 +15,9 @@ const Login = () => {
   const [error, setError] = useState("");
 
   // const baseUrl = "http://localhost:4000/sgacfi-api/auth/ingreso";
-   const baseUrl = "https://api-z5zl.onrender.com/sgacfi-api/auth/ingreso";
+  // const baseUrl =
+    // "https://sgacfi-back-mern-api.up.railway.app/sgacfi-api/auth/ingreso";
+  const baseUrl = "https://api-z5zl.onrender.com/sgacfi-api/auth/ingreso";
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -25,6 +27,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data: res } = await axios.post(baseUrl, data);
+      console.log(res.data);
       localStorage.setItem("token", res.data);
       window.location = "/";
       console.log("Ingreso éxitoso");
@@ -48,17 +51,25 @@ const Login = () => {
             </div>
             <div className="ct-form">
               <Form className="text-start" onSubmit={handleSubmit}>
-                <Container fluid style={{marginBottom: "24px"}}>
-                  <span style={{
-                    fontWeight: "400",
-                    fontSize: "1rem",
-                    color: "#2D3748"
-                  }}>Welcome back</span>
-                  <h2 style={{
-                    fontWeight: "700",
-                    fontSize: "30px",
-                    color: "#1A202C"
-                  }}>Login to your account</h2>
+                <Container fluid style={{ marginBottom: "24px" }}>
+                  <span
+                    style={{
+                      fontWeight: "400",
+                      fontSize: "1rem",
+                      color: "#2D3748",
+                    }}
+                  >
+                    Welcome back
+                  </span>
+                  <h2
+                    style={{
+                      fontWeight: "700",
+                      fontSize: "30px",
+                      color: "#1A202C",
+                    }}
+                  >
+                    Login to your account
+                  </h2>
                 </Container>
 
                 <Form.Group className="mb-1">
@@ -72,7 +83,7 @@ const Login = () => {
                   />
                 </Form.Group>
 
-                <Form.Group style={{marginBottom: "41px"}}>
+                <Form.Group style={{ marginBottom: "41px" }}>
                   <Form.Label className="form-label">Password</Form.Label>
                   <Form.Control
                     type="password"
@@ -83,13 +94,10 @@ const Login = () => {
                   />
                 </Form.Group>
 
-                {error && <div className="error_msg mb-2">{error}</div> }
+                {error && <div className="error_msg mb-2">{error}</div>}
 
                 <div>
-                  <Button
-                    className="form-btn w-100"
-                    type="submit"
-                  >
+                  <Button className="form-btn w-100" type="submit">
                     Login Now
                   </Button>
                 </div>
@@ -100,6 +108,6 @@ const Login = () => {
       </Container>
     </div>
   );
-}
+};
 
 export default Login;
