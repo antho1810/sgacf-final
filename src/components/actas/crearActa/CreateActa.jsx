@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from 'react';
 
-import GlobalParticipantesFilter from "./GlobalFilter";
-import { votosData } from "./votosData";
+import GlobalParticipantesFilter from './GlobalFilter';
+import { votosData } from './votosData';
 
-import "./CreateActa.css";
-import "./Modal.css";
+import './CreateActa.css';
+import './Modal.css';
 
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 
 import {
   HiPlus,
@@ -16,42 +16,42 @@ import {
   HiChevronDown,
   HiChevronUp,
   HiX,
-} from "react-icons/hi";
+} from 'react-icons/hi';
 
-import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-import ActaService from "../../../services/ActasDataService";
-import ParticipantesService from "../../../services/ParticipantesDataServices";
+import ActaService from '../../../services/ActasDataService';
+import ParticipantesService from '../../../services/ParticipantesDataServices';
 
 import {
   useSortBy,
   useTable,
   useGlobalFilter,
   usePagination,
-} from "react-table";
+} from 'react-table';
 
 const CreateActa = () => {
   // ESTADO DEL ACTA INICIAL
   const [actaInicial, setActaInicial] = useState({
-    lugar: "",
-    modalidad: "",
-    horaInicio: "",
-    horaFinal: "",
-    cronograma: "",
+    lugar: '',
+    modalidad: '',
+    horaInicio: '',
+    horaFinal: '',
+    cronograma: '',
     miembrosPresentes: [
       {
-        id: "",
+        id: '',
       },
     ],
     miembrosAusentes: [
       {
-        id: "",
+        id: '',
       },
     ],
     miembrosInvitados: [
       {
-        id: "",
+        id: '',
       },
     ],
     articulos: [],
@@ -63,14 +63,14 @@ const CreateActa = () => {
 
     ActaService.createActa(JSON.stringify(actaInicial))
       .then((response) => {
-        console.log("Acta enviada exitosamente:", response.data);
+        console.log('Acta enviada exitosamente:', response.data);
       })
       .catch((error) => {
-        console.error("Error al enviar el acta:", error);
+        console.error('Error al enviar el acta:', error);
       });
 
     setTimeout(() => {
-      window.location.href = "/";
+      window.location.href = '/';
     }, 1000);
   };
 
@@ -94,7 +94,7 @@ const CreateActa = () => {
 
   const handleConfirmExitBtn = () => {
     setIsOpen(false);
-    window.location.href = "/";
+    window.location.href = '/';
   };
 
   // FUNCIONALIDAD PASO A PASO
@@ -219,7 +219,7 @@ const CreateActa = () => {
         const response = await ParticipantesService.getAllParticipantes();
         setParticipantes(response.data);
       } catch (e) {
-        console.error("Error al obtener los datos:", e);
+        console.error('Error al obtener los datos:', e);
       }
     };
 
@@ -252,9 +252,9 @@ const CreateActa = () => {
   // ARREGLOS Y OBJETOS INICIALES PARA LA INDEXACIÓN DE LOS MIEMBROS
   const [groupPresentes, setGroupPresentes] = useState([
     {
-      _id: "",
-      nombre: "",
-      apellido: "",
+      _id: '',
+      nombre: '',
+      apellido: '',
     },
   ]);
 
@@ -323,9 +323,9 @@ const CreateActa = () => {
   // MIEMBROS AUSENTES
   const [groupAusentes, setGroupAusentes] = useState([
     {
-      _id: "",
-      nombre: "",
-      apellido: "",
+      _id: '',
+      nombre: '',
+      apellido: '',
     },
   ]);
 
@@ -394,9 +394,9 @@ const CreateActa = () => {
   // MIEMBROS INVITADOS
   const [groupInvitados, setGroupInvitados] = useState([
     {
-      _id: "",
-      nombre: "",
-      apellido: "",
+      _id: '',
+      nombre: '',
+      apellido: '',
     },
   ]);
 
@@ -464,8 +464,8 @@ const CreateActa = () => {
   const columns = React.useMemo(
     () => [
       {
-        Header: "",
-        accessor: "_id",
+        Header: '',
+        accessor: '_id',
         disableSortBy: true,
         Cell: ({ value }) => (
           <input
@@ -476,9 +476,9 @@ const CreateActa = () => {
           />
         ),
       },
-      { Header: "nombre", accessor: "nombre" },
-      { Header: "apellido", accessor: "apellido" },
-      { Header: "cargo", accessor: "cargo" },
+      { Header: 'nombre', accessor: 'nombre' },
+      { Header: 'apellido', accessor: 'apellido' },
+      { Header: 'cargo', accessor: 'cargo' },
     ],
     [selectedParticipant]
   );
@@ -515,14 +515,14 @@ const CreateActa = () => {
   // PARTE 4: VOTOS
   // --------------------------------------------------------------------------------------------
 
-  const [votoSeleccionado, setVotoSeleccionado] = useState("");
+  const [votoSeleccionado, setVotoSeleccionado] = useState('');
   const [formulario, setFormulario] = useState({});
   const [groupVotos, setGroupVotos] = useState([]);
 
   const addVoto = () => {
     setGroupVotos((prevGroupVotos) => [...prevGroupVotos, formulario]);
-    setFormulario({});
-    setVotoSeleccionado("");
+    setFormulario({})
+    setVotoSeleccionado('')
   };
 
   const handleRecopilarVotos = () => {
@@ -566,7 +566,7 @@ const CreateActa = () => {
             <Form.Select
               id={campo.nombre}
               name={campo.nombre}
-              value={formulario[campo.nombre] || ""}
+              value={formulario[campo.nombre] || ''}
               onChange={handleChangeCampo}
             >
               <option value="">-- Seleccionar --</option>
@@ -587,7 +587,7 @@ const CreateActa = () => {
               id={campo.nombre}
               name={campo.nombre}
               className="form-control-custom w-75"
-              value={formulario[campo.nombre] || ""}
+              value={formulario[campo.nombre] || ''}
               onChange={handleChangeCampo}
             />
           </div>
@@ -624,11 +624,11 @@ const CreateActa = () => {
               ¿Está seguro que desea confirmar los miembros presentes?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
-              <button className="btn btn-warning" onClick={closeModalMiembro}>
+              <button class="btn btn-warning" onClick={closeModalMiembro}>
                 Atrás
               </button>
               <button
-                className="btn btn-primary"
+                class="btn btn-primary"
                 onClick={handleConfirmIdPresentes}
               >
                 Confirmar
@@ -646,11 +646,11 @@ const CreateActa = () => {
               ¿Está seguro que desea confirmar los miembros invitados?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
-              <button className="btn btn-warning" onClick={closeModalMiembro}>
+              <button class="btn btn-warning" onClick={closeModalMiembro}>
                 Atrás
               </button>
               <button
-                className="btn btn-primary"
+                class="btn btn-primary"
                 onClick={handleConfirmIdInvitados}
               >
                 Confirmar
@@ -668,13 +668,10 @@ const CreateActa = () => {
               ¿Está seguro que desea confirmar los miembros ausentes?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
-              <button className="btn btn-warning" onClick={closeModalMiembro}>
+              <button class="btn btn-warning" onClick={closeModalMiembro}>
                 Atrás
               </button>
-              <button
-                className="btn btn-primary"
-                onClick={handleConfirmIdAusentes}
-              >
+              <button class="btn btn-primary" onClick={handleConfirmIdAusentes}>
                 Confirmar
               </button>
             </div>
@@ -686,21 +683,17 @@ const CreateActa = () => {
       {isOpen && (
         <div className="modal">
           <div className="modal-content">
-            <h2 className="h4 text-center">¿Está seguro que desea salir?</h2>
-            <span className="h6 mb-4 text-center">
-              Recuerda que se borrara todo lo que has hecho
-            </span>
+            <h2 className="mb-4 h4 text-center">
+              ¿Está seguro que desea salir?
+            </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                className="btn btn-warning"
+                class="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button
-                className="btn btn-primary"
-                onClick={handleConfirmExitBtn}
-              >
+              <button class="btn btn-primary" onClick={handleConfirmExitBtn}>
                 Confirmar
               </button>
             </div>
@@ -717,12 +710,12 @@ const CreateActa = () => {
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                className="btn btn-warning"
+                class="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button className="btn btn-primary" onClick={handleConfirmSend}>
+              <button class="btn btn-primary" onClick={handleConfirmSend}>
                 Confirmar
               </button>
             </div>
@@ -736,14 +729,12 @@ const CreateActa = () => {
           <div className="title-actas">
             <h1 className="h1">Crear un acta</h1>
           </div>
-          <div className="subtitle">
-            <span>Rellene los campos y crear un nuevo acta</span>
-          </div>
         </div>
 
+        {/* NO OLVIDAR INTERCAMBIAR EL PASO */}
         {/* PARTE 1: INFORMACIÓN BÁSICA */}
         {/* -------------------------------------------------------------------------------- */}
-        <div className={`formulario ${currentStep !== 1 && "oculto"}`}>
+        <div className={`formulario ${currentStep !== 1 && 'oculto'}`}>
           {currentStep === 1 && (
             <>
               <div className="create-acta-header mb-4">
@@ -817,13 +808,13 @@ const CreateActa = () => {
         </div>
 
         {/* PARTE 2: MIEMBROS DEL ACTA */}
-        <div className={`formulario ${currentStep !== 2 && "oculto"}`}>
+        <div className={`formulario ${currentStep !== 2 && 'oculto'}`}>
           {currentStep === 2 && (
             <>
               <div className="create-acta-header mb-4">
                 <h3 className="h3 mt-2">Seleccionar miembros del acta</h3>
               </div>
-              <div className="row" style={{ gap: "20px" }}>
+              <div className="row" style={{ gap: '20px' }}>
                 <div className="col h-auto d-flex flex-column justify-content-center">
                   <div className="container-fluid tabla-participantes-header mb-4">
                     <h2 className="h2 fw-bold">Tabla de participantes</h2>
@@ -834,7 +825,7 @@ const CreateActa = () => {
                       filter={globalFilter}
                       setFilter={setGlobalFilter}
                     />
-                    <Table style={{ maxWidth: "480px" }} {...getTableProps()}>
+                    <Table style={{ maxWidth: '480px' }} {...getTableProps()}>
                       <thead className="table-header">
                         {headerGroups.map((headerGroup) => (
                           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -846,7 +837,7 @@ const CreateActa = () => {
                                   column.getSortByToggleProps()
                                 )}
                               >
-                                {column.render("Header")}
+                                {column.render('Header')}
                                 <span>
                                   {column.isSorted ? (
                                     column.isSortedDesc ? (
@@ -855,7 +846,7 @@ const CreateActa = () => {
                                       <HiChevronUp />
                                     )
                                   ) : (
-                                    ""
+                                    ''
                                   )}
                                 </span>
                               </th>
@@ -872,7 +863,7 @@ const CreateActa = () => {
                                 {row.cells.map((cell) => {
                                   return (
                                     <td {...cell.getCellProps()}>
-                                      {cell.render("Cell")}
+                                      {cell.render('Cell')}
                                     </td>
                                   );
                                 })}
@@ -889,41 +880,41 @@ const CreateActa = () => {
 
                   <div
                     className="container-fluid d-flex justify-content-end mb-4"
-                    style={{ gap: "10px" }}
+                    style={{ gap: '10px' }}
                   >
                     <div>
                       <button
                         onClick={() => gotoPage(0)}
                         disabled={!canPreviousPage}
                       >
-                        {"<<"}
-                      </button>{" "}
+                        {'<<'}
+                      </button>{' '}
                       <button
                         onClick={() => previousPage()}
                         disabled={!canPreviousPage}
                       >
-                        {"<"}
-                      </button>{" "}
+                        {'<'}
+                      </button>{' '}
                       <button
                         onClick={() => nextPage()}
                         disabled={!canNextPage}
                       >
-                        {">"}
-                      </button>{" "}
+                        {'>'}
+                      </button>{' '}
                       <button
                         onClick={() => gotoPage(pageCount - 1)}
                         disabled={!canNextPage}
                       >
-                        {">>"}
-                      </button>{" "}
+                        {'>>'}
+                      </button>{' '}
                       <span>
-                        Página{" "}
+                        Página{' '}
                         <strong>
                           {pageIndex + 1} de {pageOptions.length}
-                        </strong>{" "}
+                        </strong>{' '}
                       </span>
                       <span>
-                        | Ir a la página:{" "}
+                        | Ir a la página:{' '}
                         <input
                           type="number"
                           defaultValue={pageIndex + 1}
@@ -933,9 +924,9 @@ const CreateActa = () => {
                               : 0;
                             gotoPage(page);
                           }}
-                          style={{ width: "50px" }}
+                          style={{ width: '50px' }}
                         />
-                      </span>{" "}
+                      </span>{' '}
                       <select
                         value={pageSize}
                         onChange={(e) => {
@@ -953,7 +944,7 @@ const CreateActa = () => {
 
                   <div
                     className="d-flex justify-content-center"
-                    style={{ gap: "30px" }}
+                    style={{ gap: '30px' }}
                   >
                     <Button
                       onClick={(e) => handleBtnPresClick(e)}
@@ -999,7 +990,7 @@ const CreateActa = () => {
                     <div className="col">
                       <div
                         className="row d-flex flex-column"
-                        style={{ gap: "30px" }}
+                        style={{ gap: '30px' }}
                       >
                         <div className="col-auto">
                           <div className="d-flex justify-content-between">
@@ -1010,9 +1001,9 @@ const CreateActa = () => {
                                   onClick={handleUndoPresentes}
                                   className="btn btn-sm d-flex align-items-center"
                                   style={{
-                                    backgroundColor: "#ea0e0e",
-                                    color: "#fff",
-                                    gap: "8px",
+                                    backgroundColor: '#ea0e0e',
+                                    color: '#fff',
+                                    gap: '8px',
                                   }}
                                 >
                                   Deshacer
@@ -1020,7 +1011,7 @@ const CreateActa = () => {
                                 </button>
                                 <button
                                   className="btn btn-light d-flex align-items-center justify-content-between"
-                                  style={{ gap: "8px" }}
+                                  style={{ gap: '8px' }}
                                   disabled={true}
                                 >
                                   Confirmado
@@ -1032,9 +1023,9 @@ const CreateActa = () => {
                               <button
                                 className="btn"
                                 style={{
-                                  backgroundColor: "#028306",
-                                  border: "none",
-                                  color: "#fff",
+                                  backgroundColor: '#028306',
+                                  border: 'none',
+                                  color: '#fff',
                                 }}
                                 onClick={handleConfirmMiembrosPresentes}
                               >
@@ -1044,11 +1035,11 @@ const CreateActa = () => {
                           </div>
                           <div
                             className="container-fluid mt-4 d-flex w-100 flex-wrap"
-                            style={{ gap: "20px" }}
+                            style={{ gap: '20px' }}
                           >
                             {groupPresentes.slice(1).map((presente) => (
                               <div className="tag-miembro tag-pres">
-                                {presente.nombre + " " + presente.apellido}
+                                {presente.nombre + ' ' + presente.apellido}
                               </div>
                             ))}
                           </div>
@@ -1062,9 +1053,9 @@ const CreateActa = () => {
                                   onClick={handleUndoInvitados}
                                   className="btn btn-sm d-flex align-items-center"
                                   style={{
-                                    backgroundColor: "#ea0e0e",
-                                    color: "#fff",
-                                    gap: "8px",
+                                    backgroundColor: '#ea0e0e',
+                                    color: '#fff',
+                                    gap: '8px',
                                   }}
                                 >
                                   Deshacer
@@ -1072,7 +1063,7 @@ const CreateActa = () => {
                                 </button>
                                 <button
                                   className="btn btn-light d-flex align-items-center justify-content-between"
-                                  style={{ gap: "8px" }}
+                                  style={{ gap: '8px' }}
                                   disabled={true}
                                 >
                                   Confirmado
@@ -1084,9 +1075,9 @@ const CreateActa = () => {
                               <button
                                 className="btn btn btn-warning"
                                 style={{
-                                  color: "#fff",
-                                  backgroundColor: "#028306",
-                                  border: "none",
+                                  color: '#fff',
+                                  backgroundColor: '#028306',
+                                  border: 'none',
                                 }}
                                 onClick={handleConfirmMiembrosInvitados}
                               >
@@ -1096,14 +1087,14 @@ const CreateActa = () => {
                           </div>
                           <div
                             className="container-fluid mt-4 d-flex w-100 flex-wrap"
-                            style={{ gap: "20px" }}
+                            style={{ gap: '20px' }}
                           >
                             {groupInvitados.slice(1).map((invitado) => (
                               <div
                                 className="tag-miembro tag-inv"
                                 key={invitado._id}
                               >
-                                {invitado.nombre + " " + invitado.apellido}
+                                {invitado.nombre + ' ' + invitado.apellido}
                               </div>
                             ))}
                           </div>
@@ -1117,9 +1108,9 @@ const CreateActa = () => {
                                   onClick={handleUndoAusentes}
                                   className="btn btn-sm d-flex align-items-center"
                                   style={{
-                                    backgroundColor: "#ea0e0e",
-                                    color: "#fff",
-                                    gap: "8px",
+                                    backgroundColor: '#ea0e0e',
+                                    color: '#fff',
+                                    gap: '8px',
                                   }}
                                 >
                                   Deshacer
@@ -1127,7 +1118,7 @@ const CreateActa = () => {
                                 </button>
                                 <button
                                   className="btn btn-light d-flex align-items-center justify-content-between"
-                                  style={{ gap: "8px" }}
+                                  style={{ gap: '8px' }}
                                   disabled={true}
                                 >
                                   Confirmado
@@ -1139,9 +1130,9 @@ const CreateActa = () => {
                               <button
                                 className="btn btn btn-warning"
                                 style={{
-                                  color: "#fff",
-                                  backgroundColor: "#028306",
-                                  border: "none",
+                                  color: '#fff',
+                                  backgroundColor: '#028306',
+                                  border: 'none',
                                 }}
                                 onClick={handleConfirmMiembrosAusentes}
                               >
@@ -1151,11 +1142,11 @@ const CreateActa = () => {
                           </div>
                           <div
                             className="container-fluid mt-4 d-flex w-100 flex-wrap"
-                            style={{ gap: "20px" }}
+                            style={{ gap: '20px' }}
                           >
                             {groupAusentes.slice(1).map((ausente) => (
                               <div className="tag-miembro tag-aus">
-                                {ausente.nombre + " " + ausente.apellido}
+                                {ausente.nombre + ' ' + ausente.apellido}
                               </div>
                             ))}
                           </div>
@@ -1169,9 +1160,10 @@ const CreateActa = () => {
           )}
         </div>
 
+        {/* NO OLVIDAR INTERCAMBIAR EL PASO */}
         {/* PARTE 3: VOTOS DEL ACTA */}
         {/* -------------------------------------------------------------------------------- */}
-        <div className={`formulario ${currentStep !== 3 && "oculto"}`}>
+        <div className={`formulario ${currentStep !== 3 && 'oculto'}`}>
           {currentStep === 3 && (
             <>
               <div className="create-acta-header mb-4">
@@ -1196,7 +1188,7 @@ const CreateActa = () => {
                 </div>
               </div>
 
-              <div style={{ maxWidth: "90%" }} className="row mb-4">
+              <div style={{ maxWidth: '90%' }} className="row mb-4">
                 {renderCampos()}
               </div>
 
@@ -1205,13 +1197,13 @@ const CreateActa = () => {
                   groupVotos.map((voto, index) => (
                     <div
                       className="container p-0 m-0 mb-4"
-                      style={{ maxWidth: "100%" }}
+                      style={{ maxWidth: '100%' }}
                     >
                       <div
                         style={{
-                          maxWidth: "100%",
-                          overflowX: "scroll",
-                          overflowY: "hidden",
+                          maxWidth: '100%',
+                          overflowX: 'scroll',
+                          overflowY: 'hidden',
                         }}
                         className="container-fluid p-0 m-0"
                       >
@@ -1248,7 +1240,8 @@ const CreateActa = () => {
 
         {/* PARTE 4: DOCUMENTOS DE SOPORTE */}
         {/* -------------------------------------------------------------------------------- */}
-        <div className={`formulario ${currentStep !== 4 && "oculto"}`}>
+        <div className={`formulario ${currentStep !== 4 && 'oculto'}`}>
+
           {currentStep === 4 && (
             <>
               <div className="create-acta-header mb-4">
@@ -1275,19 +1268,15 @@ const CreateActa = () => {
         {/* BOTONES DE ACCIONES (CANCELAR, ATRÁS, SIGUIENTE) */}
         {/* -------------------------------------------------------------------------------- */}
         <div
-          className="mt-4 d-flex justify-content-around"
-          style={{ maxWidth: "95%" }}
+          className="mt-4 d-flex justify-content-around" style={{maxWidth: "95%"}}
         >
-          <button
-            className="btn btn-danger"
-            onClick={handleChangeStatusModalOk}
-          >
+          <button class="btn btn-danger" onClick={handleChangeStatusModalOk}>
             Salir
           </button>
           <div className="container-fluid d-flex justify-content-end">
             {currentStep > 1 && (
               <button
-                className="btn btn-secondary me-2"
+                class="btn btn-secondary me-2"
                 onClick={handleDecrementStep}
               >
                 Atrás
@@ -1295,25 +1284,19 @@ const CreateActa = () => {
             )}
 
             {currentStep < 3 && (
-              <button className="btn btn-primary" onClick={handleIncrementStep}>
+              <button class="btn btn-primary" onClick={handleIncrementStep}>
                 Siguiente
               </button>
             )}
 
             {currentStep === 3 && (
-              <button
-                className="btn btn-primary"
-                onClick={handleRecopilarVotos}
-              >
+              <button class="btn btn-primary" onClick={handleRecopilarVotos}>
                 Siguiente
               </button>
             )}
 
             {currentStep >= 4 && (
-              <button
-                className="btn btn-success"
-                onClick={handleShowConfirmModal}
-              >
+              <button class="btn btn-success" onClick={handleShowConfirmModal}>
                 Enviar acta
               </button>
             )}

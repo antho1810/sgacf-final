@@ -1,44 +1,47 @@
-import { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
 
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
 
-import Container from "react-bootstrap/Container";
+import Container from 'react-bootstrap/Container';
 
-import { Sidenav, Nav, Avatar, Button } from "rsuite";
+import { Sidenav, Nav, Avatar, Button } from 'rsuite';
 
-import logo from "./UNACazul.png";
+import logo from './UNACazul.png';
 
-import { FaUserPlus } from "react-icons/fa";
-import { MdCategory } from "react-icons/md";
-import { ImExit } from "react-icons/im";
-import { HiDocumentAdd, HiDocumentText } from "react-icons/hi";
+import { FaUserPlus } from 'react-icons/fa';
+import { MdCategory } from 'react-icons/md';
+import { ImExit } from 'react-icons/im';
+import { HiDocumentAdd, HiDocumentText } from 'react-icons/hi';
 
-import "./Navbarside.css";
+import './Navbarside.css';
 
 function Navbarside() {
+
   const [userInfo, setUserInfo] = useState({});
 
   const loadUserData = () => {
-    const token = localStorage.getItem("token");
+    
+    const token = localStorage.getItem('token');
 
     if (token) {
       try {
         const decodedUser = jwtDecode(token);
-        setUserInfo(decodedUser);
+        setUserInfo(decodedUser)
       } catch (e) {
-        console.log("Error al decodificar el token:", e);
+        console.log('Error al decodificar el token:', e);
       }
     }
   };
 
   useEffect(() => {
-    loadUserData();
-  }, []);
+    loadUserData()
+  },[]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
+    // window.location.reload();
   };
 
   return (
@@ -54,7 +57,7 @@ function Navbarside() {
               </div>
 
               <div className="flex-items">
-                <Sidenav style={{ marginLeft: "0", height: "100%" }}>
+                <Sidenav style={{ marginLeft: '0', height: '100%' }}>
                   <Sidenav.Body>
                     <Nav activeKey="1">
                       <Nav.Item
@@ -92,9 +95,9 @@ function Navbarside() {
                         as={NavLink}
                         onClick={handleLogout}
                         eventKey="4"
-                        icon={<ImExit />}
-                      >
-                        <span>Login out</span>
+                        icon={<ImExit />}>
+
+                          <span>Login out</span>
                       </Nav.Item>
                     </Nav>
                   </Sidenav.Body>
@@ -107,12 +110,12 @@ function Navbarside() {
                     circle
                     src="https://avatars.githubusercontent.com/u/12592949"
                     alt="@SevenOutman"
-                    style={{ width: "45px" }}
+                    style={{ width: '45px' }}
                   />
-                  <div className="ct-info-user">
-                    <h4> {userInfo.nombre + " " + userInfo.apellido} </h4>
-                    <span> {userInfo.cargo} FI - UNAC</span>
-                  </div>
+                    <div className="ct-info-user">
+                      <h4> { userInfo.nombre + ' ' + userInfo.apellido } </h4>
+                      <span> { userInfo.cargo } - UNAC</span>
+                    </div>
                 </div>
               </div>
             </div>

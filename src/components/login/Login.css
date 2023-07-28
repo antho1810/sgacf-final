@@ -1,6 +1,8 @@
+/* EXTRA #1 */
 .main{
     overflow-x: hidden;
 }
+
 .main .row .col{
     padding: 0;
     margin: 0;
@@ -8,9 +10,8 @@
 }
 
 .img-login{
-    background-image: url('./tiburon.png');
+    background-image: url('./tiburon.jpg');
     background-size: cover;
-    background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
 }

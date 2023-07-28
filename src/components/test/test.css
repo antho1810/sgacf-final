@@ -1,0 +1,7 @@
+.form-control-custom, .MuiInputBase-root {
+    height: 38px;
+}
+
+.MuiInputBase-root{
+    width: 100%;
+}
