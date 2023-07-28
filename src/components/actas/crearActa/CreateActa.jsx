@@ -1241,6 +1241,7 @@ const CreateActa = () => {
         {/* PARTE 4: DOCUMENTOS DE SOPORTE */}
         {/* -------------------------------------------------------------------------------- */}
         <div className={`formulario ${currentStep !== 4 && 'oculto'}`}>
+
           {currentStep === 4 && (
             <>
               <div className="create-acta-header mb-4">

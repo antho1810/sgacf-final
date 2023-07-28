@@ -69,7 +69,6 @@ const ParticipantesTable = () => {
         const handleShowConfirmModal = () => {
           setIsDeleteModalOpen(true);
         };
-
         const handleConfirmDelete = async (id) => {
           await ParticipantesService.deleteParticipante(id);
           window.location.reload();
@@ -92,7 +91,6 @@ const ParticipantesTable = () => {
 
           // TRUE SI ES PARTICIPANTES
           var checkExistedRolParticipante = checkRol.includes("participante");
-        }
 
         return (
           <>
