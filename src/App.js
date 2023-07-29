@@ -18,7 +18,6 @@ import CreateActa from "./components/actas/crearActa/CreateActa";
 import CreateParticipante from "./components/participantes/createParticipante/CreateParticipante";
 import ActaDetails from "./components/actas/actaDetails/ActaDetails";
 import UpdateParticipante from "./components/participantes/updateParticipante/UpdateParticipante";
-import Test from "./components/test/Test";
 import PdfPage from "./components/dashboard/PdfPage";
 
 const user = localStorage.getItem("token")
@@ -48,7 +47,6 @@ const router = createBrowserRouter(
             path="actualizar-participante/id/:id"
             element={<UpdateParticipante />}
           />
-          <Route path="test" element={<Test />}></Route>
           <Route path="pdf" element={<PdfPage />}></Route>
         </Route>
       )}
