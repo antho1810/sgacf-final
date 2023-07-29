@@ -73,8 +73,8 @@ export const votosData = [
         tipo: "text",
       },
       {
-        nombre: "materiaLicei",
-        etiqueta: "Materia Licei",
+        nombre: "materiaAprovada",
+        etiqueta: "Materia Aprobada",
         tipo: "text",
       },
       {
@@ -110,11 +110,6 @@ export const votosData = [
           "modificacion de calificaciones a un periodo cerrado",
           "Materia intesiva",
         ],
-        tipo: "text",
-      },
-      {
-        nombre: "tituloVoto",
-        etiqueta: "Título voto",
         tipo: "text",
       },
       {

@@ -10,6 +10,10 @@ export const getActa = (ref) => {
     return http.get(`/actas/referencia/${ref}`)
 }
 
+export const getActaFindByID = (ref) => {
+    return http.get(`/actas/referencia/${ref}`)
+}
+
 // CREATE ACTA
 export const createActa = (data) => {
     return http.post("/actas", data)
