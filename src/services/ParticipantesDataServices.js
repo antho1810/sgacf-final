@@ -19,6 +19,8 @@ export const updateParticipante = (id, data) => {
 
 export const deleteParticipante = (id) => {
     return http.delete(`/participantes/id/${id}`)
+
+    // return http.put(`participantes/id/${id}`, data)
 }
 
 const findByName = (nombre) => {
