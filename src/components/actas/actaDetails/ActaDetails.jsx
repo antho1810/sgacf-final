@@ -12,7 +12,7 @@ import { votosData } from "./votosData";
 
 const ActaDetails = () => {
   const [acta, setActa] = useState([]);
-  const [groupVotos, setGroupVotos] = useState([])
+  const [groupVotos, setGroupVotos] = useState([]);
 
   const { ref } = useParams();
 
@@ -197,4 +197,3 @@ const ActaDetails = () => {
 };
 
 export default ActaDetails;
-
