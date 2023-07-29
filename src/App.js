@@ -14,7 +14,6 @@ import Login from "./components/login/Login";
 import RootLayout from "./routesLayouts/RootLayout"
 import Dashboard, { dashboardLoader } from "./components/dashboard/Dashboard";
 import UpdateActa from "./components/actas/updateActa/UpdateActa";
-// import CreateActa from "./components/actas/createActa/CreateActa";
 import CreateActa from "./components/actas/crearActa/CreateActa";
 import CreateParticipante from "./components/participantes/createParticipante/CreateParticipante";
 import ActaDetails from "./components/actas/actaDetails/ActaDetails";

@@ -197,3 +197,4 @@ const ActaDetails = () => {
 };
 
 export default ActaDetails;
+

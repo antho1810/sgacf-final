@@ -40,10 +40,10 @@ export const votosData = [
     nombre: "Homologaciones",
     campos: [
       {
-        nombre: "tipo",
-        etiqueta: "Tipo de homologación",
-        subElementos: ["Homologación Interna", "Homologación Externa"],
-        tipo: "text",
+        nombre: 'tituloVoto',
+        etiqueta: 'Tipo de homologación',
+        subElementos: ['Homologación Interna', 'Homologación Externa'],
+        tipo: 'text',
       },
       {
         nombre: "nombreAspirante",

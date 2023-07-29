@@ -3,8 +3,8 @@ export const votosData = [
     nombre: "Autorización de expedición de títulos académicos",
     campos: [
       {
-        nombre: "AETA",
-        etiqueta: "Titulo Voto",
+        nombre: "titulo",
+        etiqueta: "Titulo del voto",
         subElementos: ["Autorización de expedición de títulos académicos"],
         tipo: "text",
       },
@@ -40,9 +40,9 @@ export const votosData = [
     nombre: "Homologaciones",
     campos: [
       {
-        nombre: "tipo",
+        nombre: "titulo",
         etiqueta: "Tipo de homologación",
-        subElementos: ["Homologación Interna", "Homologación Externa"],
+        subElementos: ["Homologacíon Interna", "Homologacíon Externa"],
         tipo: "text",
       },
       {
@@ -98,8 +98,8 @@ export const votosData = [
     nombre: "Otros votos",
     campos: [
       {
-        nombre: "tituloVoto",
-        etiqueta: "Título voto",
+        nombre: "titulo",
+        etiqueta: "Titulo del voto",
         subElementos: [
           "Transferencia interna",
           "Suficiencia",
