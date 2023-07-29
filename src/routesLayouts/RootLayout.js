@@ -39,6 +39,7 @@ function Navbarside() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
+    // window.location.reload();
   };
 
   return (
@@ -111,7 +112,7 @@ function Navbarside() {
                   />
                   <div className="ct-info-user">
                     <h4> {userInfo.nombre + " " + userInfo.apellido} </h4>
-                    <span> {userInfo.cargo} FI - UNAC</span>
+                    <span> {userInfo.cargo} - UNAC</span>
                   </div>
                 </div>
               </div>

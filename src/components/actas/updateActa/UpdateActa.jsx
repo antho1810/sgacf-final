@@ -3,6 +3,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import GlobalParticipantesFilter from "./GlobalFilter";
 import { votosData } from "./votosData";
 
+import "./CreateActa.css";
+import "./Modal.css";
+
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
@@ -27,12 +30,8 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table";
-import { useParams } from "react-router-dom";
 
-const UpdateActa = () => {
-  const { ref } = useParams();
-
-
+const CreateActa = () => {
   // ESTADO DEL ACTA INICIAL
   const [actaInicial, setActaInicial] = useState({
     lugar: "",
@@ -59,16 +58,12 @@ const UpdateActa = () => {
     documentosSoporte: [],
   });
 
-  useEffect((req, res) => {
-    ActaService.getActa(actaInicial)
-  })
-
   const handleConfirmSend = () => {
     console.log(actaInicial);
 
-    ActaService.updateActa(ref, actaInicial)
+    ActaService.createActa(JSON.stringify(actaInicial))
       .then((response) => {
-        console.log("Acta actualizada exitosamente:", response.data);
+        console.log("Acta enviada exitosamente:", response.data);
       })
       .catch((error) => {
         console.error("Error al enviar el acta:", error);
@@ -522,10 +517,17 @@ const UpdateActa = () => {
 
   const [votoSeleccionado, setVotoSeleccionado] = useState("");
   const [formulario, setFormulario] = useState({});
+  const [groupVotos, setGroupVotos] = useState([]);
+
+  const addVoto = () => {
+    setGroupVotos((prevGroupVotos) => [...prevGroupVotos, formulario]);
+    setFormulario({});
+    setVotoSeleccionado("");
+  };
 
   const handleRecopilarVotos = () => {
     const finalActa = {
-      articulos: formulario,
+      articulos: groupVotos,
     };
 
     const definitiveActa = {
@@ -622,11 +624,11 @@ const UpdateActa = () => {
               ¿Está seguro que desea confirmar los miembros presentes?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
-              <button className="btn btn-warning" onClick={closeModalMiembro}>
+              <button class="btn btn-warning" onClick={closeModalMiembro}>
                 Atrás
               </button>
               <button
-                className="btn btn-primary"
+                class="btn btn-primary"
                 onClick={handleConfirmIdPresentes}
               >
                 Confirmar
@@ -644,11 +646,11 @@ const UpdateActa = () => {
               ¿Está seguro que desea confirmar los miembros invitados?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
-              <button className="btn btn-warning" onClick={closeModalMiembro}>
+              <button class="btn btn-warning" onClick={closeModalMiembro}>
                 Atrás
               </button>
               <button
-                className="btn btn-primary"
+                class="btn btn-primary"
                 onClick={handleConfirmIdInvitados}
               >
                 Confirmar
@@ -666,13 +668,10 @@ const UpdateActa = () => {
               ¿Está seguro que desea confirmar los miembros ausentes?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
-              <button className="btn btn-warning" onClick={closeModalMiembro}>
+              <button class="btn btn-warning" onClick={closeModalMiembro}>
                 Atrás
               </button>
-              <button
-                className="btn btn-primary"
-                onClick={handleConfirmIdAusentes}
-              >
+              <button class="btn btn-primary" onClick={handleConfirmIdAusentes}>
                 Confirmar
               </button>
             </div>
@@ -689,15 +688,12 @@ const UpdateActa = () => {
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                className="btn btn-warning"
+                class="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button
-                className="btn btn-primary"
-                onClick={handleConfirmExitBtn}
-              >
+              <button class="btn btn-primary" onClick={handleConfirmExitBtn}>
                 Confirmar
               </button>
             </div>
@@ -710,16 +706,16 @@ const UpdateActa = () => {
         <div className="modal">
           <div className="modal-content">
             <h2 className="mb-4 h4 text-center">
-              ¿Está seguro que desea actualizar el acta?
+              ¿Está seguro que desea enviar el acta?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button
-                className="btn btn-warning"
+                class="btn btn-warning"
                 onClick={handleChangeStatusModalFalse}
               >
                 Atrás
               </button>
-              <button className="btn btn-primary" onClick={handleConfirmSend}>
+              <button class="btn btn-primary" onClick={handleConfirmSend}>
                 Confirmar
               </button>
             </div>
@@ -735,6 +731,7 @@ const UpdateActa = () => {
           </div>
         </div>
 
+        {/* NO OLVIDAR INTERCAMBIAR EL PASO */}
         {/* PARTE 1: INFORMACIÓN BÁSICA */}
         {/* -------------------------------------------------------------------------------- */}
         <div className={`formulario ${currentStep !== 1 && "oculto"}`}>
@@ -1163,6 +1160,7 @@ const UpdateActa = () => {
           )}
         </div>
 
+        {/* NO OLVIDAR INTERCAMBIAR EL PASO */}
         {/* PARTE 3: VOTOS DEL ACTA */}
         {/* -------------------------------------------------------------------------------- */}
         <div className={`formulario ${currentStep !== 3 && "oculto"}`}>
@@ -1190,7 +1188,52 @@ const UpdateActa = () => {
                 </div>
               </div>
 
-              <div className="row mb-4">{renderCampos()}</div>
+              <div style={{ maxWidth: "90%" }} className="row mb-4">
+                {renderCampos()}
+              </div>
+
+              <div className="container m-0 p-0">
+                {groupVotos.length > 0 &&
+                  groupVotos.map((voto, index) => (
+                    <div
+                      className="container p-0 m-0 mb-4"
+                      style={{ maxWidth: "100%" }}
+                    >
+                      <div
+                        style={{
+                          maxWidth: "100%",
+                          overflowX: "scroll",
+                          overflowY: "hidden",
+                        }}
+                        className="container-fluid p-0 m-0"
+                      >
+                        <table
+                          key={index}
+                          className="table table-striped table-bordered"
+                        >
+                          <thead>
+                            <tr>
+                              {Object.keys(voto).map((votoInd, index) => (
+                                <th key={index}>{votoInd}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              {Object.values(voto).map((valor, i) => (
+                                <td key={i}>{valor}</td>
+                              ))}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              <button className="btn btn-primary" onClick={addVoto}>
+                Añadir nuevo voto +
+              </button>
             </>
           )}
         </div>
@@ -1224,20 +1267,16 @@ const UpdateActa = () => {
         {/* BOTONES DE ACCIONES (CANCELAR, ATRÁS, SIGUIENTE) */}
         {/* -------------------------------------------------------------------------------- */}
         <div
-          className="container-fluid mt-4 d-flex justify-content-between"
-          style={{ gap: "15px" }}
+          className="mt-4 d-flex justify-content-around"
+          style={{ maxWidth: "95%" }}
         >
-          <button
-            className="btn btn-danger"
-            role="button"
-            onClick={handleChangeStatusModalOk}
-          >
+          <button class="btn btn-danger" onClick={handleChangeStatusModalOk}>
             Salir
           </button>
           <div className="container-fluid d-flex justify-content-end">
             {currentStep > 1 && (
               <button
-                className="btn btn-secondary me-2"
+                class="btn btn-secondary me-2"
                 onClick={handleDecrementStep}
               >
                 Atrás
@@ -1245,26 +1284,20 @@ const UpdateActa = () => {
             )}
 
             {currentStep < 3 && (
-              <button className="btn btn-primary" onClick={handleIncrementStep}>
+              <button class="btn btn-primary" onClick={handleIncrementStep}>
                 Siguiente
               </button>
             )}
 
-            {currentStep == 3 && (
-              <button
-                className="btn btn-primary"
-                onClick={handleRecopilarVotos}
-              >
+            {currentStep === 3 && (
+              <button class="btn btn-primary" onClick={handleRecopilarVotos}>
                 Siguiente
               </button>
             )}
 
             {currentStep >= 4 && (
-              <button
-                className="btn btn-success"
-                onClick={handleShowConfirmModal}
-              >
-                Actualizar acta
+              <button class="btn btn-success" onClick={handleShowConfirmModal}>
+                Enviar acta
               </button>
             )}
           </div>
@@ -1274,4 +1307,4 @@ const UpdateActa = () => {
   );
 };
 
-export default UpdateActa;
+export default CreateActa;
