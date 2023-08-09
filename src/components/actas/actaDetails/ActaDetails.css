@@ -1,0 +1,21 @@
+.inProcess{
+    background-color: #2669efe8 !important;
+}
+
+.confirmed{
+    background-color: #02b308 !important;
+}
+
+.inProcess, .confirmed{
+    padding: 8px 7px;
+    width: auto;
+    border-radius: 33px;
+    opacity: .9;
+}
+
+.inProcess span,
+.confirmed span{
+    color: #fff;
+    font-weight: 400;
+    font-size: 14px;
+}
