@@ -30,7 +30,7 @@ export const votosData = [
         tipo: "number",
       },
       {
-        nombre: "tituloOtorga",
+        nombre: "programaEstudiante",
         etiqueta: "Título que otorga",
         tipo: "text",
       },
@@ -113,7 +113,7 @@ export const votosData = [
         tipo: "text",
       },
       {
-        nombre: "nombre",
+        nombre: "nombreAspirante",
         etiqueta: "Nombre del aspirante",
         tipo: "text",
       },

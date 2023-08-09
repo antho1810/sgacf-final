@@ -61,7 +61,7 @@ const CreateActa = () => {
   const handleConfirmSend = () => {
     console.log(actaInicial);
 
-    ActaService.createActa(JSON.stringify(actaInicial))
+    ActaService.updateActa(JSON.stringify(actaInicial))
       .then((response) => {
         console.log("Acta enviada exitosamente:", response.data);
       })
@@ -679,7 +679,7 @@ const CreateActa = () => {
         </div>
       )}
 
-      {/* MODAL SALIR DE CREAR EL ACTA */}
+      {/* MODAL SALIR DE ACTUALIZAR EL ACTA */}
       {isOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -706,7 +706,7 @@ const CreateActa = () => {
         <div className="modal">
           <div className="modal-content">
             <h2 className="mb-4 h4 text-center">
-              ¿Está seguro que desea enviar el acta?
+              ¿Está seguro que desea actualizar el acta?
             </h2>
             <div className="ct-btn d-flex justify-content-evenly">
               <button

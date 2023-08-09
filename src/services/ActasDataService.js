@@ -15,8 +15,8 @@ export const createActa = (data) => {
   return http.post("/actas", data);
 };
 
-export const updateActa = (id, data) => {
-  return http.put(`/actas/id/${id}`, data);
+export const updateActa = (ref, data) => {
+  return http.put(`/actas/referencia/${ref}`, data);
 };
 
 export const updateStatusActa = (ref, data) => {

@@ -152,10 +152,10 @@ function Dashboard() {
           });
 
           // TRUE SI ES secretaria
-          var checkExistedRolSecretario = checkRol.includes("secretaria");
+          var checkExistedRolSecretaria = checkRol.includes("secretaria");
 
           // TRUE SI ES decano
-          var checkExistedRolMaestro = checkRol.includes("decano");
+          var checkExistedRolDecano = checkRol.includes("decano");
 
           // TRUE SI ES PARTICIPANTES
           // var checkExistedRolParticipante = checkRol.includes("participante");
@@ -163,8 +163,8 @@ function Dashboard() {
 
         return (
           <Dropdown renderToggle={renderIconButton} className="accion-drop">
-            {/* ACCIONES PARA SECREATARIO */}
-            {checkExistedRolSecretario && (
+            {/* ACCIONES PARA SECREATARIA */}
+            {checkExistedRolSecretaria && (
               <>
                 <Dropdown.Item
                   onClick={() => showStatus(row.original.id)}
@@ -218,7 +218,7 @@ function Dashboard() {
               </>
             )}
 
-            {checkExistedRolMaestro && estado === "En proceso" && (
+            {checkExistedRolDecano && estado === "En proceso" && (
               <Dropdown.Item
                 onClick={() => handleUpdateStatus(rowRef)}
                 className="i-aprobar"
@@ -230,7 +230,7 @@ function Dashboard() {
             )}
 
             {/* ACCIONES PARA decano */}
-            {checkExistedRolMaestro && (
+            {checkExistedRolDecano && (
               <>
                 <Dropdown.Item
                   className="i-borrar"

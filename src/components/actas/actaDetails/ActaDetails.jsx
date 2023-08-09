@@ -4,15 +4,14 @@ import React, {
   useEffect,
 } from "react";
 import ActaService from "../../../services/ActasDataService";
-import { Container, Row, Col, Badge } from "react-bootstrap";
+import { Container, Row, Col, Badge, Card } from "react-bootstrap";
 import moment from "moment";
 import { NavLink, useParams } from "react-router-dom";
-import { votosData } from "./votosData";
 // import '../../dashboard/Table.css'
+import "./ActaDetails.css";
 
 const ActaDetails = () => {
   const [acta, setActa] = useState([]);
-  const [groupVotos, setGroupVotos] = useState([]);
 
   const { ref } = useParams();
 
@@ -43,7 +42,7 @@ const ActaDetails = () => {
       <div className="ct-informacion mt-3">
         <div className="d-flex text-center">
           <div className="me-4">
-            <h3 className="h4">Numero de referencia</h3>
+            <h3 className="h4">Nro. Referencia</h3>
             <p>{acta.numeroRef}</p>
           </div>
           <div className="me-4">
@@ -84,8 +83,8 @@ const ActaDetails = () => {
             <p> {moment(acta.horaFinal).format("h:mm a")} </p>
           </div>
         </div>
-        <div className="d-flex mt-2">
-          <div className="me-4 text-center">
+        <div className="mt-2">
+          <div className="me-4 mb-3 text-center">
             <h1 className="h4">Miembros presentes</h1>
             {acta.miembrosPresentes ? (
               acta.miembrosPresentes.map((item) => (
@@ -99,21 +98,7 @@ const ActaDetails = () => {
               <span>No hay miembros presentes</span>
             )}
           </div>
-          <div className="me-4 text-center">
-            <h1 className="h4">Miembros Invitados</h1>
-            {acta.miembrosInvitados ? (
-              acta.miembrosInvitados.map((item) => (
-                <div key={item._id}>
-                  <p>
-                    {item.nombre} {item.apellido} | {item.cargo}
-                  </p>
-                </div>
-              ))
-            ) : (
-              <span>No hay miembros Invitados</span>
-            )}
-          </div>
-          <div className="me-4 text-center">
+          <div className="me-4 mb-3 text-center">
             <h1 className="h4">Miembros Ausentes</h1>
             {acta.miembrosAusentes ? (
               acta.miembrosAusentes.map((item) => (
@@ -127,24 +112,51 @@ const ActaDetails = () => {
               <span>No hay miembros Ausentes</span>
             )}
           </div>
+          <div className="me-4 mb-3 text-center">
+            <h1 className="h4">Miembros Invitados</h1>
+            {acta.miembrosInvitados ? (
+              acta.miembrosInvitados.map((item) => (
+                <div key={item._id}>
+                  <p>
+                    {item.nombre} {item.apellido} | {item.cargo}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <span>No hay miembros Invitados</span>
+            )}
+          </div>
         </div>
       </div>
       <div className="mt-2">
         <div className="me-4 text-center">
-          <div className="me-4 text-center">
-            <h1 className="h4">Cronograma</h1>
-            <p className="center">{acta.cronograma}</p>
-          </div>
+          <h1 className="h4">Cronograma</h1>
+          <p className="center">{acta.cronograma}</p>
         </div>
       </div>
       {/* Container Articulos */}
       <Container className="ct-articulos mt-2 mb-2">
-        <span className="h4">Articulos</span>
-        {acta.articulos ? (
-          acta.articulos.map((item) => (
-            <div key={item.nombre}>
-              <h3>{item.nombre}</h3>
-              {votosData.map(
+        <span className="h4 text-center">Articulos</span>
+        <div className="row">
+          {acta.articulos ? (
+            acta.articulos.map((item) => (
+              <div className="col-lg-4 col-md-6 col-sm-12" key={item.titulo}>
+                <Card className="mb-3">
+                  <Card.Body>
+                    <Card.Title>
+                      <p>
+                        {item.titulo}_{item.nombreAspirante}
+                      </p>
+                    </Card.Title>
+                    <Card.Text>
+                      <p>Nombre del Aspirante: {item.nombreAspirante}</p>
+                      <p>Tipo de documento: {item.tipoDocumento}</p>
+                      <p># de documento: {item.noDocumento}</p>
+                      <p>materia aprobada: {item.materiaAprovada}</p>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+                {/* {votosData.map(
                 (voto) =>
                   voto.nombre === item.nombre && (
                     <ul key={voto.nombre}>
@@ -167,7 +179,47 @@ const ActaDetails = () => {
                       ))}
                     </ul>
                   )
-              )}
+              )} */}
+              </div>
+            ))
+          ) : (
+            <span>No hay Articulos</span>
+          )}
+        </div>
+        {acta.articulos ? (
+          acta.articulos.map((voto, index) => (
+            <div
+              className="container col-lg-12 mb-4"
+              style={{ maxWidth: "100%" }}
+            >
+              <div
+                style={{
+                  maxWidth: "95%",
+                  overflowX: "scroll",
+                  overflowY: "hidden",
+                }}
+                className="container-fluid p-0 m-0"
+              >
+                <table
+                  key={index}
+                  className="table table-striped table-bordered"
+                >
+                  <thead>
+                    <tr>
+                      {Object.keys(voto).map((votoInd, index) => (
+                        <th key={index}>{votoInd}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {Object.values(voto).map((valor, i) => (
+                        <td key={i}>{valor}</td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           ))
         ) : (
@@ -175,12 +227,18 @@ const ActaDetails = () => {
         )}
       </Container>
       {/* Container Documentos Soporte */}
-      <div className="ct-docsSoprot mt-3">
+      {/* <div className="ct-docsSoprot mt-3">
         <div className="me-4 text-center">
           <span className="h4">Documentos adjuntos</span>
-          <span className="center me-1">No hay Documentos de soporte</span>
+          <div>
+            <Badge className="inProcess">
+              {" "}
+              <span className="fw-400">titulo del documento</span>{" "}
+            </Badge>
+            <span className="center me-1">No hay Documentos de soporte</span>
+          </div>
         </div>
-      </div>
+      </div> */}
       <Container fluid>
         <Row className="mb-3">
           <Col style={{ height: "80px" }}></Col>
