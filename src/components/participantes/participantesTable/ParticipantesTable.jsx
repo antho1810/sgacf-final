@@ -135,7 +135,7 @@ const ParticipantesTable = () => {
                     <span>Editar</span>{" "}
                   </Dropdown.Item>
                   <Dropdown.Item
-                    className="i-borrar"
+                className="i-borrar"
                     as={NavLink}
                     onClick={handleShowConfirmModal}
                     icon={<RiDeleteBinLine />}

@@ -85,7 +85,9 @@ function Dashboard() {
         lugar: acta.lugar,
         modalidad: acta.modalidad,
         estado: acta.estado,
-        articulo: acta.articulos,
+        articulo: acta.articulos.map(
+          (item) => `${item.titulo}, `
+        ),
       })),
     [responseActas]
   );
@@ -115,7 +117,7 @@ function Dashboard() {
           </Badge>
         ),
     },
-    { Header: "Articulos", accessor: "articulos" },
+    { Header: "Articulos", accessor: "articulo" },
     {
       Header: "",
       accessor: "id",
@@ -132,7 +134,7 @@ function Dashboard() {
         };
 
         const handleUpdateStatus = async (ref) => {
-          await ActaService.updateStatusActa(ref, { estado: "aprobado" });
+          await ActaService.updateStatusActa(ref, { estado: "Aprobado" });
           window.location.reload();
         };
 
@@ -219,14 +221,25 @@ function Dashboard() {
             )}
 
             {checkExistedRolDecano && estado === "En proceso" && (
-              <Dropdown.Item
-                onClick={() => handleUpdateStatus(rowRef)}
-                className="i-aprobar"
-                icon={<AiOutlineLike />}
-              >
-                {" "}
-                <span>Aprobar</span>{" "}
-              </Dropdown.Item>
+              <>
+                <Dropdown.Item
+                  onClick={() => handleUpdateStatus(rowRef)}
+                  className="i-aprobar"
+                  icon={<AiOutlineLike />}
+                >
+                  {" "}
+                  <span>Aprobar</span>{" "}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className="i-editar"
+                  as={NavLink}
+                  to={`actualizar-acta/referencia/${rowRef}`}
+                  icon={<FaRegEdit />}
+                >
+                  {" "}
+                  <span>Editar</span>{" "}
+                </Dropdown.Item>
+              </>
             )}
 
             {/* ACCIONES PARA decano */}
@@ -257,15 +270,6 @@ function Dashboard() {
                 >
                   {" "}
                   <span>Compartir</span>{" "}
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="i-editar"
-                  as={NavLink}
-                  to={`actualizar-acta/referencia/${rowRef}`}
-                  icon={<FaRegEdit />}
-                >
-                  {" "}
-                  <span>Editar</span>{" "}
                 </Dropdown.Item>
                 <Dropdown.Item
                   className="i-descargar"
