@@ -156,30 +156,6 @@ const ActaDetails = () => {
                     </Card.Text>
                   </Card.Body>
                 </Card>
-                {/* {votosData.map(
-                (voto) =>
-                  voto.nombre === item.nombre && (
-                    <ul key={voto.nombre}>
-                      {voto.campos.map((campo) => (
-                        <li key={campo.nombre}>
-                          {campo.etiqueta}
-                          <input
-                            type={campo.tipo}
-                            name={campo.nombre}
-                            placeholder={campo.etiqueta}
-                          />
-                          {campo.subElementos && (
-                            <select>
-                              {campo.subElementos.map((subElem) => (
-                                <option key={subElem}>{subElem}</option>
-                              ))}
-                            </select>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  )
-              )} */}
               </div>
             ))
           ) : (
@@ -225,6 +201,39 @@ const ActaDetails = () => {
         ) : (
           <span>No hay Articulos</span>
         )}
+        <Row>
+          {acta.articulos ? (
+            acta.articulos.map((voto, index) => (
+              <Col lg={4} md={6} sm={12} key={index} className="mb-4">
+                <Card>
+                  <Card.Body>
+                    <Card.Title>Detalle de Voto</Card.Title>
+                    <div
+                      style={{
+                        maxWidth: "95%",
+                        overflowX: "scroll",
+                        overflowY: "hidden",
+                      }}
+                      className="container-fluid p-0 m-0"
+                    >
+                      <ul className="list-group">
+                        {Object.keys(voto).map((votoInd, index) => (
+                          <li key={index} className="list-group-item">
+                            <strong>{votoInd}</strong>: {voto[votoInd]}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))
+          ) : (
+            <Col>
+              <span>No hay Artículos</span>
+            </Col>
+          )}
+        </Row>
       </Container>
       {/* Container Documentos Soporte */}
       {/* <div className="ct-docsSoprot mt-3">
