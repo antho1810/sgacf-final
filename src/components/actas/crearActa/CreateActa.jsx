@@ -18,6 +18,7 @@ import {
   HiX,
 } from "react-icons/hi";
 
+
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
@@ -30,6 +31,7 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table";
+import httpCommon from "../../../http-common";
 
 const CreateActa = () => {
   // ESTADO DEL ACTA INICIAL
@@ -600,18 +602,27 @@ const CreateActa = () => {
   // -----------------------------------------------------------------------------
 
   const [files, setFiles] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+    setFiles(Array.from(event.target.files));
   };
 
   const handleFileUpload = () => {
-    if (selectedFile) {
-      setFiles([...files, selectedFile]);
-      setSelectedFile(null);
-    }
+    files.forEach(async (file) => {
+      const formData = new FormData();
+      formData.append(`soportes`, file);
+
+      const response = await httpCommon.post("/actas/carga", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const data = response.data;
+
+      console.log(data);
+    });
   };
 
   return (
@@ -1253,8 +1264,8 @@ const CreateActa = () => {
             <>
               <div className="create-acta-header mb-4">
                 <h3 className="h3 mt-2">Adjuntar documentos de soporte</h3>
-                <input type="file" accept=".pdf" onChange={handleFileChange} />
-                <button onClick={handleFileUpload}>Adjuntar</button>
+                <input type="file" accept=".pdf" onChange={handleFileChange} multiple/>
+                <button onClick={handleFileUpload}>Subir archivos</button>
 
                 {files.length > 0 && (
                   <div>
