@@ -144,10 +144,12 @@ const ActaDetails = () => {
                 <Card>
                   <Card.Body>
                     <Card.Title>Detalle de Voto</Card.Title>
+                    {/* <Card.Title>
+                      {voto.titulo}_{voto.nombreAspirante}
+                    </Card.Title> */}
                     <div
                       style={{
                         maxWidth: "95%",
-                        overflowX: "scroll",
                         overflowY: "hidden",
                       }}
                       className="container-fluid p-0 m-0"
@@ -193,7 +195,12 @@ const ActaDetails = () => {
         <button className="btn btn-warning" onClick={handleConfirmExitBtn}>
           Atrás
         </button>
-        <button className="btn btn-success">Editar</button>
+        <NavLink
+          className="btn btn-success"
+          to={`/actualizar-acta/referencia/${acta.numeroRef}`}
+        >
+          Editar
+        </NavLink>
       </div>
     </div>
   );
