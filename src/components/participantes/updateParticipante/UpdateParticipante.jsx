@@ -4,6 +4,15 @@ import { useParams } from "react-router-dom";
 
 const UpdateParticipante = () => {
   //   const [participantes, setParticipantes] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await ParticipantesService.getParticipante(id);
+
+      setPartici(response.data);
+      // console.log(response.data);
+    };
+    fetchData();
+  }, []);
 
   // Actualizar Participante
   const [participante, setPartici] = useState({
@@ -21,9 +30,10 @@ const UpdateParticipante = () => {
 
   const { id } = useParams();
 
-  useEffect((req, res) => {
-    ParticipantesService.getParticipante(participante);
-  });
+  // useEffect((req, res) => {
+  //   ParticipantesService.getParticipante(id);
+
+  // });
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
@@ -51,7 +61,7 @@ const UpdateParticipante = () => {
 
     setTimeout(() => {
       window.location.href = "/";
-    }, 1000);
+    }, 2000);
   };
 
   return (

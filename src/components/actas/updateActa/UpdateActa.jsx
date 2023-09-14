@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import Swal from "sweetalert2";
 
 import GlobalParticipantesFilter from "./GlobalFilter";
 import { votosData } from "./votosData";
@@ -28,9 +29,22 @@ import {
   usePagination,
 } from "react-table";
 import { useParams } from "react-router-dom";
+import httpCommon from "../../../http-common";
+//
 
 const UpdateActa = () => {
   const { ref } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await ActaService.getActa(ref);
+      setActaInicial(response.data);
+      JSON.stringfy(response.data);
+
+      // console.log(response.data);
+    };
+    fetchData();
+  }, []);
 
   // ESTADO DEL ACTA INICIAL
   const [actaInicial, setActaInicial] = useState({
@@ -58,9 +72,9 @@ const UpdateActa = () => {
     documentosSoporte: [],
   });
 
-  useEffect((req, res) => {
-    ActaService.getActa(actaInicial);
-  });
+  // useEffect((req, res) => {
+  //   ActaService.getActa(actaInicial);
+  // });
 
   const handleConfirmSend = () => {
     console.log(actaInicial);
@@ -521,10 +535,17 @@ const UpdateActa = () => {
 
   const [votoSeleccionado, setVotoSeleccionado] = useState("");
   const [formulario, setFormulario] = useState({});
+  const [groupVotos, setGroupVotos] = useState([]);
+
+  const addVoto = () => {
+    setGroupVotos((prevGroupVotos) => [...prevGroupVotos, formulario]);
+    setFormulario({});
+    setVotoSeleccionado("");
+  };
 
   const handleRecopilarVotos = () => {
     const finalActa = {
-      articulos: formulario,
+      articulos: groupVotos,
     };
 
     const definitiveActa = {
@@ -597,19 +618,53 @@ const UpdateActa = () => {
   // -----------------------------------------------------------------------------
 
   const [files, setFiles] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+    setFiles(Array.from(event.target.files));
   };
 
   const handleFileUpload = () => {
-    if (selectedFile) {
-      setFiles([...files, selectedFile]);
-      setSelectedFile(null);
-    }
+    files.forEach(async (file) => {
+      const formData = new FormData();
+      formData.append(`soportes`, file);
+
+      const response = await httpCommon.post("/actas/carga", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const data = response.data;
+
+      console.log(data);
+
+      Swal.fire({
+        icon: "success",
+        title: data.message,
+        text: "Los archivos se han subido correctamente.",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    });
   };
+
+  // const handleFileUploadWithAlert = async () => {
+  //   const { value: confirm } = await Swal.fire({
+  //     title: "¿Estás seguro?",
+  //     text: "¿Quieres subir los archivos seleccionados?",
+  //     icon: "question",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Sí, subirlos",
+  //     cancelButtonText: "Cancelar",
+  //   });
+
+  //   if (confirm) {
+  //     handleFileUpload(); // Llama a la función original para subir archivos
+  //   }
+  // };
 
   return (
     <>
@@ -730,7 +785,7 @@ const UpdateActa = () => {
         {/* PAGE HEADER */}
         <div className="create-acta-main-header mb-2">
           <div className="title-actas">
-            <h1 className="h1">Crear un acta</h1>
+            <h1 className="h1">Actualizar acta</h1>
           </div>
         </div>
 
@@ -1189,7 +1244,53 @@ const UpdateActa = () => {
                 </div>
               </div>
 
-              <div className="row mb-4">{renderCampos()}</div>
+              <div style={{ maxWidth: "90%" }} className="row mb-4">
+                {renderCampos()}
+              </div>
+
+              <div className="container m-0 p-0">
+                {groupVotos.length > 0 &&
+                  groupVotos.map((voto, index) => (
+                    <div
+                      className="container p-0 m-0 mb-4"
+                      style={{ maxWidth: "100%" }}
+                      value={actaInicial.articulos}
+                    >
+                      <div
+                        style={{
+                          maxWidth: "100%",
+                          overflowX: "scroll",
+                          overflowY: "hidden",
+                        }}
+                        className="container-fluid p-0 m-0"
+                      >
+                        <table
+                          key={index}
+                          className="table table-striped table-bordered"
+                        >
+                          <thead>
+                            <tr>
+                              {Object.keys(voto).map((votoInd, index) => (
+                                <th key={index}>{votoInd}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              {Object.values(voto).map((valor, i) => (
+                                <td key={i}>{valor}</td>
+                              ))}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              <button className="btn btn-primary" onClick={addVoto}>
+                Añadir nuevo voto +
+              </button>
             </>
           )}
         </div>
@@ -1201,8 +1302,13 @@ const UpdateActa = () => {
             <>
               <div className="create-acta-header mb-4">
                 <h3 className="h3 mt-2">Adjuntar documentos de soporte</h3>
-                <input type="file" accept=".pdf" onChange={handleFileChange} />
-                <button onClick={handleFileUpload}>Adjuntar</button>
+                <input
+                  type="file"
+                  accept=".pdf"
+                  onChange={handleFileChange}
+                  multiple
+                />
+                <button onClick={handleFileUpload}>Subir archivos</button>
 
                 {files.length > 0 && (
                   <div>

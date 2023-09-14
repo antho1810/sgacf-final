@@ -257,7 +257,7 @@ const ActaDetails = () => {
         <button className="btn btn-warning" onClick={handleConfirmExitBtn}>
           Atrás
         </button>
-        <button className="btn btn-success">Editar</button>
+        <button className="btn btn-success" as={NavLink} to={`actualizar-acta/referencia/${acta.numeroRef}`}>Editar</button>
       </div>
     </div>
   );

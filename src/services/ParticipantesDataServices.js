@@ -6,7 +6,7 @@ export const getAllParticipantes = () => {
 };
 
 export const getParticipante = (id) => {
-  return http.get(`/participantes/${id}`);
+  return http.get(`/participantes/id/${id}`);
 };
 
 export const createParticipante = (data) => {

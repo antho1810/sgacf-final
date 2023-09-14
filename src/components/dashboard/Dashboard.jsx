@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+
 
 import ActaService from "../../services/ActasDataService";
 import { useLoaderData, NavLink } from "react-router-dom";
@@ -66,6 +68,14 @@ function Dashboard() {
     const status = response.status;
     const message = response.data.message;
     console.log(`Status: ${status} --- Response: ${message}`);
+
+     Swal.fire({
+       icon: "success",
+       title: "El correo enviado con éxito",
+       text: `${message}`,
+       showConfirmButton: false,
+       timer: 1500,
+     });
   };
 
   const handleEmailModal = (state, ref) => {
@@ -133,10 +143,46 @@ function Dashboard() {
           window.location.reload();
         };
 
+        const handleDeleteWithConfirmation = (id) => {
+          Swal.fire({
+            title: "¿Estás seguro?",
+            text: `¿Quieres eliminar el acta ${rowRef}?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              // Usuario confirmó la eliminación, llamar a handleDelete
+              await handleDelete(id);
+            }
+          });
+        };
+
         const handleUpdateStatus = async (ref) => {
           await ActaService.updateStatusActa(ref, { estado: "Aprobado" });
           window.location.reload();
         };
+
+         const handleUpdateStatusWithConfirmation = (ref) => {
+           Swal.fire({
+             title: "¿Estás seguro?",
+             text: `¿Quieres actualizar el acta ${rowRef} a "Aprobado"?`,
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonColor: "#3085d6",
+             cancelButtonColor: "#d33",
+             confirmButtonText: "Sí, actualizar",
+             cancelButtonText: "Cancelar",
+           }).then(async (result) => {
+             if (result.isConfirmed) {
+               // Usuario confirmó la actualización, llamar a handleUpdateStatus
+               await handleUpdateStatus(ref);
+             }
+           });
+         };
 
         const showStatus = (estado) => {
           console.log(estado);
@@ -190,7 +236,7 @@ function Dashboard() {
 
                 <Dropdown.Item
                   className="i-borrar"
-                  onClick={() => handleDelete(rowId)}
+                  onClick={() => handleDeleteWithConfirmation(rowId)}
                   icon={<RiDeleteBinLine />}
                 >
                   {"  "}
@@ -223,7 +269,7 @@ function Dashboard() {
             {checkExistedRolDecano && estado === "En proceso" && (
               <>
                 <Dropdown.Item
-                  onClick={() => handleUpdateStatus(rowRef)}
+                  onClick={() => handleUpdateStatusWithConfirmation(rowRef)}
                   className="i-aprobar"
                   icon={<AiOutlineLike />}
                 >
@@ -247,7 +293,7 @@ function Dashboard() {
               <>
                 <Dropdown.Item
                   className="i-borrar"
-                  onClick={() => handleDelete(rowId)}
+                  onClick={() => handleDeleteWithConfirmation(rowId)}
                   icon={<RiDeleteBinLine />}
                 >
                   {"  "}
