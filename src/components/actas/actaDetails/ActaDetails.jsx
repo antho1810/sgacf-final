@@ -137,70 +137,6 @@ const ActaDetails = () => {
       {/* Container Articulos */}
       <Container className="ct-articulos mt-2 mb-2">
         <span className="h4 text-center">Articulos</span>
-        <div className="row">
-          {acta.articulos ? (
-            acta.articulos.map((item) => (
-              <div className="col-lg-4 col-md-6 col-sm-12" key={item.titulo}>
-                <Card className="mb-3">
-                  <Card.Body>
-                    <Card.Title>
-                      <p>
-                        {item.titulo}_{item.nombreAspirante}
-                      </p>
-                    </Card.Title>
-                    <Card.Text>
-                      <p>Nombre del Aspirante: {item.nombreAspirante}</p>
-                      <p>Tipo de documento: {item.tipoDocumento}</p>
-                      <p># de documento: {item.noDocumento}</p>
-                      <p>materia aprobada: {item.materiaAprovada}</p>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-            ))
-          ) : (
-            <span>No hay Articulos</span>
-          )}
-        </div>
-        {acta.articulos ? (
-          acta.articulos.map((voto, index) => (
-            <div
-              className="container col-lg-12 mb-4"
-              style={{ maxWidth: "100%" }}
-            >
-              <div
-                style={{
-                  maxWidth: "95%",
-                  overflowX: "scroll",
-                  overflowY: "hidden",
-                }}
-                className="container-fluid p-0 m-0"
-              >
-                <table
-                  key={index}
-                  className="table table-striped table-bordered"
-                >
-                  <thead>
-                    <tr>
-                      {Object.keys(voto).map((votoInd, index) => (
-                        <th key={index}>{votoInd}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      {Object.values(voto).map((valor, i) => (
-                        <td key={i}>{valor}</td>
-                      ))}
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ))
-        ) : (
-          <span>No hay Articulos</span>
-        )}
         <Row>
           {acta.articulos ? (
             acta.articulos.map((voto, index) => (
@@ -208,10 +144,12 @@ const ActaDetails = () => {
                 <Card>
                   <Card.Body>
                     <Card.Title>Detalle de Voto</Card.Title>
+                    {/* <Card.Title>
+                      {voto.titulo}_{voto.nombreAspirante}
+                    </Card.Title> */}
                     <div
                       style={{
                         maxWidth: "95%",
-                        overflowX: "scroll",
                         overflowY: "hidden",
                       }}
                       className="container-fluid p-0 m-0"
@@ -257,7 +195,12 @@ const ActaDetails = () => {
         <button className="btn btn-warning" onClick={handleConfirmExitBtn}>
           Atrás
         </button>
-        <button className="btn btn-success" as={NavLink} to={`actualizar-acta/referencia/${acta.numeroRef}`}>Editar</button>
+        <NavLink
+          className="btn btn-success"
+          to={`/actualizar-acta/referencia/${acta.numeroRef}`}
+        >
+          Editar
+        </NavLink>
       </div>
     </div>
   );

@@ -30,8 +30,6 @@ import {
 } from "react-table";
 import { useParams } from "react-router-dom";
 import httpCommon from "../../../http-common";
-//
-
 const UpdateActa = () => {
   const { ref } = useParams();
 
@@ -39,8 +37,6 @@ const UpdateActa = () => {
     const fetchData = async () => {
       const response = await ActaService.getActa(ref);
       setActaInicial(response.data);
-      JSON.stringfy(response.data);
-
       // console.log(response.data);
     };
     fetchData();
@@ -638,7 +634,7 @@ const UpdateActa = () => {
       const data = response.data;
 
       console.log(data);
-
+      
       Swal.fire({
         icon: "success",
         title: data.message,
@@ -648,23 +644,6 @@ const UpdateActa = () => {
       });
     });
   };
-
-  // const handleFileUploadWithAlert = async () => {
-  //   const { value: confirm } = await Swal.fire({
-  //     title: "¿Estás seguro?",
-  //     text: "¿Quieres subir los archivos seleccionados?",
-  //     icon: "question",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Sí, subirlos",
-  //     cancelButtonText: "Cancelar",
-  //   });
-
-  //   if (confirm) {
-  //     handleFileUpload(); // Llama a la función original para subir archivos
-  //   }
-  // };
 
   return (
     <>
