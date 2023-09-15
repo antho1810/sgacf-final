@@ -38,6 +38,7 @@
     "react-time-range": "^1.0.4",
     "rsuite": "^5.33.0",
     "stream-browserify": "^3.0.0",
+    "sweetalert2": "^11.7.28",
     "tablefilter": "^0.7.2",
     "web-vitals": "^2.1.4"
   },

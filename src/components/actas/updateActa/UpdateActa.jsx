@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import Swal from "sweetalert2";
 
 import GlobalParticipantesFilter from "./GlobalFilter";
 import { votosData } from "./votosData";
@@ -29,8 +30,6 @@ import {
 } from "react-table";
 import { useParams } from "react-router-dom";
 import httpCommon from "../../../http-common";
-// 
-
 const UpdateActa = () => {
   const { ref } = useParams();
 
@@ -38,7 +37,7 @@ const UpdateActa = () => {
     const fetchData = async () => {
       const response = await ActaService.getActa(ref);
       setActaInicial(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     };
     fetchData();
   }, []);
@@ -69,9 +68,9 @@ const UpdateActa = () => {
     documentosSoporte: [],
   });
 
-  useEffect((req, res) => {
-    ActaService.getActa(actaInicial);
-  });
+  // useEffect((req, res) => {
+  //   ActaService.getActa(actaInicial);
+  // });
 
   const handleConfirmSend = () => {
     console.log(actaInicial);
@@ -635,6 +634,14 @@ const UpdateActa = () => {
       const data = response.data;
 
       console.log(data);
+      
+      Swal.fire({
+        icon: "success",
+        title: data.message,
+        text: "Los archivos se han subido correctamente.",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     });
   };
 

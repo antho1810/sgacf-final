@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import Swal from "sweetalert2";
 
 import GlobalParticipantesFilter from "./GlobalFilter";
 import { votosData } from "./votosData";
@@ -17,7 +18,6 @@ import {
   HiChevronUp,
   HiX,
 } from "react-icons/hi";
-
 
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -622,6 +622,14 @@ const CreateActa = () => {
       const data = response.data;
 
       console.log(data);
+
+      Swal.fire({
+        icon: "success",
+        title: data.message,
+        text: "Los archivos se han subido correctamente.",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     });
   };
 
@@ -1207,9 +1215,13 @@ const CreateActa = () => {
                 </div>
               </div>
 
-              <div style={{ maxWidth: "90%" }} className="row mb-4">
+              <div style={{ maxWidth: "90%" }} className="row mb-2">
                 {renderCampos()}
               </div>
+
+              <button className="btn btn-primary mb-3" onClick={addVoto}>
+                Añadir nuevo voto +
+              </button>
 
               <div className="container m-0 p-0">
                 {groupVotos.length > 0 &&
@@ -1249,10 +1261,6 @@ const CreateActa = () => {
                     </div>
                   ))}
               </div>
-
-              <button className="btn btn-primary" onClick={addVoto}>
-                Añadir nuevo voto +
-              </button>
             </>
           )}
         </div>
@@ -1264,7 +1272,12 @@ const CreateActa = () => {
             <>
               <div className="create-acta-header mb-4">
                 <h3 className="h3 mt-2">Adjuntar documentos de soporte</h3>
-                <input type="file" accept=".pdf" onChange={handleFileChange} multiple/>
+                <input
+                  type="file"
+                  accept=".pdf"
+                  onChange={handleFileChange}
+                  multiple
+                />
                 <button onClick={handleFileUpload}>Subir archivos</button>
 
                 {files.length > 0 && (

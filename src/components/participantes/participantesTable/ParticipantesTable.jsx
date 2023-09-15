@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
+import Swal from "sweetalert2";
 import ParticipantesService from "../../../services/ParticipantesDataServices";
 import {
   useSortBy,
@@ -60,20 +61,28 @@ const ParticipantesTable = () => {
       Cell: ({ row }) => {
         const rowId = row.original._id;
 
-        const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-        const handleChangeStatusModalFalse = () => {
-          setIsDeleteModalOpen(false);
-        };
-
-        const handleShowConfirmModal = () => {
-          setIsDeleteModalOpen(true);
-        };
-
         const handleConfirmDelete = async (id) => {
           await ParticipantesService.deleteParticipante(id);
           window.location.reload();
         };
+
+             const handleDeleteParticipanteWithConfirmation = (id) => {
+               Swal.fire({
+                 title: "¿Estás seguro?",
+                 text: "¿Quieres eliminar a este participante?",
+                 icon: "warning",
+                 showCancelButton: true,
+                 confirmButtonColor: "#3085d6",
+                 cancelButtonColor: "#d33",
+                 confirmButtonText: "Sí, eliminar",
+                 cancelButtonText: "Cancelar",
+               }).then(async (result) => {
+                 if (result.isConfirmed) {
+                   // Usuario confirmó la eliminación del participante, llamar a la función de eliminación
+                   await handleConfirmDelete(id);
+                 }
+               });
+             };
 
         const token = localStorage.getItem("token");
 
@@ -96,30 +105,6 @@ const ParticipantesTable = () => {
 
         return (
           <>
-            {/* MODAL Eliminar CERRAR */}
-            {isDeleteModalOpen && (
-              <div className="modal">
-                <div className="modal-content">
-                  <h2 className="mb-4 h4 text-center">
-                    ¿Está seguro que desea eliminar el participante?
-                  </h2>
-                  <div className="ct-btn d-flex justify-content-evenly">
-                    <button
-                      className="btn btn-warning"
-                      onClick={handleChangeStatusModalFalse}
-                    >
-                      Atrás
-                    </button>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => handleConfirmDelete(rowId)}
-                    >
-                      Confirmar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
             <Dropdown renderToggle={renderIconButton} className="accion-drop">
               {/* Acciones para el secretaria */}
               {checkExistedRolSecretaria && (
@@ -137,7 +122,7 @@ const ParticipantesTable = () => {
                   <Dropdown.Item
                 className="i-borrar"
                     as={NavLink}
-                    onClick={handleShowConfirmModal}
+                    onClick={handleDeleteParticipanteWithConfirmation}
                     icon={<RiDeleteBinLine />}
                   >
                     {" "}
@@ -160,7 +145,7 @@ const ParticipantesTable = () => {
                   <Dropdown.Item
                     className="i-borrar"
                     as={NavLink}
-                    onClick={handleShowConfirmModal}
+                    onClick={handleDeleteParticipanteWithConfirmation}
                     icon={<RiDeleteBinLine />}
                   >
                     {" "}
