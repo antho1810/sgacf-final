@@ -33,44 +33,24 @@ import httpCommon from "../../../http-common";
 const UpdateActa = () => {
   const { ref } = useParams();
 
+  // ESTADO DEL ACTA INICIAL
+  const [actaInicial, setActaInicial] = useState();
+
+  // MEDIDA DE EMERGENCIA
+  const [groupVotos, setGroupVotos] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await ActaService.getActa(ref);
-      setActaInicial(response.data);
+      const fixedResponse = response.data;
+      const articulos = fixedResponse.articulos;
+      setActaInicial(fixedResponse);
+      setGroupVotos(articulos);
+
       // console.log(response.data);
     };
     fetchData();
   }, []);
-
-  // ESTADO DEL ACTA INICIAL
-  const [actaInicial, setActaInicial] = useState({
-    lugar: "",
-    modalidad: "",
-    horaInicio: "",
-    horaFinal: "",
-    cronograma: "",
-    miembrosPresentes: [
-      {
-        id: "",
-      },
-    ],
-    miembrosAusentes: [
-      {
-        id: "",
-      },
-    ],
-    miembrosInvitados: [
-      {
-        id: "",
-      },
-    ],
-    articulos: [],
-    documentosSoporte: [],
-  });
-
-  // useEffect((req, res) => {
-  //   ActaService.getActa(actaInicial);
-  // });
 
   const handleConfirmSend = () => {
     console.log(actaInicial);
@@ -531,7 +511,6 @@ const UpdateActa = () => {
 
   const [votoSeleccionado, setVotoSeleccionado] = useState("");
   const [formulario, setFormulario] = useState({});
-  const [groupVotos, setGroupVotos] = useState([]);
 
   const addVoto = () => {
     setGroupVotos((prevGroupVotos) => [...prevGroupVotos, formulario]);
@@ -783,7 +762,7 @@ const UpdateActa = () => {
                     type="text"
                     name="lugar"
                     placeholder="Lugar"
-                    value={actaInicial.lugar}
+                    value={actaInicial ? actaInicial.lugar : ""}
                     onChange={handleInputChange}
                     className="w-100 form-control-custom"
                   />
@@ -792,7 +771,7 @@ const UpdateActa = () => {
                   <Form.Label>Modalidad</Form.Label>
                   <Form.Select
                     name="modalidad"
-                    value={actaInicial.modalidad}
+                    value={actaInicial ? actaInicial.modalidad : ""}
                     onChange={handleInputChange}
                     aria-label="Tipo de modalidad"
                   >
@@ -807,7 +786,7 @@ const UpdateActa = () => {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <TimePicker
                       name="horaInicio"
-                      value={actaInicial.horaInicio}
+                      value={actaInicial ? actaInicial.horaInicio : ""}
                       onChange={handleHoraInicioChange}
                     />
                   </LocalizationProvider>
@@ -817,7 +796,7 @@ const UpdateActa = () => {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <TimePicker
                       name="horaFinal"
-                      value={actaInicial.horaFinal}
+                      value={actaInicial ? actaInicial.horaFinal : ""}
                       onChange={handleHoraFinalChange}
                     />
                   </LocalizationProvider>
@@ -831,7 +810,7 @@ const UpdateActa = () => {
                 <textarea
                   name="cronograma"
                   id="cronograma"
-                  value={actaInicial.cronograma}
+                  value={actaInicial ? actaInicial.cronograma : ""}
                   onChange={handleInputChange}
                   className="cronograma-textarea"
                   cols="50"
@@ -863,9 +842,9 @@ const UpdateActa = () => {
                     />
                     <Table style={{ maxWidth: "480px" }} {...getTableProps()}>
                       <thead className="table-header">
-                        {headerGroups.map((headerGroup) => (
-                          <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map((column) => (
+                        {headerGroups.map((headerGroup, key) => (
+                          <tr key={key} {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map((column, key) => (
                               <th
                                 key={column.numeroRef}
                                 className="head-column"
@@ -891,20 +870,24 @@ const UpdateActa = () => {
                         ))}
                       </thead>
                       <tbody {...getTableBodyProps()}>
-                        {page.map((row) => {
+                        {page.map((row, key) => {
                           prepareRow(row);
                           return (
                             <>
-                              <tr className="row-column" {...row.getRowProps()}>
-                                {row.cells.map((cell) => {
+                              <tr
+                                key={key}
+                                className="row-column"
+                                {...row.getRowProps()}
+                              >
+                                {row.cells.map((cell, key) => {
                                   return (
-                                    <td {...cell.getCellProps()}>
+                                    <td key={key} {...cell.getCellProps()}>
                                       {cell.render("Cell")}
                                     </td>
                                   );
                                 })}
                               </tr>
-                              <tr>
+                              <tr key={key}>
                                 <td colSpan="10" className="no-borders"></td>
                               </tr>
                             </>
@@ -1233,7 +1216,7 @@ const UpdateActa = () => {
                     <div
                       className="container p-0 m-0 mb-4"
                       style={{ maxWidth: "100%" }}
-                      value={actaInicial.articulos}
+                      value={actaInicial ? actaInicial.articulos : ""}
                     >
                       <div
                         style={{
