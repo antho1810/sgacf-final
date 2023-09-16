@@ -38,8 +38,8 @@ function Navbarside() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
-    // window.location.reload();
+    // window.location.href = "/login";
+    window.location.reload();
   };
 
   return (

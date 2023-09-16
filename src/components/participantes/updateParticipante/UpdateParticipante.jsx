@@ -3,13 +3,10 @@ import ParticipantesService from "../../../services/ParticipantesDataServices";
 import { useParams } from "react-router-dom";
 
 const UpdateParticipante = () => {
-  //   const [participantes, setParticipantes] = useState([]);
-  useEffect(() => {
+    useEffect(() => {
     const fetchData = async () => {
       const response = await ParticipantesService.getParticipante(id);
-
       setPartici(response.data);
-      // console.log(response.data);
     };
     fetchData();
   }, []);
@@ -32,7 +29,6 @@ const UpdateParticipante = () => {
 
   // useEffect((req, res) => {
   //   ParticipantesService.getParticipante(id);
-
   // });
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -97,12 +93,12 @@ const UpdateParticipante = () => {
           <div className="subtitle">
             <span>Rellene los campos y actualice el participante</span>
           </div>
-          <div className="subtitle">
+{/*           <div className="subtitle">
             <span className="fw-bold text-danger">
               Nota: Si dejas los campos de vacios, los campos se actualizan
               vacios.
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
 

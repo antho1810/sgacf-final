@@ -21,7 +21,7 @@ El rol participante solo tiene va a tener acceso para verificar si su informacio
 | ------------- | :------: |
 | Corregir desbordamiento de algunas partes de pagina | ✅ |
 | Añadir mas articulos | ✅ |
-| Envio de PDF para multiples personas por medio de correo nodemailer | :hourglass: |
-| Almacenamiento de documentos de Soporte | :hourglass: |
-| Estilos del PDF | :hourglass: |
+| Envio de PDF para multiples personas por medio de correo nodemailer | ✅ |
+| Almacenamiento de documentos de Soporte | ✅ |
+| Estilos del PDF / Word | :hourglass: |
 

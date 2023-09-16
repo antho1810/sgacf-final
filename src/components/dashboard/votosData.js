@@ -3,14 +3,14 @@ export const votosData = [
     nombre: "Autorización de expedición de títulos académicos",
     campos: [
       {
-        nombre: "AETA",
-        etiqueta: "Titulo Voto",
+        nombre: "titulo",
+        etiqueta: "Titulo del voto",
         subElementos: ["Autorización de expedición de títulos académicos"],
         tipo: "text",
       },
       {
         nombre: "nombreAspirante",
-        etiqueta: "Nombre del aspirante",
+        etiqueta: "Nombre completo del aspirante",
         tipo: "text",
       },
       {
@@ -27,27 +27,114 @@ export const votosData = [
       {
         nombre: "codigoSnies",
         etiqueta: "Código SNIES",
+        subElementos: ["101756", "107290"],
         tipo: "number",
       },
       {
-        nombre: "tituloOtorga",
+        nombre: "programaEstudiante",
         etiqueta: "Título que otorga",
+        subElementos: ["Ingeniería de Sistemas", "Ingeniería Industrial"],
         tipo: "text",
       },
     ],
   },
+  // {
+  //   nombre: "Reingreso",
+  //   campos: [
+  //     {
+  //       nombre: "titulo",
+  //       etiqueta: "Titulo del voto",
+  //       subElementos: ["Reingreso"],
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "nombreAspirante",
+  //       etiqueta: "Nombre completo del aspirante",
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "birthDate",
+  //       etiqueta: "Fecha de nacimiento",
+  //       tipo: "date",
+  //     },
+  //     {
+  //       nombre: "genero",
+  //       etiqueta: "Genero",
+  //       subElementos: ["Masculino - Male", "Femenino - Female"],
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "tipoDocumento",
+  //       etiqueta: "Tipo de documento",
+  //       subElementos: ["CC", "TI", "NIT", "PASAPORTE", "CE"],
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "noDocumento",
+  //       etiqueta: "Número de documentos (sin puntos)",
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "direccionResidencia",
+  //       etiqueta: "Dírección de Residencia",
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "noTelefono",
+  //       etiqueta: "Número de telefono",
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "estrato",
+  //       etiqueta: "Estrado",
+  //       subElementos: ["1", "2", "3", "4", "5", "6"],
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "correoElectronico",
+  //       etiqueta: "Correo Electrónico",
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "nombreEmpresa",
+  //       etiqueta: "Empresa",
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "direccionEmpresa",
+  //       etiqueta: "Dírección de la Empresa",
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "cargoEmpresa",
+  //       etiqueta: "Cargo en la empresa",
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "religion",
+  //       etiqueta: "Religión",
+  //       tipo: "text",
+  //     },
+  //     {
+  //       nombre: "programaEstudiante",
+  //       etiqueta: "Programa Reingreso",
+  //       subElementos: ["Ingeniería de Sistemas", "Ingeniería Industrial"],
+  //       tipo: "text",
+  //     },
+  //   ],
+  // },
   {
     nombre: "Homologaciones",
     campos: [
       {
-        nombre: "tipo",
+        nombre: "titulo",
         etiqueta: "Tipo de homologación",
-        subElementos: ["Homologación Interna", "Homologación Externa"],
+        subElementos: ["Homologacíon Interna", "Homologacíon Externa"],
         tipo: "text",
       },
       {
         nombre: "nombreAspirante",
-        etiqueta: "Nombre del aspirante",
+        etiqueta: "Nombre completo del aspirante",
         tipo: "text",
       },
       {
@@ -64,6 +151,7 @@ export const votosData = [
       {
         nombre: "programaEstudiante",
         etiqueta: "Programa",
+        subElementos: ["Ingeniería de Sistemas", "Ingeniería Industrial"],
         tipo: "text",
       },
       {
@@ -98,8 +186,8 @@ export const votosData = [
     nombre: "Otros votos",
     campos: [
       {
-        nombre: "tituloVoto",
-        etiqueta: "Título voto",
+        nombre: "titulo",
+        etiqueta: "Titulo del voto",
         subElementos: [
           "Transferencia interna",
           "Suficiencia",
@@ -113,8 +201,8 @@ export const votosData = [
         tipo: "text",
       },
       {
-        nombre: "nombre",
-        etiqueta: "Nombre del aspirante",
+        nombre: "nombreAspirante",
+        etiqueta: "Nombre completo del aspirante",
         tipo: "text",
       },
       {
@@ -131,6 +219,7 @@ export const votosData = [
       {
         nombre: "programaEstudiante",
         etiqueta: "Programa",
+        subElementos: ["Ingeniería de Sistemas", "Ingeniería Industrial"],
         tipo: "text",
       },
       {
@@ -138,6 +227,21 @@ export const votosData = [
         etiqueta: "Periodo",
         subElementos: ["1er periodo", "2do periodo"],
         tipo: "text",
+      },
+      {
+        nombre: "materia",
+        etiqueta: "Materia",
+        tipo: "text",
+      },
+      {
+        nombre: "notaCalificacion",
+        etiqueta: "Nota Final",
+        tipo: "text",
+      },
+      {
+        nombre: "creditosAdicionales",
+        etiqueta: "Creditos",
+        tipo: "number",
       },
     ],
   },
