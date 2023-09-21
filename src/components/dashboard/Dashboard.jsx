@@ -161,6 +161,11 @@ function Dashboard() {
           });
         };
 
+          const handleSendDoc = async (id) => {
+           await ActaService.getAndDownloadOneByRef(id);
+         };
+
+
         const handleUpdateStatus = async (ref) => {
           await ActaService.updateStatusActa(ref, { estado: "Aprobado" });
           window.location.reload();
@@ -247,7 +252,7 @@ function Dashboard() {
                   fileName="acta.pdf"
                 > */}
                 <Dropdown.Item
-                  // onClick={()=>handleActaFindByRef(row.original.numeroRef)}
+                  onClick={() => handleSendDoc(row.original.numeroRef)}
                   className="i-descargar"
                   icon={<HiDocumentDownload />}
                 >
@@ -320,6 +325,7 @@ function Dashboard() {
                 <Dropdown.Item
                   className="i-descargar"
                   icon={<HiDocumentDownload />}
+                  onClick={() => handleSendDoc(row.original.numeroRef)}
                 >
                   {" "}
                   <span> Descargar PDF</span>

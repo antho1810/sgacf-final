@@ -129,7 +129,7 @@ export const votosData = [
       {
         nombre: "titulo",
         etiqueta: "Tipo de homologación",
-        subElementos: ["Homologacíon Interna", "Homologacíon Externa"],
+        subElementos: ["Homologación Interna", "Homologación Externa"],
         tipo: "text",
       },
       {
@@ -193,9 +193,9 @@ export const votosData = [
           "Suficiencia",
           "Materia dirigida",
           "Reingreso",
-          "Autorizacion para cursar materia con otra malla",
+          "Autorización para cursar materia con otra malla",
           "Matricula de honor",
-          "modificacion de calificaciones a un periodo cerrado",
+          "Modificación de calificaciones a un periodo cerrado",
           "Materia intesiva",
         ],
         tipo: "text",
