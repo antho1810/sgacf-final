@@ -12,7 +12,7 @@
 
 #### Nota
 
-El rol participante solo tiene va a tener acceso para verificar si su informacion esta correcta en dado caso que los roles superiores no tenga la información correcta.
+El rol participante solo va a tener acceso para verificar si su informacion esta correcta en dado caso que los roles superiores no tenga la información correcta.
 
 
 ### Requerimientos faltantes
