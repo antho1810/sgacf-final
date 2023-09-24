@@ -323,9 +323,9 @@ function Dashboard() {
                   <span>Compartir</span>{" "}
                 </Dropdown.Item>
                 <Dropdown.Item
+                  onClick={() => handleSendDoc(row.original.numeroRef)}
                   className="i-descargar"
                   icon={<HiDocumentDownload />}
-                  onClick={() => handleSendDoc(row.original.numeroRef)}
                 >
                   {" "}
                   <span> Descargar PDF</span>
