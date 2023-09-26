@@ -161,7 +161,7 @@ export const votosData = [
         tipo: "text",
       },
       {
-        nombre: "materiaAprovada",
+        nombre: "materiaAprobada",
         etiqueta: "Materia Aprobada",
         tipo: "text",
       },

@@ -2,7 +2,6 @@ import http from "../http-common.js";
 import axios from "axios";
 import { saveAs } from "file-saver";
 
-
 export const getAndDownloadOneByRef = async (ref) => {
   const token = localStorage.getItem("token");
   return axios({
@@ -20,7 +19,7 @@ export const getAndDownloadOneByRef = async (ref) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "file.pdf");
+      link.setAttribute("download", `acta-${ref}.pdf`);
       document.body.appendChild(link);
       link.click();
     })
