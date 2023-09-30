@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-
 import ActaService from "../../services/ActasDataService";
 import { useLoaderData, NavLink } from "react-router-dom";
 
@@ -69,13 +68,13 @@ function Dashboard() {
     const message = response.data.message;
     console.log(`Status: ${status} --- Response: ${message}`);
 
-     Swal.fire({
-       icon: "success",
-       title: "El correo enviado con éxito",
-       text: `${message}`,
-       showConfirmButton: false,
-       timer: 1500,
-     });
+    Swal.fire({
+      icon: "success",
+      title: "El correo enviado con éxito",
+      text: `${message}`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   const handleEmailModal = (state, ref) => {
@@ -83,9 +82,10 @@ function Dashboard() {
     setRef(ref);
   };
 
-  const data = useMemo(
-    () =>
-      responseActas.map((acta) => ({
+  const data = useMemo(() => {
+    console.log(responseActas);
+    if (Array.isArray(responseActas)) {
+      return responseActas.map((acta) => ({
         _id: acta._id,
         numeroRef: acta.numeroRef,
         fechaCreacion: acta.fechaCreacion,
@@ -95,12 +95,12 @@ function Dashboard() {
         lugar: acta.lugar,
         modalidad: acta.modalidad,
         estado: acta.estado,
-        articulo: acta.articulos.map(
-          (item) => `${item.titulo}, `
-        ),
-      })),
-    [responseActas]
-  );
+        articulo: acta.articulos.map((item) => `${item.titulo}, `),
+      }));
+    } else {
+      return [];
+    }
+  }, [responseActas]);
 
   const COLUMNS = [
     { Header: "# Ref", accessor: "numeroRef" },
@@ -161,33 +161,32 @@ function Dashboard() {
           });
         };
 
-          const handleSendDoc = async (id) => {
-           await ActaService.getAndDownloadOneByRef(id);
-         };
-
+        const handleSendDoc = async (id) => {
+          await ActaService.getAndDownloadOneByRef(id);
+        };
 
         const handleUpdateStatus = async (ref) => {
           await ActaService.updateStatusActa(ref, { estado: "Aprobado" });
           window.location.reload();
         };
 
-         const handleUpdateStatusWithConfirmation = (ref) => {
-           Swal.fire({
-             title: "¿Estás seguro?",
-             text: `¿Quieres actualizar el acta ${rowRef} a "Aprobado"?`,
-             icon: "warning",
-             showCancelButton: true,
-             confirmButtonColor: "#3085d6",
-             cancelButtonColor: "#d33",
-             confirmButtonText: "Sí, actualizar",
-             cancelButtonText: "Cancelar",
-           }).then(async (result) => {
-             if (result.isConfirmed) {
-               // Usuario confirmó la actualización, llamar a handleUpdateStatus
-               await handleUpdateStatus(ref);
-             }
-           });
-         };
+        const handleUpdateStatusWithConfirmation = (ref) => {
+          Swal.fire({
+            title: "¿Estás seguro?",
+            text: `¿Quieres actualizar el acta ${rowRef} a "Aprobado"?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, actualizar",
+            cancelButtonText: "Cancelar",
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              // Usuario confirmó la actualización, llamar a handleUpdateStatus
+              await handleUpdateStatus(ref);
+            }
+          });
+        };
 
         const showStatus = (estado) => {
           console.log(estado);
@@ -338,6 +337,7 @@ function Dashboard() {
     },
   ];
 
+    // const fixedColumns = React.useMemo(() => COLUMNS, []);
   const {
     getTableProps,
     getTableBodyProps,
@@ -564,8 +564,85 @@ function Dashboard() {
 }
 
 export const dashboardLoader = async () => {
-  const responseActas = await ActaService.getAllActas();
-  return responseActas.data;
+  const token = localStorage.getItem("token");
+
+  const body = document.querySelector("body");
+  if (!token) {
+    console.log("No hay token disponible. El usuario no está autenticado.");
+    //   body.innerHTML = `
+    //   <div class='layer'>
+    //   <div class="modal-layer">
+    //     No hay token disponible. El usuario no está autenticado.
+    //     <a href="http://localhost:3000/login">Iniciar sección</a>
+    //   </div>
+    // </div>
+    //   `
+
+    const layer = document.createElement("div");
+    layer.classList.add("layer");
+
+    const modalLayer = document.createElement("div");
+    modalLayer.classList.add("modal-layer");
+
+    const msg = document.createElement("span");
+    msg.textContent =
+      "No hay token disponible. El usuario no está autenticado.";
+
+    const link = document.createElement("a");
+    link.href = "http://localhost:3000/login";
+    link.textContent = "Iniciar Sección";
+
+    modalLayer.appendChild(msg);
+    modalLayer.appendChild(link);
+    layer.appendChild(modalLayer);
+
+    body.appendChild(layer);
+    // return (window.location.href = '/login');
+    return null;
+  } else {
+    try {
+      const decodedToken = jwtDecode(token);
+
+      const currentTime = Date.now() / 1000;
+
+      if (decodedToken.exp < currentTime) {
+        console.log("El token ha caducado. Debes iniciar sesión nuevamente.");
+
+        const layer = document.createElement("div");
+        layer.classList.add("layer");
+
+        const modalLayer = document.createElement("div");
+        modalLayer.classList.add("modal-layer");
+
+        const msg = document.createElement("span");
+        msg.textContent =
+          "El token ha caducado. Debes iniciar sesión nuevamente.";
+
+        const link = document.createElement("a");
+        link.href = "http://localhost:3000/login";
+        link.textContent = "Iniciar Sección";
+
+        modalLayer.appendChild(msg);
+        modalLayer.appendChild(link);
+        layer.appendChild(modalLayer);
+
+        body.appendChild(layer);
+        // return (window.location.href = '/login');
+        return null;
+      } else {
+        const response = await ActaService.getAllActas();
+        console.log(response.data);
+        return response.data;
+        // ActaService.getAllActas()
+        //   .then((response) => {
+        //     return response.data;
+        //   })
+        //   .catch((e) => console.log(e));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 };
 
 export default Dashboard;

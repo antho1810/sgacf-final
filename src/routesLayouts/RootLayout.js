@@ -5,7 +5,7 @@ import jwtDecode from "jwt-decode";
 
 import Container from "react-bootstrap/Container";
 
-import { Sidenav, Nav, Avatar, Button } from "rsuite";
+import { Sidenav, Nav, Avatar } from "rsuite";
 
 import logo from "./UNACazul.png";
 

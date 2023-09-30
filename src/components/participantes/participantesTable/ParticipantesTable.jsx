@@ -24,11 +24,37 @@ import jwtDecode from "jwt-decode";
 
 const ParticipantesTable = () => {
   const [participantes, setParticipantes] = useState([]);
+    const [layer, setLayer] = useState(false);
+    const [layerMsg, setLayerMsg] = useState("");
 
   const getParticipantesData = async () => {
-    const response = await ParticipantesService.getAllParticipantes();
-    setParticipantes(response.data);
-    // console.log(response.data);
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      setLayerMsg('No hay token disponible. El usuario no está autenticado.');
+      setLayer(true);
+      // return (window.location.href = '/login');
+    } else {
+      try {
+        const decodedToken = jwtDecode(token);
+
+        const currentTime = Date.now() / 1000;
+
+        if (decodedToken.exp < currentTime) {
+          setLayerMsg('El token ha caducado. Debes iniciar sesión nuevamente.');
+          setLayer(true);
+          // return (window.location.href = '/login');
+        } else {
+          ParticipantesService.getAllParticipantes()
+            .then((response) => {
+              return setParticipantes(response.data);
+            })
+            .catch((e) => console.log(e));
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
   };
 
   useEffect(() => {
@@ -45,10 +71,10 @@ const ParticipantesTable = () => {
     );
   };
   const COLUMNS = [
-    { Header: "Nombre", accessor: "nombre" },
+    { Header: "Nombres", accessor: "nombre" },
 
     {
-      Header: "Apellido",
+      Header: "Apellidos",
       accessor: "apellido",
     },
     {
@@ -161,13 +187,18 @@ const ParticipantesTable = () => {
   ];
 
   const data = useMemo(
-    () =>
-      participantes.map((participante) => ({
-        nombre: participante.nombre,
-        apellido: participante.apellido,
-        cargo: participante.cargo,
-        _id: participante._id,
-      })),
+    () => {
+      if (Array.isArray(participantes)) {
+        return participantes.map((participante) => ({
+          nombre: participante.nombre,
+          apellido: participante.apellido,
+          cargo: participante.cargo,
+          _id: participante._id,
+        }));
+      } else {
+        return [];
+      }
+    },
     [participantes]
   );
 
@@ -200,129 +231,140 @@ const ParticipantesTable = () => {
 
   const { pageIndex, pageSize, globalFilter } = state;
 
-  return (
+   return (
     <>
-      <div className="ct-header-actas">
-        <div className="title-actas">
-          <h2>Lista de participantes</h2>
-        </div>
-        <div>
-          <Button
-            as={NavLink}
-            to="crear-participante"
-            className="plus-acta-btn"
-          >
-            + Añadir participante
-          </Button>
-        </div>
-      </div>
+      {!layer ? (
+        <>
+          <div className="ct-header-actas">
+            <div className="title-actas">
+              <h2>Lista de participantes</h2>
+            </div>
+            <div>
+              <Button
+                as={NavLink}
+                to="crear-participante"
+                className="plus-acta-btn"
+              >
+                + Añadir participante
+              </Button>
+            </div>
+          </div>
 
-      <GlobalParticipantesFilter
-        filter={globalFilter}
-        setFilter={setGlobalFilter}
-      />
+          <GlobalParticipantesFilter
+            filter={globalFilter}
+            setFilter={setGlobalFilter}
+          />
 
-      <Table {...getTableProps()}>
-        <thead className="table-header">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, index) => (
-                <th
-                  key={index}
-                  className="head-column"
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                >
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <HiChevronDown />
-                      ) : (
-                        <HiChevronUp />
-                      )
-                    ) : (
-                      ""
-                    )}
-                  </span>
-                </th>
+          <Table {...getTableProps()}>
+            <thead className="table-header">
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column, index) => (
+                    <th
+                      key={index}
+                      className="head-column"
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                    >
+                      {column.render('Header')}
+                      <span>
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <HiChevronDown />
+                          ) : (
+                            <HiChevronUp />
+                          )
+                        ) : (
+                          ''
+                        )}
+                      </span>
+                    </th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <>
-                <tr className="row-column" {...row.getRowProps()}>
-                  {row.cells.map((cell, index) => {
-                    return (
-                      <td key={index} {...cell.getCellProps()}>
-                        {cell.render("Cell")}
-                      </td>
-                    );
-                  })}
-                </tr>
-                <tr>
-                  <td colSpan="10" className="no-borders"></td>
-                </tr>
-              </>
-            );
-          })}
-        </tbody>
-      </Table>
-      <div
-        className="container-fluid d-flex justify-content-end mb-4"
-        style={{ gap: "10px" }}
-      >
-        <div>
-          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            {"<<"}
-          </button>{" "}
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            {"<"}
-          </button>{" "}
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            {">"}
-          </button>{" "}
-          <button
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row) => {
+                prepareRow(row);
+                return (
+                  <>
+                    <tr className="row-column" {...row.getRowProps()}>
+                      {row.cells.map((cell, index) => {
+                        return (
+                          <td key={index} {...cell.getCellProps()}>
+                            {cell.render('Cell')}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                    <tr>
+                      <td colSpan="10" className="no-borders"></td>
+                    </tr>
+                  </>
+                );
+              })}
+            </tbody>
+          </Table>
+          <div
+            className="container-fluid d-flex justify-content-end mb-4"
+            style={{ gap: '10px' }}
           >
-            {">>"}
-          </button>{" "}
-          <span>
-            Página{" "}
-            <strong>
-              {pageIndex + 1} de {pageOptions.length}
-            </strong>{" "}
-          </span>
-          <span>
-            | Ir a la página:{" "}
-            <input
-              type="number"
-              defaultValue={pageIndex + 1}
-              onChange={(e) => {
-                const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                gotoPage(page);
-              }}
-              style={{ width: "50px" }}
-            />
-          </span>{" "}
-          <select
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[5, 10, 15, 20].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Mostrar {pageSize}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+            <div>
+              <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                {'<<'}
+              </button>{' '}
+              <button
+                onClick={() => previousPage()}
+                disabled={!canPreviousPage}
+              >
+                {'<'}
+              </button>{' '}
+              <button onClick={() => nextPage()} disabled={!canNextPage}>
+                {'>'}
+              </button>{' '}
+              <button
+                onClick={() => gotoPage(pageCount - 1)}
+                disabled={!canNextPage}
+              >
+                {'>>'}
+              </button>{' '}
+              <span>
+                Página{' '}
+                <strong>
+                  {pageIndex + 1} de {pageOptions.length}
+                </strong>{' '}
+              </span>
+              <span>
+                | Ir a la página:{' '}
+                <input
+                  type="number"
+                  defaultValue={pageIndex + 1}
+                  onChange={(e) => {
+                    const page = e.target.value
+                      ? Number(e.target.value) - 1
+                      : 0;
+                    gotoPage(page);
+                  }}
+                  style={{ width: '50px' }}
+                />
+              </span>{' '}
+              <select
+                value={pageSize}
+                onChange={(e) => {
+                  setPageSize(Number(e.target.value));
+                }}
+              >
+                {[5, 10, 15, 20].map((pageSize) => (
+                  <option key={pageSize} value={pageSize}>
+                    Mostrar {pageSize}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </>
+      ) : (
+        <span>No hay datos</span>
+      )}
     </>
   );
 };

@@ -26,7 +26,10 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     // Login routes
     <Route>
-      {user && (
+      <Route path="/login" exact element={<Login />} />
+      {!user ? (
+        <Route path="*" element={<Navigate replace to="/login" />} />
+      ) : (
         <Route path="/" exact element={<RootLayout />}>
           <Route index element={<Dashboard />} loader={dashboardLoader}></Route>
 
@@ -47,36 +50,8 @@ const router = createBrowserRouter(
             path="actualizar-participante/id/:id"
             element={<UpdateParticipante />}
           />
-          {/* <Route path="pdf" element={<PdfPage />}></Route> */}
         </Route>
       )}
-      <Route path="/login" exact element={<Login />} />
-      <Route path="/" exact element={<Navigate replace to="/login" />} />
-      <Route
-        path="/crear-acta"
-        exact
-        element={<Navigate replace to="/login" />}
-      />
-      <Route
-        path="/details-acta"
-        exact
-        element={<Navigate replace to="/login" />}
-      />
-      <Route
-        path="/actualizar-acta"
-        exact
-        element={<Navigate replace to="/login" />}
-      />
-      <Route
-        path="/crear-participante"
-        exact
-        element={<Navigate replace to="/login" />}
-      />
-      <Route
-        path="/actualizar-participante"
-        exact
-        element={<Navigate replace to="/login" />}
-      />
     </Route>
   )
 );
