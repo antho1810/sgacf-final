@@ -1,10 +1,10 @@
 :root{
     --aprobar: #2de71d;
-    --revisar: #F6B400;
+    --revisar: #5B93FF;
     --compartir: #000AF9;
-    --descargar: #E7661D;
-    --editar: #5B93FF;
-    --borrar: #E71D36
+    --descargar: #185abd;
+    --editar: #F6B400;
+    --borrar: #E71D36;
 }
 
 .table-header{

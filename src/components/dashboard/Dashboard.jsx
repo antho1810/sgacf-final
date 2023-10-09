@@ -229,7 +229,7 @@ function Dashboard() {
                   <span>Revisar</span>{" "}
                 </Dropdown.Item>
                 <Dropdown.Item
-                  className="i-editar"
+                  className="i-editar text-warning"
                   as={NavLink}
                   to={`actualizar-acta/referencia/${rowRef}`}
                   icon={<FaRegEdit />}
@@ -256,7 +256,7 @@ function Dashboard() {
                   icon={<HiDocumentDownload />}
                 >
                   {" "}
-                  <span> Descargar PDF</span>
+                  <span> Descargar DOCX</span>
                 </Dropdown.Item>
                 {/* </PDFDownloadLink> */}
                 <Dropdown.Item
@@ -281,7 +281,7 @@ function Dashboard() {
                   <span>Aprobar</span>{" "}
                 </Dropdown.Item>
                 <Dropdown.Item
-                  className="i-editar"
+                  className="i-editar text-warning"
                   as={NavLink}
                   to={`actualizar-acta/referencia/${rowRef}`}
                   icon={<FaRegEdit />}
@@ -327,7 +327,7 @@ function Dashboard() {
                   icon={<HiDocumentDownload />}
                 >
                   {" "}
-                  <span> Descargar PDF</span>
+                  <span> Descargar DOCX</span>
                 </Dropdown.Item>
               </>
             )}

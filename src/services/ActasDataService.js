@@ -2,15 +2,17 @@ import http from "../http-common.js";
 import axios from "axios";
 // import { saveAs } from "file-saver";
 
+// Download docx
 export const getAndDownloadOneByRef = async (ref) => {
   const token = localStorage.getItem("token");
   return axios({
-    url: `https://api-z5zl.onrender.com/sgacfi-api/actas/descargar/referencia/${ref}`,
+    url: `http://localhost:4000/sgacfi-api/actas/descargar/referencia/${ref}`,
     method: "GET",
-    responseType: "blob",
+    responseType: "arraybuffer",
     headers: {
-      "Content-Disposition": "attachment; filename=archivo.pdf",
-      "Content-Type": "application/pdf",
+      "Content-Disposition": "attachment; filename=archivo.docx",
+      Accept:
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       Authorization: `Bearer ${token}`,
     },
   })
@@ -19,7 +21,7 @@ export const getAndDownloadOneByRef = async (ref) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `acta-${ref}.pdf`);
+      link.setAttribute("download", `acta-${ref}.docx`);
       document.body.appendChild(link);
       link.click();
     })

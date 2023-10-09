@@ -137,7 +137,7 @@ const ParticipantesTable = () => {
                 <>
                   {" "}
                   <Dropdown.Item
-                    className="i-editar"
+                    className="i-editar text-warning"
                     as={NavLink}
                     to={`actualizar-participante/id/${rowId}`}
                     icon={<FaRegEdit />}
@@ -146,7 +146,7 @@ const ParticipantesTable = () => {
                     <span>Editar</span>{" "}
                   </Dropdown.Item>
                   <Dropdown.Item
-                className="i-borrar"
+                className="i-borrar text-danger"
                     as={NavLink}
                     onClick={handleDeleteParticipanteWithConfirmation}
                     icon={<RiDeleteBinLine />}
@@ -160,7 +160,7 @@ const ParticipantesTable = () => {
               {checkExistedRolDecano && (
                 <>
                   <Dropdown.Item
-                    className="i-editar"
+                    className="i-editar text-warning"
                     as={NavLink}
                     to={`actualizar-participante/id/${rowId}`}
                     icon={<FaRegEdit />}
@@ -169,7 +169,7 @@ const ParticipantesTable = () => {
                     <span>Editar</span>{" "}
                   </Dropdown.Item>
                   <Dropdown.Item
-                    className="i-borrar"
+                    className="i-borrar text-danger"
                     as={NavLink}
                     onClick={handleDeleteParticipanteWithConfirmation}
                     icon={<RiDeleteBinLine />}

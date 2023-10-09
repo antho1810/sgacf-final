@@ -1210,6 +1210,10 @@ const UpdateActa = () => {
                 {renderCampos()}
               </div>
 
+              <button className="btn btn-primary" onClick={addVoto}>
+                Añadir nuevo voto +
+              </button>
+
               <div className="container m-0 p-0">
                 {groupVotos.length > 0 &&
                   groupVotos.map((voto, index) => (
@@ -1249,10 +1253,6 @@ const UpdateActa = () => {
                     </div>
                   ))}
               </div>
-
-              <button className="btn btn-primary" onClick={addVoto}>
-                Añadir nuevo voto +
-              </button>
             </>
           )}
         </div>
