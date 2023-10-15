@@ -760,84 +760,10 @@ const CreateActa = () => {
           </div>
         </div>
 
-        {/* PARTE 1: INFORMACIÓN BÁSICA */}
+        {/* PARTE 1: MIEMBROS DEL ACTA */}
         {/* -------------------------------------------------------------------------------- */}
         <div className={`formulario ${currentStep !== 1 && "oculto"}`}>
           {currentStep === 1 && (
-            <>
-              <div className="create-acta-header mb-4">
-                <h3 className="h3 mt-2">Información básica</h3>
-              </div>
-              <div className="row mb-4">
-                <div className="col-auto">
-                  <Form.Label>Lugar</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="lugar"
-                    placeholder="Lugar"
-                    value={actaInicial.lugar}
-                    onChange={handleInputChange}
-                    className="w-100 form-control-custom"
-                  />
-                </div>
-                <div className="col-auto">
-                  <Form.Label>Modalidad</Form.Label>
-                  <Form.Select
-                    name="modalidad"
-                    value={actaInicial.modalidad}
-                    onChange={handleInputChange}
-                    aria-label="Tipo de modalidad"
-                  >
-                    <option>-- Seleccionar --</option>
-                    <option value="presencial">Presencial</option>
-                    <option value="virtual">Virtual</option>
-                    <option value="mixta">Mixta</option>
-                  </Form.Select>
-                </div>
-                <div className="col-auto d-flex flex-column">
-                  <Form.Label>Hora inicio</Form.Label>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <TimePicker
-                      name="horaInicio"
-                      value={actaInicial.horaInicio}
-                      onChange={handleHoraInicioChange}
-                    />
-                  </LocalizationProvider>
-                </div>
-                <div className="col-auto d-flex flex-column">
-                  <Form.Label>Hora final</Form.Label>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <TimePicker
-                      name="horaFinal"
-                      value={actaInicial.horaFinal}
-                      onChange={handleHoraFinalChange}
-                    />
-                  </LocalizationProvider>
-                </div>
-              </div>
-              <div className="create-acta-header mb-4">
-                <h2 className="h2">Cronograma del acta</h2>
-              </div>
-
-              <div className="row mb-4">
-                <textarea
-                  name="cronograma"
-                  id="cronograma"
-                  value={actaInicial.cronograma}
-                  onChange={handleInputChange}
-                  className="cronograma-textarea"
-                  cols="50"
-                  rows="10"
-                  placeholder="Introduza las actividades realizadas durante el acta"
-                ></textarea>
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* PARTE 2: MIEMBROS DEL ACTA */}
-        <div className={`formulario ${currentStep !== 2 && "oculto"}`}>
-          {currentStep === 2 && (
             <>
               <div className="create-acta-header mb-4">
                 <h3 className="h3 mt-2">Seleccionar miembros del acta</h3>
@@ -1183,6 +1109,80 @@ const CreateActa = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* PARTE 2: INFORMACION BASICA */}
+        <div className={`formulario ${currentStep !== 2 && "oculto"}`}>
+          {currentStep === 2 && (
+            <>
+              <div className="create-acta-header mb-4">
+                <h3 className="h3 mt-2">Información básica</h3>
+              </div>
+              <div className="row mb-4">
+                <div className="col-auto">
+                  <Form.Label>Lugar</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="lugar"
+                    placeholder="Lugar"
+                    value={actaInicial.lugar}
+                    onChange={handleInputChange}
+                    className="w-100 form-control-custom"
+                  />
+                </div>
+                <div className="col-auto">
+                  <Form.Label>Modalidad</Form.Label>
+                  <Form.Select
+                    name="modalidad"
+                    value={actaInicial.modalidad}
+                    onChange={handleInputChange}
+                    aria-label="Tipo de modalidad"
+                  >
+                    <option>-- Seleccionar --</option>
+                    <option value="presencial">Presencial</option>
+                    <option value="virtual">Virtual</option>
+                    <option value="mixta">Mixta</option>
+                  </Form.Select>
+                </div>
+                <div className="col-auto d-flex flex-column">
+                  <Form.Label>Hora inicio</Form.Label>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <TimePicker
+                      name="horaInicio"
+                      value={actaInicial.horaInicio}
+                      onChange={handleHoraInicioChange}
+                    />
+                  </LocalizationProvider>
+                </div>
+                <div className="col-auto d-flex flex-column">
+                  <Form.Label>Hora final</Form.Label>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <TimePicker
+                      name="horaFinal"
+                      value={actaInicial.horaFinal}
+                      onChange={handleHoraFinalChange}
+                    />
+                  </LocalizationProvider>
+                </div>
+              </div>
+              <div className="create-acta-header mb-4">
+                <h2 className="h2">Cronograma del acta</h2>
+              </div>
+
+              <div className="row mb-4">
+                <textarea
+                  name="cronograma"
+                  id="cronograma"
+                  value={actaInicial.cronograma}
+                  onChange={handleInputChange}
+                  className="cronograma-textarea"
+                  cols="50"
+                  rows="10"
+                  placeholder="Introduza las actividades realizadas durante el acta"
+                ></textarea>
               </div>
             </>
           )}
