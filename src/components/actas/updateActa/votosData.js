@@ -36,6 +36,11 @@ export const votosData = [
         subElementos: ["Ingeniería de Sistemas", "Ingeniería Industrial"],
         tipo: "text",
       },
+      {
+        nombre: "Aprobacion",
+        etiqueta: "Aprobación",
+        tipo: "text",
+      },
     ],
   },
   // {
@@ -180,6 +185,11 @@ export const votosData = [
         etiqueta: "Crédito",
         tipo: "text",
       },
+      {
+        nombre: "Aprobación",
+        etiqueta: "Aprobación",
+        tipo: "text",
+      },
     ],
   },
   {
@@ -242,6 +252,11 @@ export const votosData = [
         nombre: "creditosAdicionales",
         etiqueta: "Creditos",
         tipo: "number",
+      },
+      {
+        nombre: "Aprobación",
+        etiqueta: "Aprobación",
+        tipo: "text",
       },
     ],
   },
