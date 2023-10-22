@@ -186,7 +186,7 @@ export const votosData = [
         tipo: "text",
       },
       {
-        nombre: "Aprobación",
+        nombre: "Aprobacion",
         etiqueta: "Aprobación",
         tipo: "text",
       },
@@ -254,7 +254,7 @@ export const votosData = [
         tipo: "number",
       },
       {
-        nombre: "Aprobación",
+        nombre: "Aprobacion",
         etiqueta: "Aprobación",
         tipo: "text",
       },

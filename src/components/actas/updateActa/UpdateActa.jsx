@@ -1210,7 +1210,7 @@ const UpdateActa = () => {
                 {renderCampos()}
               </div>
 
-              <button className="btn btn-primary" onClick={addVoto}>
+              <button className="btn btn-primary mb-3" onClick={addVoto}>
                 Añadir nuevo voto +
               </button>
 
