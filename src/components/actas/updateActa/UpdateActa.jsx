@@ -1228,7 +1228,7 @@ const UpdateActa = () => {
                           overflowX: "scroll",
                           overflowY: "hidden",
                         }}
-                        className="container-fluid p-0 m-0"
+                        className="container-fluid col-11 p-0 m-0"
                       >
                         <table
                           key={index}
@@ -1301,7 +1301,7 @@ const UpdateActa = () => {
           >
             Salir
           </button>
-          <div className="container-fluid d-flex justify-content-end">
+          <div className="container-fluid d-flex justify-content-end me-md-1">
             {currentStep > 1 && (
               <button
                 className="btn btn-secondary me-2"
@@ -1320,6 +1320,7 @@ const UpdateActa = () => {
             {currentStep === 3 && (
               <button
                 className="btn btn-primary"
+                style={{ marginRight: "100px" }}
                 onClick={handleRecopilarVotos}
               >
                 Siguiente
