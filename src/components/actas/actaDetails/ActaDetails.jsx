@@ -132,11 +132,13 @@ const ActaDetails = () => {
         <div className="me-4 text-center">
           <h1 className="h4">Cronograma</h1>
           {/* <p className="text-justify">{acta.cronograma}</p> */}
-          {acta.cronograma.split("\n").map((parrafo, index) => (
-            <p key={index} className="center">
-              {parrafo.trim()+ "."}
-            </p>
-          ))}
+          {acta &&
+            acta.cronograma &&
+            acta.cronograma.split(".").map((parrafo, index) => (
+              <p key={index} className="center">
+                {parrafo.trim() + "."}
+              </p>
+            ))}
         </div>
       </div>
       {/* Container Articulos */}
