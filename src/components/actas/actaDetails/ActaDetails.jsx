@@ -129,9 +129,16 @@ const ActaDetails = () => {
         </div>
       </div>
       <div className="mt-2">
-        <div className="me-4 text-center">
-          <h1 className="h4">Cronograma</h1>
-          <p className="center">{acta.cronograma}</p>
+        <div className="me-4 ">
+          <h1 className="h4 text-center">Cronograma</h1>
+          {/* <p className="text-justify">{acta.cronograma}</p> */}
+          {acta &&
+            acta.cronograma &&
+            acta.cronograma.split("\n").map((parrafo, index) => (
+              <p key={index} className="text-justify">
+                {parrafo.trim()}
+              </p>
+            ))}
         </div>
       </div>
       {/* Container Articulos */}
@@ -173,19 +180,6 @@ const ActaDetails = () => {
           )}
         </Row>
       </Container>
-      {/* Container Documentos Soporte */}
-      {/* <div className="ct-docsSoprot mt-3">
-        <div className="me-4 text-center">
-          <span className="h4">Documentos adjuntos</span>
-          <div>
-            <Badge className="inProcess">
-              {" "}
-              <span className="fw-400">titulo del documento</span>{" "}
-            </Badge>
-            <span className="center me-1">No hay Documentos de soporte</span>
-          </div>
-        </div>
-      </div> */}
       <Container fluid>
         <Row className="mb-3">
           <Col style={{ height: "80px" }}></Col>
