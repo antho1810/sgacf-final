@@ -61,19 +61,50 @@ const CreateActa = () => {
   });
 
   const handleConfirmSend = () => {
-    console.log(actaInicial);
+    if (camposRequeridosLlenos()) {
+      console.log(actaInicial);
 
-    ActaService.createActa(JSON.stringify(actaInicial))
-      .then((response) => {
-        console.log("Acta enviada exitosamente:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error al enviar el acta:", error);
-      });
+      ActaService.createActa(JSON.stringify(actaInicial))
+        .then((response) => {
+          console.log("Acta enviada exitosamente:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error al enviar el acta:", error);
+        });
 
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 1000);
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
+    } else {
+       Swal.fire({
+         icon: "error",
+         title: "Campos requeridos vacíos",
+         text: "Por favor, complete todos los campos requeridos.",
+       });
+    }
+  };
+
+  const camposRequeridosLlenos = () => {
+    if (!actaInicial.lugar) {
+      return false;
+    }
+
+    if (!actaInicial.modalidad) {
+      return false;
+    }
+
+    if (!actaInicial.horaInicio) {
+      return false;
+    }
+    if (!actaInicial.horaFinal) {
+      return false;
+    }
+
+    if (!actaInicial.cronograma) {
+      return false;
+    }
+
+    return true;
   };
 
   // MODALES
@@ -727,7 +758,7 @@ const CreateActa = () => {
         </div>
       )}
 
-      {/* MODAL CERRAR */}
+      {/* MODAL CREAR REGISTRO */}
       {isSendModalOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -1132,6 +1163,7 @@ const CreateActa = () => {
                     onChange={handleInputChange}
                     className="w-100 form-control-custom"
                   />
+                  <spam className="small-font">Campo requerido</spam>
                 </div>
                 <div className="col-auto">
                   <Form.Label>Modalidad</Form.Label>
@@ -1146,6 +1178,7 @@ const CreateActa = () => {
                     <option value="virtual">Virtual</option>
                     <option value="mixta">Mixta</option>
                   </Form.Select>
+                  <spam className="small-font">Campo requerido</spam>
                 </div>
                 <div className="col-auto d-flex flex-column">
                   <Form.Label>Hora inicio</Form.Label>
@@ -1156,6 +1189,7 @@ const CreateActa = () => {
                       onChange={handleHoraInicioChange}
                     />
                   </LocalizationProvider>
+                  <spam className="small-font">Campo requerido</spam>
                 </div>
                 <div className="col-auto d-flex flex-column">
                   <Form.Label>Hora final</Form.Label>
@@ -1166,6 +1200,7 @@ const CreateActa = () => {
                       onChange={handleHoraFinalChange}
                     />
                   </LocalizationProvider>
+                  <spam className="small-font">Campo requerido</spam>
                 </div>
               </div>
               <div className="create-acta-header mb-4">
@@ -1183,6 +1218,7 @@ const CreateActa = () => {
                   rows="10"
                   placeholder="Introduza las actividades realizadas durante el acta"
                 ></textarea>
+                <spam className="small-font">Campo requerido</spam>
               </div>
             </>
           )}

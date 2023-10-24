@@ -141,3 +141,8 @@
   background: rgba(247, 2, 2, 0.8);
   color: #fff;
 }
+
+.small-font {
+  font-size: 0.8em; /* Ajusta el valor según tu preferencia */
+  color: red; /* Cambia el color a rojo si lo deseas */
+}
