@@ -6,9 +6,9 @@
 - Participante
 
 ## Privigilegios de cada uno
-- SuperUsuario/Decano: aprobar, crear, editar y borrar actas, crear, editar y borrar participantes.
-- Secretaria: crear, editar y borrar actas, crear, editar y borrar participantes.
-- Participante: ver el listado de actas y participantes.
+- SuperAdmin/Decano: aprobar, crear, editar y borrar actas, crear, editar y borrar participantes.
+- Admin/Secretaria: crear, editar y borrar actas, crear, editar y borrar participantes.
+- Usuario/Participante: ver el listado de actas y participantes.
 
 #### Nota
 
