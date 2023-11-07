@@ -573,7 +573,7 @@ export const dashboardLoader = async () => {
     //   <div class='layer'>
     //   <div class="modal-layer">
     //     No hay token disponible. El usuario no está autenticado.
-    //     <a href="http://localhost:3000/login">Iniciar sección</a>
+    //     <a href="https://software-sgacfi.netlify.app/login">Iniciar sección</a>
     //   </div>
     // </div>
     //   `
@@ -589,7 +589,7 @@ export const dashboardLoader = async () => {
       "No hay token disponible. El usuario no está autenticado.";
 
     const link = document.createElement("a");
-    link.href = "http://localhost:3000/login";
+    link.href = "https://software-sgacfi.netlify.app/login";
     link.textContent = "Iniciar Sección";
 
     modalLayer.appendChild(msg);
@@ -619,7 +619,7 @@ export const dashboardLoader = async () => {
           "El token ha caducado. Debes iniciar sesión nuevamente.";
 
         const link = document.createElement("a");
-        link.href = "http://localhost:3000/login";
+        link.href = "https://software-sgacfi.netlify.app/login";
         link.textContent = "Iniciar Sección";
 
         modalLayer.appendChild(msg);
