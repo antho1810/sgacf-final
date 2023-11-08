@@ -48,96 +48,6 @@ export const votosData = [
       },
     ],
   },
-  // {
-  //   nombre: "Reingreso",
-  //   campos: [
-  //     {
-  //       nombre: "titulo",
-  //       etiqueta: "Título del voto",
-  //       subElementos: ["Reingreso"],
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "nombreAspirante",
-  //       etiqueta: "Nombre completo del aspirante",
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "birthDate",
-  //       etiqueta: "Fecha de nacimiento",
-  //       tipo: "date",
-  //     },
-  //     {
-  //       nombre: "genero",
-  //       etiqueta: "Genero",
-  //       subElementos: ["Masculino - Male", "Femenino - Female"],
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "tipoDocumento",
-  //       etiqueta: "Tipo de documento",
-  //       subElementos: ["CC", "TI", "NIT", "PASAPORTE", "CE"],
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "noDocumento",
-  //       etiqueta: "Número de documentos (sin puntos)",
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "direccionResidencia",
-  //       etiqueta: "Dírección de Residencia",
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "noTelefono",
-  //       etiqueta: "Número de telefono",
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "estrato",
-  //       etiqueta: "Estrado",
-  //       subElementos: ["1", "2", "3", "4", "5", "6"],
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "correoElectronico",
-  //       etiqueta: "Correo Electrónico",
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "nombreEmpresa",
-  //       etiqueta: "Empresa",
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "direccionEmpresa",
-  //       etiqueta: "Dírección de la Empresa",
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "cargoEmpresa",
-  //       etiqueta: "Cargo en la empresa",
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "religion",
-  //       etiqueta: "Religión",
-  //       tipo: "text",
-  //     },
-  //     {
-  //       nombre: "programaEstudiante",
-  //       etiqueta: "Programa Reingreso",
-  //       subElementos: ["Ingeniería de Sistemas", "Ingeniería Industrial"],
-  //       tipo: "text",
-  //     },
-  // {
-  //   nombre: "observacion",
-  //   etiqueta: "Observación (Comenzar con mayuscula)",
-  //   tipo: "text",
-  // },
-  //   ],
-  // },
   {
     nombre: "Homologaciones",
     campos: [
@@ -283,3 +193,99 @@ export const votosData = [
 ];
 
 export default votosData;
+
+// {
+//   nombre: "Reingreso",
+//   campos: [
+//     {
+//       nombre: "titulo",
+//       etiqueta: "Título del voto",
+//       subElementos: ["Reingreso"],
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "nombreAspirante",
+//       etiqueta: "Nombre completo del aspirante",
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "birthDate",
+//       etiqueta: "Fecha de nacimiento",
+//       tipo: "date",
+//     },
+//     {
+//       nombre: "genero",
+//       etiqueta: "Genero",
+//       subElementos: ["Masculino - Male", "Femenino - Female"],
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "tipoDocumento",
+//       etiqueta: "Tipo de documento",
+//       subElementos: ["CC", "TI", "NIT", "PASAPORTE", "CE"],
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "noDocumento",
+//       etiqueta: "Número de documentos (sin puntos)",
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "direccionResidencia",
+//       etiqueta: "Dírección de Residencia",
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "noTelefono",
+//       etiqueta: "Número de telefono",
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "estrato",
+//       etiqueta: "Estrado",
+//       subElementos: ["1", "2", "3", "4", "5", "6"],
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "correoElectronico",
+//       etiqueta: "Correo Electrónico",
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "nombreEmpresa",
+//       etiqueta: "Empresa",
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "direccionEmpresa",
+//       etiqueta: "Dírección de la Empresa",
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "cargoEmpresa",
+//       etiqueta: "Cargo en la empresa",
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "religion",
+//       etiqueta: "Religión",
+//       tipo: "text",
+//     },
+//     {
+//       nombre: "programaEstudiante",
+//       etiqueta: "Programa Reingreso",
+//       subElementos: ["Ingeniería de Sistemas", "Ingeniería Industrial"],
+//       tipo: "text",
+//     },
+// {
+//   nombre: "observacion",
+//   etiqueta: "Observación (Comenzar con mayuscula)",
+//   tipo: "text",
+// },
+// {
+//       nombre: "Aprobacion",
+//       etiqueta: "Aprobación",
+//       tipo: "text",
+//     },
+//   ],
+// },
