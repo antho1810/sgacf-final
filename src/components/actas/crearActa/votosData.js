@@ -176,13 +176,18 @@ export const votosData = [
         tipo: "text",
       },
       {
-        nombre: "nota",
-        etiqueta: "Nota",
+        nombre: "notaCalificacion",
+        etiqueta: "Nota Final",
         tipo: "text",
       },
       {
         nombre: "credito",
         etiqueta: "Crédito",
+        tipo: "text",
+      },
+      {
+        nombre: "observacion",
+        etiqueta: "Observación (Comenzar con mayuscula)",
         tipo: "text",
       },
       {

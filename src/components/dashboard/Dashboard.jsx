@@ -93,9 +93,20 @@ function Dashboard() {
           (miembro) => `${miembro.nombre} ${miembro.apellido}, `
         ),
         lugar: acta.lugar,
+        cronograma: acta.cronograma,
         modalidad: acta.modalidad,
         estado: acta.estado,
         articulo: acta.articulos.map((item) => `${item.titulo}, `),
+        aspiranteArti: acta.articulos.map((item) => `${item.nombreAspirante}, `),
+        tipoDocumenArti: acta.articulos.map((item) => `${item.tipoDocumento}, `),
+        noDocumentArti: acta.articulos.map((item) => `${item.noDocumento}, `),
+        programaArti: acta.articulos.map((item) => `${item.programaEstudiante}, `),
+        codigotArti: acta.articulos.map((item) => `${item.codigoSnies}, `),
+        periodoArti: acta.articulos.map((item) => `${item.periodo}, `),
+        materiaAproArti: acta.articulos.map((item) => `${item.materiaAprobada}, `),
+        materiaEquiAproArti: acta.articulos.map((item) => `${item.materiaEquivalente}, `),
+        creditoArti: acta.articulos.map((item) => `${item.credito}, `),
+        aprobaArti: acta.articulos.map((item) => `${item.Aprobacion}, `),
       }));
     } else {
       return [];
@@ -335,9 +346,21 @@ function Dashboard() {
         );
       },
     },
+    { Header: "Estudiante", accessor: "aspiranteArti" },
+    { Header: "Tipo de documento", accessor: "tipoDocumenArti" },
+    { Header: "Número de documento", accessor: "noDocumentArti" },
+    { Header: "Programa", accessor: "programaArti" },
+    { Header: "Código SNIES", accessor: "codigoArti" },
+    { Header: "Periodo", accessor: "periodoArti" },
+    { Header: "Materia Aprobada", accessor: "materiaAproArti" },
+    { Header: "Materia Equivalente", accessor: "materiaEquiAproArti" },
+    { Header: "Nota Final", accessor: "notaFinArti" },
+    { Header: "Crédito Materia", accessor: "creditoArti" },
+    { Header: "Aprobación", accessor: "aprobaArti" },
+    { Header: "Cronograma", accessor: "cronograma" },
   ];
 
-    // const fixedColumns = React.useMemo(() => COLUMNS, []);
+  // const fixedColumns = React.useMemo(() => COLUMNS, []);
   const {
     getTableProps,
     getTableBodyProps,
