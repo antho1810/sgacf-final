@@ -43,8 +43,8 @@
   opacity: 0;
 }
 
-.tabla-participantes-header{
-  width:80%;
+.tabla-participantes-header {
+  width: 80%;
   text-align: center;
 }
 
@@ -53,7 +53,7 @@
   height: 38px;
 }
 
-.cronograma-textarea{
+.cronograma-textarea {
   border: none;
   padding-top: 8px;
   padding-bottom: 8px;
@@ -145,4 +145,15 @@
 .small-font {
   font-size: 0.8em; /* Ajusta el valor según tu preferencia */
   color: red; /* Cambia el color a rojo si lo deseas */
+}
+
+#observacion {
+  border: none;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+#observacion:focus {
+  transition-property: opacity;
 }
