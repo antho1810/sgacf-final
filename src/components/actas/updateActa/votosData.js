@@ -4,7 +4,7 @@ export const votosData = [
     campos: [
       {
         nombre: "titulo",
-        etiqueta: "Titulo del voto",
+        etiqueta: "Título del voto",
         subElementos: ["Autorización de expedición de títulos académicos"],
         tipo: "text",
       },
@@ -37,6 +37,11 @@ export const votosData = [
         tipo: "text",
       },
       {
+        nombre: "observacion",
+        etiqueta: "Observación (Comenzar con mayuscula)",
+        tipo: "text",
+      },
+      {
         nombre: "Aprobacion",
         etiqueta: "Aprobación",
         tipo: "text",
@@ -48,7 +53,7 @@ export const votosData = [
   //   campos: [
   //     {
   //       nombre: "titulo",
-  //       etiqueta: "Titulo del voto",
+  //       etiqueta: "Título del voto",
   //       subElementos: ["Reingreso"],
   //       tipo: "text",
   //     },
@@ -126,6 +131,11 @@ export const votosData = [
   //       subElementos: ["Ingeniería de Sistemas", "Ingeniería Industrial"],
   //       tipo: "text",
   //     },
+  // {
+  //   nombre: "observacion",
+  //   etiqueta: "Observación (Comenzar con mayuscula)",
+  //   tipo: "text",
+  // },
   //   ],
   // },
   {
@@ -176,8 +186,8 @@ export const votosData = [
         tipo: "text",
       },
       {
-        nombre: "nota",
-        etiqueta: "Nota",
+        nombre: "notaCalificacion",
+        etiqueta: "Nota Final",
         tipo: "text",
       },
       {
@@ -186,7 +196,12 @@ export const votosData = [
         tipo: "text",
       },
       {
-        nombre: "Aprobación",
+        nombre: "observacion",
+        etiqueta: "Observación (Comenzar con mayuscula)",
+        tipo: "text",
+      },
+      {
+        nombre: "Aprobacion",
         etiqueta: "Aprobación",
         tipo: "text",
       },
@@ -197,7 +212,7 @@ export const votosData = [
     campos: [
       {
         nombre: "titulo",
-        etiqueta: "Titulo del voto",
+        etiqueta: "Título del voto",
         subElementos: [
           "Transferencia interna",
           "Suficiencia",
@@ -250,11 +265,16 @@ export const votosData = [
       },
       {
         nombre: "creditosAdicionales",
-        etiqueta: "Creditos",
+        etiqueta: "Créditos",
         tipo: "number",
       },
       {
-        nombre: "Aprobación",
+        nombre: "observacion",
+        etiqueta: "Observación (Comenzar con mayuscula)",
+        tipo: "text",
+      },
+      {
+        nombre: "Aprobacion",
         etiqueta: "Aprobación",
         tipo: "text",
       },
