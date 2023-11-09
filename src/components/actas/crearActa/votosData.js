@@ -136,7 +136,7 @@ export const votosData = [
           "Autorización para cursar materia con otra malla",
           "Matricula de honor",
           "Modificación de calificaciones a un periodo cerrado",
-          "Materia intesiva",
+          "Materia intensiva",
         ],
         tipo: "text",
       },
