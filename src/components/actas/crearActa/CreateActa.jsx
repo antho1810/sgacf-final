@@ -616,7 +616,6 @@ const CreateActa = () => {
           <div className="col-auto mb-2" key={campo.nombre}>
             <label>{campo.etiqueta}:</label>
             <Form.Control
-              as={campo.as}
               class={campo.class}
               type={campo.tipo}
               id={campo.nombre}

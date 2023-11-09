@@ -602,9 +602,9 @@ const UpdateActa = () => {
   const handleFileUpload = () => {
     files.forEach(async (file) => {
       const formData = new FormData();
-      formData.append(`soportes`, file);
+      formData.append(`updateSoportes`, file);
 
-      const response = await httpCommon.post("/actas/carga", formData, {
+      const response = await httpCommon.post(`/actas/carga/actualizar/referencia/${ref}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -1270,7 +1270,7 @@ const UpdateActa = () => {
                   onChange={handleFileChange}
                   multiple
                 />
-                <button onClick={handleFileUpload}>Subir archivos</button>
+                <button onClick={handleFileUpload}>Actualizar archivos</button>
 
                 {files.length > 0 && (
                   <div>
