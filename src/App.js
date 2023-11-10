@@ -28,7 +28,7 @@ const router = createBrowserRouter(
     <Route>
       <Route path="/sgacfi/login" exact element={<Login />} />
       {!user ? (
-        <Route path="*" element={<Navigate replace to="/login" />} />
+        <Route path="*" element={<Navigate replace to="/sgacfi/login" />} />
       ) : (
         <Route path="/sgacfi/" exact element={<RootLayout />}>
           <Route index element={<Dashboard />} loader={dashboardLoader}></Route>
@@ -47,7 +47,7 @@ const router = createBrowserRouter(
             element={<ActaDetails />}
           ></Route>
           <Route
-            path="sgacfi/actualizar-participante/id/:id"
+            path="/sgacfi/actualizar-participante/id/:id"
             element={<UpdateParticipante />}
           />
         </Route>

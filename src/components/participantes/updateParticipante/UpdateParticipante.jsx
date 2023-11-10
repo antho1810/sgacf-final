@@ -43,7 +43,7 @@ const UpdateParticipante = () => {
 
   const handleConfirmExitBtn = () => {
     setIsUpdateModalOpen(false);
-    window.location.href = "/";
+    window.location.href = "/sgacfi/";
   };
 
   const handleConfirmUpdate = () => {
@@ -56,7 +56,7 @@ const UpdateParticipante = () => {
       });
 
     setTimeout(() => {
-      window.location.href = "/";
+      window.location.href = "/sgacfi/";
     }, 2000);
   };
 

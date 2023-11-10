@@ -31,9 +31,9 @@ const ParticipantesTable = () => {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      setLayerMsg('No hay token disponible. El usuario no está autenticado.');
+      setLayerMsg("No hay token disponible. El usuario no está autenticado.");
       setLayer(true);
-      // return (window.location.href = '/login');
+      // return (window.location.href = '/sgacfi/login');
     } else {
       try {
         const decodedToken = jwtDecode(token);
@@ -41,9 +41,9 @@ const ParticipantesTable = () => {
         const currentTime = Date.now() / 1000;
 
         if (decodedToken.exp < currentTime) {
-          setLayerMsg('El token ha caducado. Debes iniciar sesión nuevamente.');
+          setLayerMsg("El token ha caducado. Debes iniciar sesión nuevamente.");
           setLayer(true);
-          // return (window.location.href = '/login');
+          // return (window.location.href = '/sgacfi/login');
         } else {
           ParticipantesService.getAllParticipantes()
             .then((response) => {
@@ -89,7 +89,7 @@ const ParticipantesTable = () => {
 
         const handleConfirmDelete = async (id) => {
           await ParticipantesService.deleteParticipante(id);
-          window.location.reload();
+          window.location.href = "/sgacfi/";
         };
 
              const handleDeleteParticipanteWithConfirmation = (id) => {

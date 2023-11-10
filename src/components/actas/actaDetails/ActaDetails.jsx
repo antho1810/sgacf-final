@@ -16,7 +16,7 @@ const ActaDetails = () => {
   const { ref } = useParams();
 
   const handleConfirmExitBtn = () => {
-    window.location.href = "/";
+    window.location.href = "/sgacfi/";
   };
 
   const fechaCreacion = acta.fechaCreacion;

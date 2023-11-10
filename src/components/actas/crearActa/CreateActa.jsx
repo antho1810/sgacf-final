@@ -73,7 +73,7 @@ const CreateActa = () => {
         });
 
       setTimeout(() => {
-        window.location.href = "/";
+        window.location.href = "/sgacfi/";
       }, 1000);
     } else {
        Swal.fire({
@@ -127,7 +127,7 @@ const CreateActa = () => {
 
   const handleConfirmExitBtn = () => {
     setIsOpen(false);
-    window.location.href = "/";
+    window.location.href = "/sgacfi/";
   };
 
   // FUNCIONALIDAD PASO A PASO

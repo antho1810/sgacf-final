@@ -29,7 +29,7 @@ const Login = () => {
       const { data: res } = await axios.post(baseUrl, data);
       console.log(res.data);
       localStorage.setItem("token", res.data);
-      window.location = "/";
+      window.location = "/sgacfi/";
       console.log("Ingreso éxitoso");
     } catch (e) {
       if (e.response && e.response.status >= 400 && e.response.status <= 500) {

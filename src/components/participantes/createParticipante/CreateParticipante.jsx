@@ -43,7 +43,7 @@ const CreateParticipante = () => {
       });
 
     setTimeout(() => {
-      window.location.href = "/";
+      window.location.href = "/sgacfi/";
     })
   };
 

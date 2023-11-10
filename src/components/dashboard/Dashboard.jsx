@@ -612,7 +612,7 @@ export const dashboardLoader = async () => {
       "No hay token disponible. El usuario no está autenticado.";
 
     const link = document.createElement("a");
-    link.href = "https://sgacfi/sgacfi/login";
+    link.href = "https://192.168.51.107/sgacfi/login";
     link.textContent = "Iniciar Sección";
 
     modalLayer.appendChild(msg);
@@ -620,7 +620,7 @@ export const dashboardLoader = async () => {
     layer.appendChild(modalLayer);
 
     body.appendChild(layer);
-    // return (window.location.href = '/login');
+    // return (window.location.href = '/sgacfi/login');
     return null;
   } else {
     try {
@@ -642,7 +642,7 @@ export const dashboardLoader = async () => {
           "El token ha caducado. Debes iniciar sesión nuevamente.";
 
         const link = document.createElement("a");
-        link.href = "https://sgacfi/sgacfi/login";
+        link.href = "https://192.168.51.107/sgacfi/login";
         link.textContent = "Iniciar Sección";
 
         modalLayer.appendChild(msg);
@@ -650,7 +650,7 @@ export const dashboardLoader = async () => {
         layer.appendChild(modalLayer);
 
         body.appendChild(layer);
-        // return (window.location.href = '/login');
+        // return (window.location.href = '/sgacfi/login');
         return null;
       } else {
         const response = await ActaService.getAllActas();
