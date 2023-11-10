@@ -26,11 +26,11 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     // Login routes
     <Route>
-      <Route path="/login" exact element={<Login />} />
+      <Route path="/#/login" exact element={<Login />} />
       {!user ? (
-        <Route path="*" element={<Navigate replace to="/login" />} />
+        <Route path="*" element={<Navigate replace to="/#/login" />} />
       ) : (
-        <Route path="/" exact element={<RootLayout />}>
+        <Route path="/#/" exact element={<RootLayout />}>
           <Route index element={<Dashboard />} loader={dashboardLoader}></Route>
 
           <Route path="crear-acta" element={<CreateActa />}></Route>
