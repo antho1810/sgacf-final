@@ -191,7 +191,7 @@ const ActaDetails = () => {
         </button>
         <NavLink
           className="btn btn-success"
-          to={`/actualizar-acta/referencia/${acta.numeroRef}`}
+          to={`/sgacfi/actualizar-acta/referencia/${acta.numeroRef}`}
         >
           Editar
         </NavLink>

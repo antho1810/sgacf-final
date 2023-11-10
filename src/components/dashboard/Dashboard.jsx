@@ -231,7 +231,7 @@ function Dashboard() {
               <>
                 <Dropdown.Item
                   onClick={() => showStatus(row.original.id)}
-                  to={`details-acta/referencia/${rowRef}`}
+                  to={`/sgacfi/details-acta/referencia/${rowRef}`}
                   as={NavLink}
                   className="i-revisar"
                   icon={<BsEyeglasses />}
@@ -242,7 +242,7 @@ function Dashboard() {
                 <Dropdown.Item
                   className="i-editar text-warning"
                   as={NavLink}
-                  to={`actualizar-acta/referencia/${rowRef}`}
+                  to={`/sgacfi/actualizar-acta/referencia/${rowRef}`}
                   icon={<FaRegEdit />}
                 >
                   {" "}
@@ -294,7 +294,7 @@ function Dashboard() {
                 <Dropdown.Item
                   className="i-editar text-warning"
                   as={NavLink}
-                  to={`actualizar-acta/referencia/${rowRef}`}
+                  to={`/sgacfi/actualizar-acta/referencia/${rowRef}`}
                   icon={<FaRegEdit />}
                 >
                   {" "}
@@ -316,7 +316,7 @@ function Dashboard() {
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={() => showStatus(rowState)}
-                  to={`details-acta/referencia/${rowRef}`}
+                  to={`/sgacfi/details-acta/referencia/${rowRef}`}
                   as={NavLink}
                   className="i-revisar"
                   icon={<BsEyeglasses />}
@@ -612,7 +612,7 @@ export const dashboardLoader = async () => {
       "No hay token disponible. El usuario no está autenticado.";
 
     const link = document.createElement("a");
-    link.href = "https://sgacfi/#/login";
+    link.href = "https://sgacfi/sgacfi/login";
     link.textContent = "Iniciar Sección";
 
     modalLayer.appendChild(msg);
@@ -642,7 +642,7 @@ export const dashboardLoader = async () => {
           "El token ha caducado. Debes iniciar sesión nuevamente.";
 
         const link = document.createElement("a");
-        link.href = "https://sgacfi/#/login";
+        link.href = "https://sgacfi/sgacfi/login";
         link.textContent = "Iniciar Sección";
 
         modalLayer.appendChild(msg);

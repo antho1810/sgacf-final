@@ -139,14 +139,14 @@ const ParticipantesTable = () => {
                   <Dropdown.Item
                     className="i-editar text-warning"
                     as={NavLink}
-                    to={`actualizar-participante/id/${rowId}`}
+                    to={`/sgacfi/actualizar-participante/id/${rowId}`}
                     icon={<FaRegEdit />}
                   >
                     {" "}
                     <span>Editar</span>{" "}
                   </Dropdown.Item>
                   <Dropdown.Item
-                className="i-borrar text-danger"
+                    className="i-borrar text-danger"
                     as={NavLink}
                     onClick={handleDeleteParticipanteWithConfirmation}
                     icon={<RiDeleteBinLine />}
@@ -162,7 +162,7 @@ const ParticipantesTable = () => {
                   <Dropdown.Item
                     className="i-editar text-warning"
                     as={NavLink}
-                    to={`actualizar-participante/id/${rowId}`}
+                    to={`/sgacfi/actualizar-participante/id/${rowId}`}
                     icon={<FaRegEdit />}
                   >
                     {" "}

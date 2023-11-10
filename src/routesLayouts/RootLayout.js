@@ -63,7 +63,7 @@ function Navbarside() {
                         active
                         eventKey="1"
                         icon={<MdCategory />}
-                        to="/"
+                        to="/sgacfi/"
                       >
                         <span>Dashboard</span>
                       </Nav.Item>
@@ -76,7 +76,7 @@ function Navbarside() {
                           as={NavLink}
                           eventKey="3-1"
                           icon={<HiDocumentAdd />}
-                          to="/crear-acta"
+                          to="/sgacfi/crear-acta"
                         >
                           <span>Crear acta</span>
                         </Nav.Item>
@@ -84,7 +84,7 @@ function Navbarside() {
                           as={NavLink}
                           eventKey="3-2"
                           icon={<FaUserPlus />}
-                          to="/crear-participante"
+                          to="/sgacfi/crear-participante"
                         >
                           <span>Crear participante</span>
                         </Nav.Item>
