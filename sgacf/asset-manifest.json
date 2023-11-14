@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "static/css/main.1c49bbd3.css",
+    "main.js": "static/js/main.9aaf3aab.js",
+    "static/media/tiburon.png": "/sgacfi/static/media/tiburon.bbc89ef65803cc2ee60a.png",
+    "static/media/UNACazul.png": "/sgacfi/static/media/UNACazul.ddff0edd31f63f3e883d.png",
+    "static/media/logo-unac.png": "/sgacfi/static/media/logo-unac.ddff0edd31f63f3e883d.png",
+    "index.html": "index.html",
+    "main.1c49bbd3.css.map": "static/css/main.1c49bbd3.css.map",
+    "main.9aaf3aab.js.map": "static/js/main.9aaf3aab.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1c49bbd3.css",
+    "static/js/main.9aaf3aab.js"
+  ]
+}
