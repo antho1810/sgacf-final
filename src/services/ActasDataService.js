@@ -6,7 +6,8 @@ import axios from "axios";
 export const getAndDownloadOneByRef = async (ref) => {
   const token = localStorage.getItem("token");
   return axios({
-    url: `https://api-z5zl.onrender.com/sgacfi-api/actas/descargar/referencia/${ref}`,
+    url: `http://ingenieria.unac.edu.co:4001/sgacfi-api/actas/descargar/referencia/${ref}`,
+    // url: `https://api-z5zl.onrender.com/sgacfi-api/actas/descargar/referencia/${ref}`,
     method: "GET",
     responseType: "arraybuffer",
     headers: {
